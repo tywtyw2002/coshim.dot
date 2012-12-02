@@ -51,18 +51,18 @@ function nh() { nohup "$@" &>/dev/null & }
 # usage: lists screen sessions, otherwise
 #        s <name> reattaches to <name>, otherwise
 #        s <name> creates a new session <name>.
-s ()
-{
-    if [[ $1 ]]; then
-        screen -dRR -S $HOSTNAME.$1
-    else
-        screen -ls
-    fi
-}
+#s ()
+#{
+#    if [[ $1 ]]; then
+#        screen -dRR -S $HOSTNAME.$1
+#    else
+#        screen -ls
+#    fi
+#}
 
 
 
-rd defnition from google
+#rd defnition from google
 # usage: define <word>
 define ()
 {

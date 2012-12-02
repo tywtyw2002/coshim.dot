@@ -4,33 +4,34 @@ Xcursor.size:   16
 
 
 !rxvt-unicode --------------------------------------------------------------
-urxvt*depth:            32
+URxvt*depth:            32
 !urxvt*geometry:         132x50
-urxvt*saveLines:        65535
-urxvt*scrollTtyKeypress:true
-urxvt*scrollTtyOutput:  false
-urxvt*scrollBar:        false
-urxvt*loginShell:       true
-urxvt*termName:         rxvt-unicode-256color
-urxvt*inheritPixmap:    true
-urxvt*shading:          105
-urxvt*tintColor:        #202222
-urxvt*font:             xft:Inconsolata:pixelsize=14
-urxvt*print-pipe:       cat > $(echo urxvt.dump.$(date +'%Y%M%d%H%m%S'))
-urxvt*secondaryScroll:  true
-urxvt*perl-ext-common:  default,matcher
-urxvt*urlLauncher:      /usr/bin/firefox
-urxvt*matcher.button:   1
-urxvt*xftAntialias:     true
-urxvt*borderless:       false
-urxvt*internalBorder:   5
-urxvt*externalBorder:   5
-urxvt*loginShell:       true
-urxvt*visualBell:       false
-urxvt*imLocale:         en_US.UTF-8
-URxvt.perl-ext-common:matcher,selection,-readline,-selection-popup,-option-popup,-option-popup,-tabbed,-searchable-scrollback
-URxvt.cutchars:"()*,<>[]{}|'"
-
+URxvt*saveLines:        65535
+URxvt*scrollTtyKeypress:true
+URxvt*scrollTtyOutput:  false
+URxvt*scrollBar:        false
+URxvt*loginShell:       true
+URxvt*termName:         rxvt-unicode-256color
+URxvt*inheritPixmap:    true
+URxvt*shading:          105
+!urxvt*tintColor:        #202222
+!urxvt*font:             xft:Inconsolata:pixelsize=14
+URxvt*print-pipe:       cat > $(echo urxvt.dump.$(date +'%Y%M%d%H%m%S'))
+URxvt*secondaryScroll:  true
+!#urxvt*perl-ext-common:  default,matcher
+URxvt*urlLauncher:      /usr/bin/firefox
+URxvt*matcher.button:   1
+URxvt*xftAntialias:     true
+URxvt*borderless:       false
+URxvt*internalBorder:   5
+URxvt*externalBorder:   5
+URxvt*loginShell:       true
+URxvt*visualBell:       false
+URxvt*imLocale:         en_US.UTF-8
+URxvt.perl-ext-common: default,tabbed,matcher
+!#URxvt*perl-ext-common:matcher,tabbed,selection,-readline,-selection-popup,-option-popup,-option-popup,-tabbed,-searchable-scrollback
+URxvt*cutchars:"()*,<>[]{}|'"
+URxvt*perl-lib: /usr/lib/urxvt/perl/
 
 ! xterm -----------------------------------------------------------------
 
@@ -95,4 +96,4 @@ xclock*background:        black
 
 ! color set
 *dynamicColors:on
-#include ".my_config/color"
+#include "./.my_config/color"
