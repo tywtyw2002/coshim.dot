@@ -1,0 +1,123 @@
+#caption always "%?%F%{-b 4w}%:%{-b bb}%? %H | %l | %m-%d %c |%?%F%{-b 4w}%?%L=%-Lw%45>%{-b w4}%n%f* %t%{-}%+Lw%-0<"
+#caption always "%m-%d %c |%?%F%{-b 4w}%?%L=%-Lw%45>%{-b w4}%n%f* %t%{-}%+Lw%-0<"
+vbell off
+#termcapinfo xterm ti@:te@
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+
+autodetach on # Autodetach session on hangup instead of terminating screen completely
+
+startup_message off # Turn off the splash screen
+
+defscrollback 99999 # Use a 30000-line scrollback buffer
+
+zombie kr
+
+#caption always "%{= KG} %Y-%m-%d %c |%?%F%{-b 4w}%?%L=%-Lw%45>%{-b w4}%n%f* %t%{-}%+Lw%-0<"
+#caption always "%{= KG} %H |%?%F%{-b 4w}%?%L=%-Lw%45>%{-b w4}%n%f* %t%{-}%+Lw%-0<"
+
+caption always "%{rw}%n%f %t %{wk} | %?%-Lw%?%{wb}[%n*%f %t]%?(%u)%?%{wk}%?%+Lw%? %{wk}"
+
+hardstatus alwayslastline "%{+b kr}host: %{kw}%H %{kg} | %c | %{ky}%Y.%m.%d | %{kr}(load: %l)%-0=%{kw}"
+
+#caption always "%{= wk} %{= KY} [%n]%t %{-} %= %{= KR} %l %{-} | %{= KG} %Y-%m-%d %{-} "
+#hardstatus alwayslastline " %-Lw%{= Bw}%n%f %t%{-}%+Lw %=| %0c:%s"
+#
+activity              "activity in %n (%t) [%w:%s]~"
+
+# ------------------------------------------------------------------------------
+# SCREEN KEYBINDINGS
+# ------------------------------------------------------------------------------
+
+# Remove some stupid / dangerous key bindings
+#bind ^k
+#bind L
+#bind ^\
+# Make them better
+#bind \\ quit
+#bind K kill
+#bind I login on
+#bind O login off
+#bind } history
+
+# An example of a "screen scraper" which will launch urlview on the current
+# screen window
+#
+#bind ^B eval "hardcopy_append off" "hardcopy -h $HOME/.screen-urlview" "screen urlview $HOME/.screen-urlview"
+
+# k1 is f1; ie f1 jumps to window 1
+#bindkey -k k4  quit
+bindkey -k k8  next
+bindkey -k k9  prev
+bindkey -k k1  select 1
+bindkey -k k2  select 2
+bindkey -k k3  select 3 
+bindkey -k k4  select 4 
+bindkey -k F2 quit
+
+# Using tab to move around regions gets annoying.  These help.
+bind ^j focus down
+bind ^k focus up
+bind ^h focus top
+bind ^l focus bottom
+
+#Remove Ctrl+k, Ctrl+a k, then bind ctrl+a,shift+k to 'kill' command 
+#Remove Ctrl+s, Ctrl+a s, Ctrl+a S bind
+bind ^k
+bind k
+bind K kill
+bind ^s
+bind s
+bind S
+
+
+
+screen -t Main 1
+screen -t Top 2
+screen -t bash3 3
+screen -t bash4 4
+
+# ------------------------------------------------------------------------------
+# caption description:
+# ------------------------------------------------------------------------------
+#
+# caption always "%?%F%{-b bc}%:%{-b bb}%?%C|%D|%M %d|%H%?%F%{+u wb}%? %L=%-Lw%45>%{+b by}%n%f* %t%{-}%+Lw%-0<"
+# 
+# Anything I don't describe is treated literally.
+# 
+# %?          - Start of a conditional statement.
+#  %F         - Use this part of the statement if the window has focus (i.e. it
+#               is the only window or the currently active one).
+#  %{-b bc}   - Turn off bold, blue foreground, cyan background.
+# %:          - else
+#  %{-b bb}   - Turn off bold, blue foreground, blue background (this obscures
+#               the text on non-focused windows and just gives a blue line).
+# %?          - End conditional statement.
+#  %C         - time (hh:mm, leading space) in 12 hour format
+#  %D         - Three-letter day-of-week appreviation
+#  %M         - Three-letter month appreviation
+#  %d         - Day of the month
+#  %H         - hostname
+#  %?         - Start of conditional statement.
+#   %F        - Use this part of the statement if the window has focus.
+#   %{+u wb}  - underlined, white foreground, blue background
+#  %?         - End conditional (if not focused, text remaind blue on blue).
+#    %L=      - truncation/padding point.  With the 'L' qualifier, basically
+#               just acts as a reference point.  Further truncation/padding is
+#               done relative to here, not the beginning of the string
+#    %-Lw     - window list up to but not including the current window (-),
+#               show window flags (L)
+#    %45>     - truncation/padding marker; place this point about 45% of the
+#               way into the display area (45)
+#    %{+b by} - add bold (still underlined from before), blue foreground,
+#               yellow background
+#      %n     - number of the current window
+#      %f     - flags for current window
+#      %t     - title of current window
+#    %{-}     - undo last color change (so now we're back to underlined white
+#               on blue)  (technically, this is a pop; a second invocation
+#               would drop things back to unadorned blue on cyan)
+#    %+Lw     - window list from the next window on (-), show window flags (L)
+#    %-0<     - truncation/padding point.  Place this point zero spaces (0)
+#               from the right margin (-).
+
+
