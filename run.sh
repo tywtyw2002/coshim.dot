@@ -18,8 +18,8 @@ fi
 
 if [ -e $HOME/.vim ]; then
     echo "Move .vim to .vim.old"
-    mv -fr "$HOME/.vim $HOME/.vim.old"
-
+    mv -f "$HOME/.vim $HOME/.vim.old"
+fi
 
 echo "START INSTALL oh-my-sh"
 curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
@@ -28,6 +28,8 @@ curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | 
 
 echo "\033[0;34mCloning my_vim...\033[0m""]]"
 git clone https://github.com/tywtyw2002/my.vim.git ~/.vim
+echo "\033[0;34mCloning vim bunble...\033[0m""]]"
+git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 
 
 echo "\033[0;34mCloning my_config...\033[0m""]]"
