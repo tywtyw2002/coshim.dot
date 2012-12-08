@@ -1,4 +1,4 @@
-My dot file
+#My dot file
 
 install:
 
