@@ -16,6 +16,18 @@ if [ -f $HOME/.vimrc ]; then
     mv -f $HOME/.vimrc $HOME/.vimrc.old
 fi
 
+if [ -f $HOME/.Xresources ]; then
+    echo "move .Xresource to .Xresource.old"
+    mv -f $HOME/.Xresources $HOME/.Xresources.old
+fi
+
+if [ -f $HOME/.Xdefaults ]; then
+    echo "move .Xdefaults to .Xdefaults.old"
+    mv -f $HOME/.Xdefaults $HOME/.Xdefaults.old
+fi
+
+
+
 if [ -e $HOME/.vim ]; then
     echo "Move .vim to .vim.old"
     mv -f "$HOME/.vim $HOME/.vim.old"
@@ -39,5 +51,6 @@ ln -sf $HOME/.my_config/zshrc $HOME/.zshrc
 ln -sf $HOME/.my_config/screenrc $HOME/.screenrc
 ln -sf $HOME/.my_config/bashrc $HOME/.bashrc
 ln -sf $HOME/.vim/vimrc $HOME/.vimrc
-
+ln -sf $HOME/.my_config/Xresources $HOME/.Xresources
+ln -sf $HOME/.my_config/Xresources $HOME/.Xdefaults
 echo "DONE!"

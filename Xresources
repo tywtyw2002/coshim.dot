@@ -1,0 +1,98 @@
+! Xcursor -----------------------------------------------------------------
+Xcursor.theme:  Grounation 
+Xcursor.size:   16
+
+
+!rxvt-unicode --------------------------------------------------------------
+urxvt*depth:            32
+!urxvt*geometry:         132x50
+urxvt*saveLines:        65535
+urxvt*scrollTtyKeypress:true
+urxvt*scrollTtyOutput:  false
+urxvt*scrollBar:        false
+urxvt*loginShell:       true
+urxvt*termName:         rxvt-unicode-256color
+urxvt*inheritPixmap:    true
+urxvt*shading:          105
+urxvt*tintColor:        #202222
+urxvt*font:             xft:Inconsolata:pixelsize=14
+urxvt*print-pipe:       cat > $(echo urxvt.dump.$(date +'%Y%M%d%H%m%S'))
+urxvt*secondaryScroll:  true
+urxvt*perl-ext-common:  default,matcher
+urxvt*urlLauncher:      /usr/bin/firefox
+urxvt*matcher.button:   1
+urxvt*xftAntialias:     true
+urxvt*borderless:       false
+urxvt*internalBorder:   5
+urxvt*externalBorder:   5
+urxvt*loginShell:       true
+urxvt*visualBell:       false
+urxvt*imLocale:         en_US.UTF-8
+URxvt.perl-ext-common:matcher,selection,-readline,-selection-popup,-option-popup,-option-popup,-tabbed,-searchable-scrollback
+URxvt.cutchars:"()*,<>[]{}|'"
+
+
+! xterm -----------------------------------------------------------------
+
+xterm*dynamicColors:    true
+xterm*utf8:             2
+xterm*eightBitInput:    true
+xterm*saveLines:        32767
+xterm*scrollTtyKeypress:true
+xterm*scrollTtyOutput:  false
+xterm*scrollBar:        false
+xterm*loginShell:       true
+xterm*faceName:         Inconsolata:pixelsize=16
+xterm*jumpScroll:       true
+xterm*multiScroll:      true
+xterm*toolBar:          false
+
+
+!xpdf settings --------------------------------------------
+xpdf*enableFreetype:    true
+xpdf*antialias:         true
+xpdf*foreground:        white
+xpdf*background:        #1f1f1f
+xpdf*urlCommand:        /usr/bin/firefox %s
+xpdf*initialZoom:       125
+xpdf*continuousView:    true
+xpdf*viKeys:            true
+
+
+
+! xft set --------------
+Xft.hinting:            false
+Xft.hintstyle:          hintnone
+Xft.antialias:          true
+Xft.rgba:               rgb
+Xft.dpi:                96
+
+
+!xscreensaver settings
+
+
+
+! lal clock ------------------------------------------------------------------
+
+lal*font:       Arial
+lal*fontsize:   12
+lal*bold:       true
+lal*color:      #ffffff
+lal*width:      150
+lal*format:     %a %b %d %l:%M%P
+
+
+!xclock ---------------------------------------------------------
+
+xclock*analog:            false
+xclock*update:            1         ! update every 1 sec
+xclock*Foreground:        white
+xclock*background:        black
+
+
+
+
+
+! color set
+*dynamicColors:on
+#include ".my_config/color"

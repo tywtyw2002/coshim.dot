@@ -1,0 +1,22 @@
+# vim:enc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=sh:
+
+if [ "$TERM" = "linux" ]; then
+  echo -en "\e]P0292929"  xxxxx
+  echo -en "\e]P83d3d3d"  xxxxx
+  echo -en "\e]P1de6951"  xxxxx
+  echo -en "\e]P9c56a47"  xxxxx
+  echo -en "\e]P2bcda55"  xxxxx
+  echo -en "\e]PA9dbf60"  xxxxx
+  echo -en "\e]P3e2a564"  xxxxx
+  echo -en "\e]PBec8a25"  xxxxx
+  echo -en "\e]P42187f6"  xxxxx
+  echo -en "\e]PC5495dc"  xxxxx
+  echo -en "\e]P5875c8d"  xxxxx
+  echo -en "\e]PDe41f66"  xxxxx
+  echo -en "\e]P64390b1"  xxxxx
+  echo -en "\e]PE276cc2"  xxxxx
+  echo -en "\e]P7d2d2d2"  xxxxx
+  echo -en "\e]PFffffff"  xxxxx
+  clear
+ 
+fi

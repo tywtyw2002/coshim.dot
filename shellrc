@@ -1,0 +1,116 @@
+#vim:enc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=sh:
+alias k="ssh-add"
+alias kd="ssh-add -D"
+
+
+#LESS man page colors -------------------------------------------------
+
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'                           
+export LESS_TERMCAP_so=$'\E[01;44;33m'                                 
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+
+
+# functions ------------------------------------------------------------
+
+function mkcd() { mkdir "$1" && cd "$1"; }
+function hex2dec { awk 'BEGIN { printf "%d\n",0x$1}'; }
+function dec2hex { awk 'BEGIN { printf "%x\n",$1}'; }
+
+# mktar - tarball wrapper
+# usage: mktar <filename | dirname>
+function mktar() { tar czf "${1%%/}.tar.gz" "${1%%/}/"; }
+
+# calc - simple calculator
+# usage: calc <equation>
+function calc() { echo "$*" | bc; }
+
+# search the vim reference manual for a keyword
+# usage: :h <keyword>
+function :h() {  vim --cmd ":silent help $@" --cmd "only"; }
+
+# mkmine - recursively change ownership to $USER:$USER
+# usage:  mkmine, or
+#         mkmine <filename | dirname>
+function mkmine() { sudo chown -R ${USER} ${1:-.}; }
+
+
+# remindme - a simple reminder
+# usage: remindme 10m "omg, the pizza"
+function remindme() { sleep $1 && zenity --info --text "$2" & }
+
+
+# nohup - run command detached from terminal and without output
+# usage: nh <command>
+function nh() { nohup "$@" &>/dev/null & }
+
+# s - gnu screen function
+# usage: lists screen sessions, otherwise
+#        s <name> reattaches to <name>, otherwise
+#        s <name> creates a new session <name>.
+s ()
+{
+    if [[ $1 ]]; then
+        screen -dRR -S $HOSTNAME.$1
+    else
+        screen -ls
+    fi
+}
+
+
+
+rd defnition from google
+# usage: define <word>
+define ()
+{
+  curl -L "http://www.google.com/search?hl=en&q=define%3A+${1}&btnG=Google+Search" | grep -m 5 -w "*"  | sed 's/;/ -/g' | cut -d- -f5 > /tmp/templookup.txt
+  if [[ -s  /tmp/templookup.txt ]] ;then    
+        until ! read response
+      do
+        echo "${response}"
+        done < /tmp/templookup.txt
+      else
+        echo "Sorry $USER, I can't find the term \"${1} \""                
+    fi    
+    rm -f /tmp/templookup.txt
+}
+
+
+# send public key to remote server
+# usage: sendkey <user@remotehost>
+sendkey()
+{
+    if [ $# -ne 1 ]; then
+       ssh $1 'cat >> ~/.ssh/authorized_keys' < ~/.ssh/id_dsa.pub
+    fi
+}
+
+# start, stop, restart, reload - simple daemon management
+# usage: start <daemon-name>
+start()
+{
+  for arg in $*; do
+      sudo /etc/init.d/$arg start
+    done
+}
+stop()
+{
+  for arg in $*; do
+      sudo /etc/init.d/$arg stop
+    done
+}
+restart()
+{
+  for arg in $*; do
+      sudo /etc/init.d/$arg restart
+    done
+}
+reload()
+{
+  for arg in $*; do
+      sudo /etc/init.d/$arg reload
+    done
+}
