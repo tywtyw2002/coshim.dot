@@ -96,4 +96,4 @@ xclock*background:        black
 
 ! color set
 *dynamicColors:on
-#include "/home/tyw/.my_config/color"
+#include "./.my_config/color"
