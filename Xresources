@@ -14,8 +14,9 @@ URxvt*loginShell:       true
 URxvt*termName:         rxvt-unicode-256color
 URxvt*inheritPixmap:    true
 URxvt*shading:          105
-!urxvt*tintColor:        #202222
-urxvt*font:             xft:Inconsolata:pixelsize=14
+URxvt*tintColor:        #171717
+URxvt*transparent:      true
+URxvt*font:             xft:Inconsolata:pixelsize=12
 URxvt*print-pipe:       cat > $(echo urxvt.dump.$(date +'%Y%M%d%H%m%S'))
 URxvt*secondaryScroll:  true
 !#urxvt*perl-ext-common:  default,matcher
@@ -32,7 +33,7 @@ URxvt.perl-ext-common: default,tabbed,matcher
 !#URxvt*perl-ext-common:matcher,tabbed,selection,-readline,-selection-popup,-option-popup,-option-popup,-tabbed,-searchable-scrollback
 URxvt*cutchars:"()*,<>[]{}|'"
 URxvt*perl-lib: /usr/lib/urxvt/perl/
-
+!URxvt*background: #171717
 ! xterm -----------------------------------------------------------------
 
 Xterm*dynamicColors:    true
@@ -96,4 +97,4 @@ xclock*background:        black
 
 ! color set
 *dynamicColors:on
-#include "./.my_config/color"
+#include "/home/tyw/.my_config/color"
