@@ -1,7 +1,8 @@
 #vim:enc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=sh:
 alias k="ssh-add"
 alias kd="ssh-add -D"
-LANG=C
+alias pacman="sudo pacman"
+export LANG=en_US.UTF-8
 
 #LESS man page colors -------------------------------------------------
 

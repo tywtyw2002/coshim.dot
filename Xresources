@@ -10,25 +10,28 @@ URxvt*saveLines:        65535
 URxvt*scrollTtyKeypress:true
 URxvt*scrollTtyOutput:  false
 URxvt*scrollBar:        false
-URxvt*loginShell:       true
+!URxvt*loginShell:       true
 URxvt*termName:         rxvt-unicode-256color
 URxvt*inheritPixmap:    true
 URxvt*shading:          105
 URxvt*tintColor:        #171717
 URxvt*transparent:      true
-URxvt*font:             xft:Inconsolata:pixelsize=12
+URxvt*font:             xft:Inconsolata:pixelsize=14:antialias=true,xft:WenQuanYi Micro Hei:pixelsize=14:antialias=true
+!URxvt*font:             xft:WenQuanYi Micro Hei:pixelsize=14:antialias=true                        
+!URxvt*font:      -*-dina-medium-r-*-*-12-*-*-*-*-*-*-*
+!URxvt*boldFont:  -*-dina-medium-*-*-*-12-*-*-*-*-*-*-*
 URxvt*print-pipe:       cat > $(echo urxvt.dump.$(date +'%Y%M%d%H%m%S'))
 URxvt*secondaryScroll:  true
 !#urxvt*perl-ext-common:  default,matcher
 URxvt*urlLauncher:      /usr/bin/firefox
 URxvt*matcher.button:   1
 URxvt*xftAntialias:     true
-URxvt*borderless:       false
-URxvt*internalBorder:   5
-URxvt*externalBorder:   5
+!URxvt*borderless:       false
+!URxvt*internalBorder:   5
+!URxvt*externalBorder:   5
 URxvt*loginShell:       true
 URxvt*visualBell:       false
-URxvt*imLocale:         en_US.UTF-8
+!URxvt*imLocale:         en_US.UTF-8
 URxvt.perl-ext-common: default,tabbed,matcher
 !#URxvt*perl-ext-common:matcher,tabbed,selection,-readline,-selection-popup,-option-popup,-option-popup,-tabbed,-searchable-scrollback
 URxvt*cutchars:"()*,<>[]{}|'"
@@ -36,18 +39,21 @@ URxvt*perl-lib: /usr/lib/urxvt/perl/
 !URxvt*background: #171717
 ! xterm -----------------------------------------------------------------
 
-Xterm*dynamicColors:    true
-Xterm*utf8:             2
-Xterm*eightBitInput:    true
-Xterm*saveLines:        32767
-Xterm*scrollTtyKeypress:true
-xterm*scrollTtyOutput:  false
-Xterm*scrollBar:        false
-Xterm*loginShell:       true
-Xterm*faceName:         Inconsolata:pixelsize=14
-Xterm*jumpScroll:       true
-Xterm*multiScroll:      true
-Xterm*toolBar:          false
+XTerm*backgroud:        #171717
+XTerm*dynamicColors:    true
+XTerm*utf8:             2
+XTerm*eightBitInput:    true
+XTerm*saveLines:        32767
+XTerm*scrollTtyKeypress:true
+XTerm*scrollTtyOutput:  false
+XTerm*scrollBar:        false
+XTerm*loginShell:       true
+XTerm*cjk_width:        true
+XTerm*faceName:         Inconsolata:pixelsize=14
+XTerm*faceNameDoublesize: WenQuanYi Zen Hei:pixelsize=14
+XTerm*jumpScroll:       true
+XTerm*multiScroll:      true
+XTerm*toolBar:          false
 
 
 !xpdf settings --------------------------------------------
@@ -63,12 +69,12 @@ xpdf*viKeys:            true
 
 
 ! xft set --------------
-Xft.hinting:            false
+Xft.hinting:            true
 Xft.hintstyle:          hintnone
 Xft.antialias:          true
 Xft.rgba:               rgb
 Xft.dpi:                96
-
+Xft.lcdfilter:          lcddefault
 
 !xscreensaver settings
 
