@@ -84,8 +84,9 @@ define ()
 # usage: sendkey <user@remotehost>
 sendkey()
 {
-    if [ $# -ne 1 ]; then
-       ssh $1 'cat >> ~/.ssh/authorized_keys' < ~/.ssh/id_dsa.pub
+    if [ $# -ge 1 ]; then
+       echo $1
+       ssh $1 'cat >> ~/.ssh/authorized_keys' < ~/.ssh/id_rsa.pub
     fi
 }
 

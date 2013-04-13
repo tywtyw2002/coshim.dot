@@ -1,6 +1,7 @@
 ! Xcursor -----------------------------------------------------------------
-Xcursor.theme:  Grounation 
-Xcursor.size:   16
+!Xcursor.theme:  Grounation 
+Xcursor.theme:  Neutral_Plus 
+Xcursor.size:   12
 
 
 !rxvt-unicode --------------------------------------------------------------
@@ -26,6 +27,7 @@ URxvt*secondaryScroll:  true
 URxvt*urlLauncher:      /usr/bin/firefox
 URxvt*matcher.button:   1
 URxvt*xftAntialias:     true
+URxvt*letterSpace:      0
 !URxvt*borderless:       false
 !URxvt*internalBorder:   5
 !URxvt*externalBorder:   5
