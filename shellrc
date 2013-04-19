@@ -1,7 +1,7 @@
 #vim:enc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=sh:
 alias k="ssh-add"
 alias kd="ssh-add -D"
-LANG=C
+LANG=en_US.UTF-8
 
 #LESS man page colors -------------------------------------------------
 
@@ -83,8 +83,8 @@ define ()
 # usage: sendkey <user@remotehost>
 sendkey()
 {
-    if [ $# -ne 1 ]; then
-       ssh $1 'cat >> ~/.ssh/authorized_keys' < ~/.ssh/id_dsa.pub
+    if [ $# -ne 2 ]; then
+       ssh $1 'cat >> ~/.ssh/authorized_keys' < ~/.ssh/my_pub_key
     fi
 }
 

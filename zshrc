@@ -39,6 +39,7 @@ alias rm="rm -i"
 alias run="source"
 alias ll="ls -lsah"
 
+
 source $HOME/.my_config/shellrc
 source $HOME/.my_config/shellcolor
 # Customize to your needs...
