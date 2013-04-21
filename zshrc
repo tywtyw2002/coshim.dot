@@ -38,6 +38,7 @@ alias cp="cp -i"
 alias rm="rm -i"
 alias run="source"
 alias ll="ls -lsah"
+LC_CTYPE=en_US.UTF-8
 
 source $HOME/.my_config/shellrc
 source $HOME/.my_config/shellcolor
