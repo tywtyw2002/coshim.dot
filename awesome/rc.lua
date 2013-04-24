@@ -45,10 +45,11 @@ beautiful.init(awful.util.getdir("config") .. "/themes/default/theme.lua")
 -- This is used later as the default terminal and editor to run.
 --terminal = "xterm"
 --terminal = "PERL5LIB=/home/dsk07/ugrad/twu5/ux/urxvt /home/dsk07/ugrad/twu5/ux/bin/urxvt"
-terminal = "/home/dsk07/ugrad/twu5/ux/bin/rx"
+--terminal = "/home/dsk07/ugrad/twu5/ux/bin/rx"
+terminal = "urxvt"
 firefox = "firefox"
 editor = os.getenv("EDITOR") or "editor"
-editor_cmd = terminal .. " -e " .. editor
+editor_cmd = "xterm" .. " -e " .. editor
 
 
 --auto run

@@ -21,7 +21,7 @@ URxvt*font:             xft:Inconsolata:pixelsize=14:antialias=true,xft:WenQuanY
 URxvt*print-pipe:       cat > $(echo urxvt.dump.$(date +'%Y%M%d%H%m%S'))
 URxvt*secondaryScroll:  true
 !#urxvt*perl-ext-common:  default,matcher
-URxvt*urlLauncher:      /usr/bin/firefox
+URxvt*urlLauncher:      /usr/bin/chromium-browser
 URxvt*matcher.button:   1
 URxvt*xftAntialias:     true
 !URxvt*borderless:       false
