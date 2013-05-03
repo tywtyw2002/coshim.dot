@@ -11,6 +11,13 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 
+
+local vicious = require("vicious")
+local scratch = require("scratch")
+
+
+
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -92,6 +99,75 @@ for s = 1, screen.count() do
     tags[s] = awful.tag({ "Term", "Web", "C", 4, 5, 6, 7, 8, 9 }, s, layouts[1])
 end
 -- }}}
+
+
+-- {{{Wiggets configurationm
+separator = wibox.widget.imagebox()
+separator:set_image(beautiful.widget_sep)
+
+
+cpuicon = wibox.widget.imagebox()
+cpuicon:set_image(beautiful.widget_cpu)
+
+cpugraph  = awful.widget.graph()
+tzswidget = wibox.widget.textbox()
+-- Graph properties
+cpugraph:set_width(30):set_height(14)
+cpugraph:set_background_color(beautiful.fg_off_widget)
+cpugraph:set_color({
+   beautiful.fg_end_widget, beautiful.fg_center_widget, beautiful.fg_widget
+}) -- Register widgets
+vicious.register(cpugraph,  vicious.widgets.cpu,      "$1")
+vicious.register(tzswidget, vicious.widgets.thermal, " $1C", 19, "thermal_zone0")
+
+
+-- {{{ Battery state
+baticon = wibox.widget.imagebox()
+baticon:set_image(beautiful.widget_bat)
+-- Initialize widget
+batwidget = wibox.widget.textbox()
+-- Register widget
+vicious.register(batwidget, vicious.widgets.bat, "$1$2%", 61, "BAT0")
+-- }}}
+
+-- {{{ Memory usage
+memicon = wibox.widget.imagebox()
+memicon:set_image(beautiful.widget_mem)
+-- Initialize widget
+membar = awful.widget.progressbar()
+-- Pogressbar properties
+membar:set_vertical(true):set_ticks(true)
+membar:set_height(12):set_width(8):set_ticks_size(2)
+membar:set_background_color(beautiful.fg_off_widget)
+membar:set_color({ beautiful.fg_widget,
+   beautiful.fg_center_widget, beautiful.fg_end_widget
+}) -- Register widget
+vicious.register(membar, vicious.widgets.mem, "$1", 13)
+
+
+
+-- {{{ Network usage
+dnicon = wibox.widget.imagebox()
+upicon = wibox.widget.imagebox()
+dnicon:set_image(beautiful.widget_net)
+upicon:set_image(beautiful.widget_netup)
+-- Initialize widget
+netwidget = wibox.widget.textbox()
+--`` Register widget
+vicious.register(netwidget, vicious.widgets.net, '<span color="'
+  .. beautiful.fg_netdn_widget ..'">${wlan0 down_kb}</span> <span color="'
+  .. beautiful.fg_netup_widget ..'">${wlan0 up_kb}</span>', 3)
+-- }}}
+
+
+
+
+
+-- }}}
+
+-- }}}
+
+
 
 -- {{{ Menu
 -- Create a laucher widget and a main menu
@@ -197,6 +273,13 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
+    right_layout:add(separator)
+    right_layout:add(batwidget)
+    right_layout:add(baticon)
+    right_layout:add(separator)
+    right_layout:add(tzswidget)
+    --right_layout:add(cpugraph)
+    right_layout:add(cpuicon)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
