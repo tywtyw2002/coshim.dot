@@ -11,7 +11,7 @@ URxvt*scrollTtyKeypress:true
 URxvt*scrollTtyOutput:  false
 URxvt*scrollBar:        false
 URxvt*loginShell:       true
-URxvt*termName:         rxvt-unicode-256color
+URxvt*termName:         rxvt-unicode
 URxvt*inheritPixmap:    true
 URxvt*shading:          105
 URxvt*tintColor:        #171717
@@ -35,7 +35,7 @@ URxvt*imLocale:         en_US.UTF-8
 URxvt.perl-ext-common: default,tabbed,matcher
 !#URxvt*perl-ext-common:matcher,tabbed,selection,-readline,-selection-popup,-option-popup,-option-popup,-tabbed,-searchable-scrollback
 URxvt*cutchars:"()*,<>[]{}|'"
-URxvt*perl-lib: /home/dsk07/ugrad/twu5/ux/urxvt/perl/
+URxvt*perl-lib: /cshome/twu5/ux/urxvt/perl/
 !URxvt*background: #171717
 ! xterm -----------------------------------------------------------------
 
@@ -118,4 +118,4 @@ xclock*background:        black
 
 ! color set
 *dynamicColors:on
-#include "/home/dsk07/ugrad/twu5/.my_config/color"
+#include "/cshome/twu5/.my_config/color"

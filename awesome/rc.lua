@@ -45,10 +45,11 @@ beautiful.init(awful.util.getdir("config") .. "/themes/default/theme.lua")
 -- This is used later as the default terminal and editor to run.
 --terminal = "xterm"
 --terminal = "PERL5LIB=/home/dsk07/ugrad/twu5/ux/urxvt /home/dsk07/ugrad/twu5/ux/bin/urxvt"
---terminal = "/home/dsk07/ugrad/twu5/ux/bin/rx"
-terminal = "urxvt"
+terminal = "/cshome/twu5/ux/bin/rx"
+--terminal = "urxvt"
 firefox = "firefox"
-editor = os.getenv("EDITOR") or "editor"
+--editor = os.getenv("EDITOR") or "editor"
+editor = "vim"
 editor_cmd = "xterm" .. " -e " .. editor
 
 
@@ -56,6 +57,7 @@ editor_cmd = "xterm" .. " -e " .. editor
 awful.util.spawn_with_shell("ibus-daemon")
 awful.util.spawn_with_shell("xrdb ~/.Xdefaults")
 awful.util.spawn_with_shell("xsetroot -cursor_name  left_ptr")
+awful.util.spawn_with_shell("~/.dropbox-dist/dropboxd")
 --awful.util.spawn_with_shell("export PERL5LIB=/home/dsk07/ugrad/twu5/ux/urxvt")
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
