@@ -38,7 +38,7 @@ alias cp="cp -i"
 alias rm="rm -i"
 alias run="source"
 alias ll="ls -lsah"
-
+export EDITOR="vim"
 
 source $HOME/.my_config/shellrc
 source $HOME/.my_config/shellcolor
