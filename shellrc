@@ -116,3 +116,9 @@ reload()
       sudo /etc/init.d/$arg reload
     done
 }
+
+
+
+function ssht(){
+  ssh $* -t 'tmux a || tmux || /bin/bash'
+}
