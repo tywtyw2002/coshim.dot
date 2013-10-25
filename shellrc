@@ -120,5 +120,5 @@ reload()
 
 
 function ssht(){
-  ssh $* -t 'tmux a || tmux || /bin/bash'
+  ssh $* -t 'tmux  -u a || tmux -u || /bin/bash'
 }
