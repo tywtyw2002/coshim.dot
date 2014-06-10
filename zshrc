@@ -29,7 +29,7 @@ ZSH_CUSTOM=$HOME/.my_config/zsh_custom/
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git git-flow pip pep8  osx autojump brew python history  )
+plugins=(git git-flow pip pep8  osx autojump brew python history virtualenvwrapper )
 
 source $ZSH/oh-my-zsh.sh
 alias vi=vim
@@ -44,4 +44,4 @@ LC_CTYPE=en_US.UTF-8
 source $HOME/.my_config/shellrc
 source $HOME/.my_config/shellcolor
 # Customize to your needs...
-export PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/texbin
+#export PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/texbin
