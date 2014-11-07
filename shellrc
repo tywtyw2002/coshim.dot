@@ -120,5 +120,9 @@ reload()
 
 
 function ssht(){
-  ssh $* -t 'tmux  -u a || tmux -u || /bin/bash'
+  ssh $* -t 'tmux  -u a || tmux -u || /bin/zsh ||/bin/bash'
+}
+
+function sshcc(){
+  ssh $* -t 'tmux  -CC -u a || tmux -CC -u || /bin/zsh || /bin/bash'
 }
