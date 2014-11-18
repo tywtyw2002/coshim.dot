@@ -117,7 +117,11 @@ reload()
     done
 }
 
+function http_server() {
+    local port="${1:-8000}"
+    python -m SimpleHTTPServer "$port"
 
+}
 
 function ssht(){
   ssh $* -t 'tmux  -u a || tmux -u || /bin/zsh ||/bin/bash'
