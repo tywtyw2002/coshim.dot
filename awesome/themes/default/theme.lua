@@ -5,7 +5,8 @@ local awful = require("awful")
 
 theme = {}
 theme.confdir       = awful.util.getdir("config") .. "/themes/default"
-theme.font          = "anorexia 9"
+theme.font          = "Envy Code R 12"
+--theme.font          = "Profont 8"
 
 
 theme.bg_normal     = "#222222"

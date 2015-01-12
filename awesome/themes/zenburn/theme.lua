@@ -8,11 +8,13 @@
 
 -- {{{ Main
 theme = {}
+theme.confdir   = awful.util.getdir("config" .. "themes/zenburn/")
 theme.wallpaper = "/usr/share/awesome/themes/zenburn/zenburn-background.png"
 -- }}}
 
 -- {{{ Styles
-theme.font      = "anorexia 9"
+theme.font      = "ProFont 8"
+--theme.font      = "lime 11"
 
 -- {{{ Colors
 theme.fg_normal  = "#DCDCCC"
@@ -25,15 +27,15 @@ theme.bg_systray = theme.bg_normal
 -- }}}
 
 -- {{{ Borders
-theme.border_width  = 2
-theme.border_normal = "#3F3F3F"
+theme.border_width  = 1
+theme.border_normal = theme.bg_normal
 theme.border_focus  = "#6F6F6F"
-theme.border_marked = "#CC9393"
+theme.border_marked = theme.fg_urgent
 -- }}}
 
 -- {{{ Titlebars
-theme.titlebar_bg_focus  = "#3F3F3F"
-theme.titlebar_bg_normal = "#3F3F3F"
+theme.titlebar_bg_focus  = theme.bg_normal
+theme.titlebar_bg_normal = theme.bg_normal
 -- }}}
 
 -- There are other variable sets
@@ -47,14 +49,14 @@ theme.titlebar_bg_normal = "#3F3F3F"
 -- }}}
 
 -- {{{ Widgets
--- You can add as many variables as
--- you wish and access them by using
--- beautiful.variable in your rc.lua
---theme.fg_widget        = "#AECF96"
---theme.fg_center_widget = "#88A175"
---theme.fg_end_widget    = "#FF5656"
---theme.bg_widget        = "#494B4F"
---theme.border_widget    = "#3F3F3F"
+theme.fg_widget        = "#AECF96"
+theme.fg_center_widget = "#88A175"
+theme.fg_end_widget    = "#FF5656"
+theme.fg_off_widget    = "#494B4F"
+theme.fg_netup_widget  = "#7F9F7F"
+theme.fg_netdn_widget  = theme.fg_urgent
+theme.bg_widget        = theme.bg_normal
+theme.border_widget    = theme.bg_normal
 -- }}}
 
 -- {{{ Mouse finder
@@ -74,6 +76,8 @@ theme.menu_width  = 100
 -- {{{ Taglist
 theme.taglist_squares_sel   = "/usr/share/awesome/themes/zenburn/taglist/squarefz.png"
 theme.taglist_squares_unsel = "/usr/share/awesome/themes/zenburn/taglist/squarez.png"
+--theme.taglist_squares_sel   = theme.confdir .. "/icons/taglist/sel.png"
+--theme.taglist_squares_unsel = theme.confdir .. "/icons/taglist/unsel.png"
 --theme.taglist_squares_resize = "false"
 -- }}}
 
