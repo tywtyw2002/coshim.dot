@@ -1,2 +1,8 @@
-alias tmux="tmux -2"
+#alias tmux="tmux -2"
+export COSHIM=UA_LAB
+function gvim () { (/usr/bin/gvim -f "$@" &) }
 source $HOME/.my_config/zshrc 
+PATH=~/bin/:~/.local/bin:$PATH:/oracle/bin:/oracle/sqldeveloper
+export PATH
+source /oracle/oraenv
+alias kindent="indent -nbad -bap -nbc -bbo -hnl -br -brs -c33 -cd33 -ncdb -ce -ci4 -cli0 -d0 -di1 -nfc1 -i8 -ip0 -l80 -lp -npcs -nprs -npsl -sai -saf -saw -ncs -nsc -sob -nfca -cp33 -ss -ts8 -il1"

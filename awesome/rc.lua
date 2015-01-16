@@ -89,7 +89,7 @@ layouts =
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ "term" , "web" , "☠", 4, 5, 6, 7, 8, 9 }, s, layouts[1])
+    tags[s] = awful.tag({ "term" , "web" , "☠", 4, 5, 6, 7, 8, "Au" }, s, layouts[1])
 end
 -- }}}
 
@@ -118,8 +118,10 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                     { "Debian", debian.menu.Debian_menu.Debian },
                                     { "open terminal", terminal },
                                     { "firefix" , firefox },
-                                    { "chrome" , "chromium-browser"}
-                                  }
+                                   -- { "chrome" , "chromium-browser"}
+                                    --{"chrome", "/cshome/twu5/bin/chrome"}   
+                                    {"chrome", "/usr/bin/google-chrome"}   
+                                }
                         })
 
 mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
@@ -372,8 +374,11 @@ awful.rules.rules = {
     { rule = { class = "Firefox" },
       properties = { tag = tags[1][2] } },
 
-    { rule = { class = "Chromium"} ,
+    { rule = { class = "chrome"} ,
       properties = { tag = tags[1][3]} },
+
+    { rule = { name = "alsamixer"},
+      properties = { tag = tags[1][9]}},
     
   } 
 -- }}}
