@@ -8,6 +8,7 @@ require("beautiful")
 require("naughty")
 require("debian.menu")
 require("wicked")
+require("func")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -83,7 +84,7 @@ layouts =
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ "TERM", "WEB", "WEB", 4, 5, 6, 7, 8, 9 }, s, layouts[1])
+    tags[s] = awful.tag({ "TERM", "WEB", "WEB", 4, 5, 6, 7, "XMPP", 9 }, s, layouts[1])
 end
 -- }}}
 
@@ -223,10 +224,7 @@ globalkeys = awful.util.table.join(
             if client.focus then client.focus:raise() end
         end),
     --awful.key({ modkey,           }, "w", function () mymainmenu:show({keygrabber=true}) end),
-    awful.key({ modkey,           }, "w", function () 
-        awful.util.spawn_with_shell("xdotool getactivewindow >> /User/tyw/test") 
-        awful.util.spawn_with_shell("echo \"done\" >> /User/tyw/test ") 
-    end),
+    awful.key({ modkey,           }, "w", key_ctrl_w),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),

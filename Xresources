@@ -20,17 +20,18 @@ URxvt*tintColor:        #171717
 URxvt*transparent:      true
 !URxvt*font:             xft:Monaco for Powerline:pixelsize=12:antialias=true,xft:WenQuanYi Micro Hei:pixelsize=14:antialias=true
 !URxvt*font:             xft:Inconsolata for Powerline:pixelsize=14:antialias=true,xft:Heiti SC:pixelsize=14:antialias=true
-URxvt*font:             xft:Monaco for Powerline:pixelsize=14:antialias=true,xft:Heiti SC:pixelsize=14:antialias=true
+URxvt*font:             xft:Monaco for Powerline:size=9:antialias=true,xft:Heiti SC:pixelsize=9:antialias=true
 !URxvt*font:             xft:WenQuanYi Micro Hei:pixelsize=14:antialias=true                        
 !URxvt*font:      -*-dina-medium-r-*-*-12-*-*-*-*-*-*-*
 !URxvt*boldFont:  -*-dina-medium-*-*-*-12-*-*-*-*-*-*-*
 URxvt*print-pipe:       cat > $(echo urxvt.dump.$(date +'%Y%M%d%H%m%S'))
 URxvt*secondaryScroll:  true
 !#urxvt*perl-ext-common:  default,matcher
-URxvt*urlLauncher:      /usr/bin/chromium
+URxvt*urlLauncher:       /usr/bin/google-chrome-stable
+!URxvt*urlLauncher:      /usr/bin/chromium
 URxvt*matcher.button:   1
-URxvt*xftAntialias:     true
-URxvt*letterSpace:      0
+!URxvt*xftAntialias:     true
+URxvt*letterSpace:      -1
 !URxvt*borderless:       false
 !URxvt*internalBorder:   5
 !URxvt*externalBorder:   5
@@ -54,11 +55,34 @@ XTerm*scrollTtyOutput:  false
 XTerm*scrollBar:        false
 XTerm*loginShell:       true
 XTerm*cjk_width:        true
-XTerm*faceName:         Inconsolata:pixelsize=14
+XTerm*faceName:         Monaco\ for\ Powerline:pixelsize=14
 XTerm*faceNameDoublesize: WenQuanYi Zen Hei:pixelsize=14
 XTerm*jumpScroll:       true
 XTerm*multiScroll:      true
 XTerm*toolBar:          false
+
+! Uxterm -----------------------------------------------------------------
+
+UXTerm*backgroud:        #171717
+UXTerm*locale:           true
+UXTerm*termName:         xterm-256color
+UXTerm*dynamicColors:    true
+!UXTerm*utf8:             2
+UXTerm*eightBitInput:    true
+UXTerm*saveLines:        32767
+UXTerm*scrollTtyKeypress:true
+UXTerm*scrollTtyOutput:  false
+UXTerm*scrollBar:        false
+!UXTerm*loginShell:       true
+!UXTerm*cjk_width:        true
+UXTerm*faceName:         Monaco for Powerline
+UXTerm*faceSize:         10
+!UXTerm*faceNameDoublesize: WenQuanYi Zen Hei
+UXTerm*jumpScroll:       true
+UXTerm*multiScroll:      true
+UXTerm*toolBar:          false
+
+
 
 
 !xpdf settings --------------------------------------------
@@ -66,7 +90,7 @@ xpdf*enableFreetype:    true
 xpdf*antialias:         true
 xpdf*foreground:        white
 xpdf*background:        #1f1f1f
-xpdf*urlCommand:        /usr/bin/firefox %s
+xpdf*urlCommand:        /usr/bin/google-chrome-stable %s
 xpdf*initialZoom:       125
 xpdf*continuousView:    true
 xpdf*viKeys:            true
@@ -75,7 +99,7 @@ xpdf*viKeys:            true
 
 ! xft set --------------
 Xft.hinting:            true
-Xft.hintstyle:          hintnone
+Xft.hintstyle:          hintfull
 Xft.antialias:          true
 Xft.rgba:               rgb
 Xft.dpi:                96
