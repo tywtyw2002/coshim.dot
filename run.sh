@@ -52,8 +52,8 @@ echo "\033[0;34mCloning my_config...\033[0m""]]"
 git clone https://github.com/tywtyw2002/coshim.dot.git ~/.my_config
 
 touch $HOME/.zshrc
-echo "source ./.zsh_local" >.zshrc
-echo "source ./.my_config/zshrc" >> .zshrc
+echo "source $HOME/.zsh_local" >.zshrc
+echo "source $HOME/.my_config/zshrc" >> .zshrc
 touch $HOME/.zsh_local
 ln -sf $HOME/.my_config/screenrc $HOME/.screenrc
 ln -sf $HOME/.my_config/bashrc $HOME/.bashrc
