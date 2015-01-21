@@ -37,10 +37,17 @@ if [ -e $HOME/.vim ]; then
     mv -f "$HOME/.vim $HOME/.vim.old"
 fi
 
+if [ -e $HOME/.xsession ]; then
+    echo "Move .xsession to .xession.old"
+    mv -f "$HOME/.xsession $HOME/.xsession.old"
+fi
+
+if [ -e $HOME/.vim ]; then
+    echo "Move .vim to .vim.old"
+    mv -f "$HOME/.vim $HOME/.vim.old"
+fi
 echo "START INSTALL oh-my-sh"
 curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
-
-
 
 echo "\033[0;34mCloning my_vim...\033[0m""]]"
 git clone https://github.com/tywtyw2002/my.vim.git ~/.vim
@@ -61,4 +68,6 @@ ln -sf $HOME/.vim/vimrc $HOME/.vimrc
 ln -sf $HOME/.my_config/tmux.conf $HOME/.tmux.conf
 ln -sf $HOME/.my_config/Xresources $HOME/.Xresources
 ln -sf $HOME/.my_config/Xresources $HOME/.Xdefaults
+ln -sf $HOME/.my_config/xsession $HOME/.xsession
+ln -sf $HOME/.my_config/xinitrc $HOME/.xinitrc
 echo "DONE!"
