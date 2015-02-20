@@ -1,0 +1,8 @@
+[user]
+	name = Tianyi Wu
+	email = tywtyw2002@gmail.com
+[core]
+	editor = /usr/local/bin/vim
+	excludesfile = $HOME/.my_config/gitignore_global
+[push]
+	default = simple
