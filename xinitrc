@@ -29,4 +29,4 @@ xmodmap $HOME/.Xmodmap
 #fi
 
 
-exec /usr/bin/awesome
+exec /usr/local/bin/awesome
