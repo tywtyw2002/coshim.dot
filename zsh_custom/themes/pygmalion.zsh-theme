@@ -20,13 +20,17 @@ prompt_setup_pygmalion(){
   ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
   ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[yellow]%}⚡%{$reset_color%}"
   ZSH_THEME_GIT_PROMPT_CLEAN=""
-  
+
   ZSH_THEME_VIRTUAL_ENV_PROMPT_PREFIX="%{$fg[blue]%}venv:‹%{$fg[red]%}"
   ZSH_THEME_VIRTUAL_ENV_PROMPT_SUFFIX="%{$fg[blue]%}›"
 
+  user_prompt='%(!.%{$fg[red]%}.%{$fg[magenta]%})'
 
-  base_prompt='%{$fg[magenta]%}%n%{$reset_color%}%{$fg[cyan]%}@%{$reset_color%}%{$fg[yellow]%}%m%{$reset_color%}%{$fg[red]%}:%{$reset_color%}%{$fg[cyan]%}%0~%{$reset_color%}%{$fg[red]%}|$(virtualenv_prompt_info)%{$reset_color%}'
-  post_prompt='%{$fg[cyan]%}⇒%{$reset_color%}  '
+  base_prompt=$user_prompt'%n%{$reset_color%}%{$fg[cyan]%}@%{$reset_color%}%{$fg[yellow]%}%m%{$reset_color%}%{$fg[red]%}:%{$reset_color%}%{$fg[cyan]%}%0~%{$reset_color%}%{$fg[red]%}|$(virtualenv_prompt_info)%{$reset_color%}'
+  #base_prompt='%{$fg[magenta]%}%n%{$reset_color%}%{$fg[cyan]%}@%{$reset_color%}%{$fg[yellow]%}%m%{$reset_color%}%{$fg[red]%}:%{$reset_color%}%{$fg[cyan]%}%0~%{$reset_color%}%{$fg[red]%}|$(virtualenv_prompt_info)%{$reset_color%}'
+
+  post_prompt='%(!.%{$fg[yellow]%}➜.%{$fg[cyan]%}⇒)%{$reset_color%}  '
+  #post_prompt='%{$fg[cyan]%}⇒%{$reset_color%}  '
 
   base_prompt_nocolor=$(echo "$base_prompt" | perl -pe "s/%\{[^}]+\}//g")
   post_prompt_nocolor=$(echo "$post_prompt" | perl -pe "s/%\{[^}]+\}//g")
