@@ -21,6 +21,17 @@ prompt_setup_pygmalion(){
   ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[yellow]%}⚡%{$reset_color%}"
   ZSH_THEME_GIT_PROMPT_CLEAN=""
 
+  ZSH_THEME_GIT_PROMPT_ADDED="%{$fg[green]%} ✚"
+  ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg_bold[cyan]%} ⬆"
+  ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg_bold[cyan]%} ⬇"
+  ZSH_THEME_GIT_PROMPT_DIVERGED="%{$fg_bold[cyan]%} ⬍"
+  ZSH_THEME_GIT_PROMPT_MODIFIED="%{$fg[blue]%} ✱"
+  ZSH_THEME_GIT_PROMPT_DELETED="%{$fg[red]%} ✖"
+  ZSH_THEME_GIT_PROMPT_RENAMED="%{$fg[magenta]%} ➜"
+  ZSH_THEME_GIT_PROMPT_STASHED='%{$fg[cyna]%} ✭'
+  ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[yellow]%} ═"
+  ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[white]%} ◼"
+
   ZSH_THEME_VIRTUAL_ENV_PROMPT_PREFIX="%{$fg[blue]%}venv:‹%{$fg[red]%}"
   ZSH_THEME_VIRTUAL_ENV_PROMPT_SUFFIX="%{$fg[blue]%}›"
 
@@ -49,6 +60,7 @@ prompt_pygmalion_precmd(){
     nl=$'\n%{\r%}';
   fi
   PROMPT="$base_prompt$gitinfo$nl$post_prompt"
+  RPROMPT="%{$fg[red]%}%(?..⏎)%{$reset_color%}$(git_prompt_status)%{$reset_color%}"
 }
 
 prompt_setup_pygmalion

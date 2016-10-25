@@ -132,4 +132,4 @@ xclock*background:        black
 
 ! color set
 *dynamicColors:on
-#include "/User/tyw/.my_config/color"
+#include "/Users/tyw/.my_config/color"
