@@ -91,7 +91,7 @@ zgen-install-plugin() {
     case $(uname) in
         "Darwin"*)
             zgen oh-my-zsh plugins/brew
-            zgen oh-my-zsh plugins/cask
+            #zgen oh-my-zsh plugins/cask
             zgen oh-my-zsh plugins/osx
 
             zgen oh-my-zsh plugins/sublime
