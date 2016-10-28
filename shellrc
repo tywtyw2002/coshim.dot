@@ -1,5 +1,5 @@
 #vim:enc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=sh:
-alias k="ssh-add"
+alias ak="ssh-add"
 alias kd="ssh-add -D"
 alias pacman="sudo pacman"
 export LANG=en_US.UTF-8
@@ -31,7 +31,7 @@ function calc() { echo "$*" | bc; }
 
 # search the vim reference manual for a keyword
 # usage: :h <keyword>
-function :h() {  vim --cmd ":silent help $@" --cmd "only"; }
+#function :h() {  vim --cmd ":silent help $@" --cmd "only"; }
 
 # mkmine - recursively change ownership to $USER:$USER
 # usage:  mkmine, or
@@ -65,19 +65,19 @@ function nh() { nohup "$@" &>/dev/null & }
 
 #rd defnition from google
 # usage: define <word>
-define ()
-{
-  curl -L "http://www.google.com/search?hl=en&q=define%3A+${1}&btnG=Google+Search" | grep -m 5 -w "*"  | sed 's/;/ -/g' | cut -d- -f5 > /tmp/templookup.txt
-  if [[ -s  /tmp/templookup.txt ]] ;then
-        until ! read response
-      do
-        echo "${response}"
-        done < /tmp/templookup.txt
-      else
-        echo "Sorry $USER, I can't find the term \"${1} \""
-    fi
-    rm -f /tmp/templookup.txt
-}
+#define ()
+#{
+  #curl -L "http://www.google.com/search?hl=en&q=define%3A+${1}&btnG=Google+Search" | grep -m 5 -w "*"  | sed 's/;/ -/g' | cut -d- -f5 > /tmp/templookup.txt
+  #if [[ -s  /tmp/templookup.txt ]] ;then
+        #until ! read response
+      #do
+        #echo "${response}"
+        #done < /tmp/templookup.txt
+      #else
+        #echo "Sorry $USER, I can't find the term \"${1} \""
+    #fi
+    #rm -f /tmp/templookup.txt
+#}
 
 
 # send public key to remote server
@@ -86,7 +86,7 @@ sendkey()
 {
     if [ $# -ge 1 ]; then
        echo $1
-       ssh $1 'cat >> ~/.ssh/authorized_keys' < ~/.ssh/id_rsa.pub
+       ssh $1 'umask 0077; mkdir -p .ssh; cat >> ~/.ssh/authorized_keys' < ~/.ssh/id_rsa.pub
     fi
 }
 
