@@ -1,6 +1,8 @@
 #!/usr/bin/env zsh
 
 ZHOME=$HOME/.zgen
+CFG_HOME=$HOME/.my_config
+ZLHOME=$CFG_HOME/zsh_custom
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
@@ -76,9 +78,15 @@ zgen-install-plugin() {
     zgen load supercrabtree/k
     zgen load rupa/z
 
-
     #zsh themes
-    zgen load $HOME/.my_config/zsh_custom/themes/pygmalion.zsh-theme
+    zgen load $ZLHOME/themes/pygmalion.zsh-theme
+
+    #load custom zgen plugins
+    zgen load $ZLHOME/completion.zsh
+    zgen load $ZLHOME/editor.zsh
+
+    #load custom shell scripts
+    zgen load $CFG_HOME/shellrc
 
     case $(uname) in
         "Darwin"*)
@@ -89,8 +97,8 @@ zgen-install-plugin() {
             zgen oh-my-zsh plugins/sublime
             ;;
         "Linux"*)
-            command -v yum >/dev/null 2>&1 || zgen oh-my-zsh plugins/yum
-            command -v apt-get >/dev/null 2>&1 || zgen oh-my-zsh plugins/debian
+            command -v yum >/dev/null 2>&1 && zgen oh-my-zsh plugins/yum
+            command -v apt-get >/dev/null 2>&1 && zgen oh-my-zsh plugins/debian
 
         ;;
     esac
