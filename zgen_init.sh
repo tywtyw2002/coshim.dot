@@ -11,15 +11,19 @@ exit 1
 }
 
 #clone zgen
-git clone https://github.com/tarjoilija/zgen.git $ZHOME
+if ! [[ -d $ZHOME ]]; then
+    git clone https://github.com/tarjoilija/zgen.git $ZHOME
+fi
 
 #load zgen
-source $ZHOME/zgen.zsh
+if [[ -e $ZHOME/zgen.zsh ]]; then
+    source $ZHOME/zgen.zsh
+fi
 
 #reset all zgen plugin
 zgen-plugin-reset() {
     #check --doit parameter.
-    if ! [[ ${2} = '--doit' ]]; then
+    if ! [[ ${1} = '--doit' ]]; then
         echo "Execute reset must with --doit parameter."
         echo "Exit..."
         exit 1
@@ -30,6 +34,8 @@ zgen-plugin-reset() {
     for item in $(find $ZHOME/* -maxdepth 0 -type d); do
         rm -rf $item
     done
+
+    echo 'Zgen cleanup finish.'
 }
 
 
@@ -56,19 +62,19 @@ zgen-install-plugin() {
     #tools
     zgen oh-my-zsh plugins/urltools
     zgen oh-my-zsh plugins/encode64
-    zgen oh-my-zsh plugins/autojump
+    #zgen oh-my-zsh plugins/autojump
 
     #python
     zgen oh-my-zsh plugins/pip
     zgen oh-my-zsh plugins/python
 
 
-    zgen load zsh-users/zsh-syntax-highlighting
+    #zgen load zsh-users/zsh-syntax-highlighting
     zgen load zsh-users/zsh-completions src
     zgen load psprint/history-search-multi-word
 
     zgen load supercrabtree/k
-    #zgen load rupa/z
+    zgen load rupa/z
 
 
     #zsh themes
@@ -93,12 +99,10 @@ zgen-install-plugin() {
 }
 
 
-cmd() {
-    if [[ ${1} = "reset" ]]; then
-        zgen-plugin-reset
-    fi
-
+if [[ ${1} = "reset" ]]; then
+    zgen-plugin-reset $2
+else
     zgen-install-plugin
-}
+fi
 
-cmd
+
