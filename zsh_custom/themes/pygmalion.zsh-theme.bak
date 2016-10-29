@@ -1,7 +1,7 @@
 # Yay! High voltage and arrows!
 
 
-function virtualenv_prompt_info() {
+virtualenv_prompt_info() {
     if [ -n "$VIRTUAL_ENV" ]; then
         if [ -f "$VIRTUAL_ENV/__name__" ]; then
             local name=`cat $VIRTUAL_ENV/__name__`
@@ -14,6 +14,14 @@ function virtualenv_prompt_info() {
     fi
 }
 
+vi_prompt_info() {
+     if [[ "$KEYMAP" == 'vicmd' ]]; then
+        echo "$vicmd_prompt"
+     else
+        echo "$post_prompt"
+     fi
+}
+
 host_prompt_info() {
     if [[ -z $SSH_TTY ]]; then
         echo "%{$fg[yellow]%}%m%{$reset_color%}"
@@ -23,16 +31,11 @@ host_prompt_info() {
 }
 
 
-prompt_vi_mode() {
-    if [[ "$KEYMAP" == 'vicmd' ]]; then
-        echo "%(!.%{$fg[red]%}❮❮.%{$fg[green]%}⇐ )%{$reset_color%} "
-    else
-        echo "%(!.%{$fg[yellow]%}➜.%{$fg[cyan]%}⇒)%{$reset_color%}  "
-    fi
-}
+if [[ "$TERM" != "dumb" ]]; then
+  MODE_INDICATOR='%(!.%{$fg[red]%}❮❮.%{$fg[green]%}⇐ )%{$reset_color%} '
+  #MODE_INDICATOR="%{$fg_bold[red]%}❮%{$reset_color%}%{$fg[red]%}❮❮%{$reset_color%}"
+  local return_status="%{$fg[red]%}%(?..⏎)%{$reset_color%}"
 
-prompt_setup_pygmalion(){
-  MODE_INDICATOR="%{$bg[green]%}%{$fg_bold[black]%}<%{$fg[black]%}<<%{$reset_color%}"
   ZSH_THEME_GIT_PROMPT_PREFIX="%{$reset_color%}%{$fg[green]%}git:"
   ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
   ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[yellow]%}⚡%{$reset_color%}"
@@ -52,41 +55,43 @@ prompt_setup_pygmalion(){
   ZSH_THEME_VIRTUAL_ENV_PROMPT_PREFIX="%{$fg[blue]%}venv:‹%{$fg[red]%}"
   ZSH_THEME_VIRTUAL_ENV_PROMPT_SUFFIX="%{$fg[blue]%}›"
 
-  user_prompt='%(!.%{$fg[red]%}.%{$fg[magenta]%})'
-  #host_prompt='%(!.%{$fg[magenta]%}.%{$fg[yellow]%})'
+  user_prompt='%(!.%{$fg[red]%}.%{$fg[magenta]%})%n%{$reset_color%}'
 
-  base_prompt=$user_prompt'%n%{$reset_color%}%{$fg[cyan]%}@%{$reset_color%}$(host_prompt_info)%{$fg[red]%}:%{$reset_color%}%{$fg[cyan]%}%0~%{$reset_color%}%{$fg[red]%}|$(virtualenv_prompt_info)%{$reset_color%}'
+  base_prompt=$user_prompt'%{$fg[cyan]%}@%{$reset_color%}$(host_prompt_info)%{$fg[red]%}:%{$reset_color%}%{$fg[cyan]%}%0~%{$reset_color%}%{$fg[red]%}|$(virtualenv_prompt_info)%{$reset_color%}'
   #base_prompt='%{$fg[magenta]%}%n%{$reset_color%}%{$fg[cyan]%}@%{$reset_color%}%{$fg[yellow]%}%m%{$reset_color%}%{$fg[red]%}:%{$reset_color%}%{$fg[cyan]%}%0~%{$reset_color%}%{$fg[red]%}|$(virtualenv_prompt_info)%{$reset_color%}'
 
+  vicmd_prompt='%(!.%{$fg[red]%}❮❮.%{$fg[green]%}⇐ )%{$reset_color%} '
   post_prompt='%(!.%{$fg[yellow]%}➜.%{$fg[cyan]%}⇒)%{$reset_color%}  '
   #post_prompt='%{$fg[cyan]%}⇒%{$reset_color%}  '
 
-  base_prompt_nocolor=$(echo "$base_prompt" | perl -pe "s/%\{[^}]+\}//g")
-  #post_prompt_nocolor=$(prompt_vi_mode | perl -pe "s/%\{[^}]+\}//g")
+  #base_prompt_nocolor=$(echo "$base_prompt" | perl -pe "s/%\{[^}]+\}//g")
   #post_prompt_nocolor=$(echo "$post_prompt" | perl -pe "s/%\{[^}]+\}//g")
-  precmd_functions+=(prompt_pygmalion_precmd)
+  #precmd_functions+=(prompt_pygmalion_precmd)
+  if [[ $prompt_length -gt 40 ]]; then
+    nl=$'\n%{\r%}';
+  fi
 
-  vi_mode_status='${${KEYMAP/vicmd/$MODE_INDICATOR}/(main|viins)/}'
+  #echo "$user_prompt"
 
-  RPROMPT="$vi_mode_status%{$fg[red]%}%(?..⏎)%{$reset_color%}\${VIM:+\"%B%F{6}V%f%b\"}\$(git_prompt_status)%{$reset_color%}"
-}
+  PROMPT="$base_prompt\$(git_prompt_info)$nl$post_prompt"
+  RPROMPT=${return_status}'$(git_prompt_status)%{$reset_color%}'
+
+fi
 
 prompt_pygmalion_precmd(){
   local gitinfo=$(git_prompt_info)
   local gitinfo_nocolor=$(echo "$gitinfo" | perl -pe "s/%\{[^}]+\}//g")
-  #local exp_nocolor="$(print -P \"$base_prompt_nocolor$gitinfo_nocolor$post_prompt_nocolor\")"
-  local exp_nocolor="$(print -P \"$base_prompt_nocolor$gitinfo_nocolor\")"
+  local exp_nocolor="$(print -P \"$base_prompt_nocolor$gitinfo_nocolor$post_prompt_nocolor\")"
   local prompt_length=${#exp_nocolor}
 
   local nl=""
 
-  if [[ $prompt_length -gt 38 ]]; then
+  if [[ $prompt_length -gt 40 ]]; then
     nl=$'\n%{\r%}';
   fi
-
-  PROMPT="$base_prompt$gitinfo$nl\$(prompt_vi_mode)"
+  #PROMPT="$base_prompt$gitinfo$nl$(vi_prompt_info)$KEYMAP"
 }
 
-prompt_setup_pygmalion
+#prompt_setup_pygmalion
 
 
