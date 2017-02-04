@@ -4,6 +4,9 @@ alias kd="ssh-add -D"
 alias pacman="sudo pacman"
 export LANG=en_US.UTF-8
 
+#global aliases
+source $HOME/.my_config/shell_alias
+
 #LESS man page colors -------------------------------------------------
 
 export LESS_TERMCAP_mb=$'\E[01;31m'

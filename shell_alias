@@ -1,0 +1,20 @@
+#vim:enc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=sh:
+
+#short cut
+alias -g ED="export DISPLAY=:0.0"
+alias -g TF="tail -f"
+alias -g DU2="du -h -d 2"
+alias -g DUS=""
+
+
+#In cmd short cut
+alias -g D="DISPLAY=:0.0"
+alias -g DN=/dev/null
+alias -g NUL="> /dev/null 2>&1"
+alias -g G="| grep "
+
+
+
+
+
+
