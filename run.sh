@@ -66,9 +66,9 @@ function precheck_repo() {
 
     for item in "${REPO_LIST[@]}"
     do
-        args=($=item)
-        [ -d "$HOME/$args[2]" ] && check_failed=true && \
-            echo -e "  >\033[0;32mRepo: $args[2] exists.\033[0m"
+        args=($item)
+        [ -d "$HOME/${args[1]}" ] && check_failed=true && \
+            echo -e "  >\033[0;32mRepo: ${args[1]} exists.\033[0m"
     done
 
     if [ "$check_failed" = true ] ; then
@@ -82,7 +82,7 @@ function precheck_repo() {
 }
 
 function pre_backup () {
-    if [ "$FLAG_NOBACKUP" = false ]; then
+    if [ "$FLAG_NOBACKUP" = true ]; then
         echo -e "\033[0;35mSkipping Backup....\033[0m"
         return 0
     fi
@@ -108,19 +108,19 @@ function pre_backup () {
 }
 
 function pre_cleanup() {
-    printf "\033[0;33mCleanup dotfile............"
+    printf "\033[0;33mCleanup Dotfile............"
     for item in "${BACKUP_LIST[@]}"
     do
         [ -f $item ] && rm $item
         [ -d $item ] && rm -r $item
     done
-    printf "\033[0;32mOK\033[0m\n"
+    printf "\033[0;32mDone\033[0m\n"
 
-    printf "\033[0;33mCleanup dot repo............"
+    printf "\033[0;33mCleanup Dot Repo............"
     for item in "${REPO_LIST[@]}"
     do
-        args=($=item)
-        [ -d $args[2] ] && rm -r $args[2]
+        args=($item)
+        [ -d ${args[1]} ] && rm -r ${args[1]}
     done
     printf "\033[0;32mDone\033[0m\n"
 }
@@ -128,14 +128,14 @@ function pre_cleanup() {
 function _do_link() {
     for item in "${CLINK_LIST[@]}"
     do
-        args=($=item)
-        printf -e "\033[0;33mClone Repo $args[0]........."
-        local spath="$HOME/$args[1]"
+        args=($item)
+        printf -e "\033[0;33mLink file ${args[0]}........."
+        local spath="$HOME/${args[0]}"
         if [ ! -e $spath ]; then
             echo -e "\033[0;31mCannot link file $spath, file is not exists.\033[0m"
             exit 2
         fi
-        _do_shell ln -sf $spath $HOME/$args[2]
+        _do_shell ln -sf $spath $HOME/${args[1]}
         printf "\033[0;32mDone\033[0m\n"
     done
 
@@ -144,9 +144,9 @@ function _do_link() {
 function _do_repoclone() {
     for item in "${REPO_LIST[@]}"
     do
-        args=($=item)
-        printf "\033[0;33mClone Repo $args[0]........."
-        _do_shell git clone --quiet $args[0] $HOME/$args[1]
+        args=($item)
+        printf "\033[0;33mClone Repo ${args[0]}........."
+        _do_shell git clone --quiet ${args[0]} $HOME/${args[1]}
         printf "\033[0;32mDone\033[0m\n"
     done
 }
@@ -162,7 +162,7 @@ function _do_zegn_setup() {
 }
 
 function ccommit() {
-    echo -e "\033[0;34mInstalling Dotfiles......."
+    echo -e "\033[0;34mStarting Dotfile Install Preocess."
     precheck_command git
 
     precheck_repo
