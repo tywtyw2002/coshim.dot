@@ -71,7 +71,7 @@ function precheck_repo() {
             echo -e "  >\033[0;32mRepo: $args[2] exists.\033[0m"
     done
 
-    if [ "$check_failed" = false ] ; then
+    if [ "$check_failed" = true ] ; then
         if [ "$FLAG_FORCE" = true ]; then
             echo -e "\033[0;34mOverride Repo Checking Result, Continue.\033[0m"
         fi
