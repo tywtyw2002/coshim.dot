@@ -48,6 +48,9 @@ zgen-install-plugin() {
         exit 1
     fi
 
+    #zgen
+    zgen load unixorn/autoupdate-zgen
+
     # common plugin
     zgen oh-my-zsh
     zgen oh-my-zsh plugins/git
@@ -87,6 +90,10 @@ zgen-install-plugin() {
 
     #load custom shell scripts
     zgen load $CFG_HOME/shellrc
+
+    #zsh completion
+    GENCOMPL_FPATH=$HOME/.zsh/complete
+    zgen load RobSis/zsh-completion-generator
 
     case $(uname) in
         "Darwin"*)

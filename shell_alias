@@ -1,5 +1,18 @@
 #vim:enc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=sh:
 
+#vim
+if [[ `command -v vim` ]]; then
+    alias vi=vim
+    export EDITOR=vim
+fi
+
+#command alias
+alias ak="ssh-add"
+alias kd="ssh-add -D"
+
+#tyops
+alias gerp="grep"
+
 #short cut
 alias -g ED="export DISPLAY=:0.0"
 alias -g TF="tail -f"
