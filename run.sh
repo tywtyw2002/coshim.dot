@@ -54,7 +54,7 @@ function precheck_command () {
     done
 
     # check result.
-    if [ "$check_failed" = false ] ; then
+    if [ "$check_failed" = true ] ; then
         echo "Pre-process Check Failed, Please install above commands."
         exit -1
     fi
