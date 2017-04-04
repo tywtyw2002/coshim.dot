@@ -36,19 +36,19 @@ args_hookup $@
 function _do_shell() {
     echo "> $*" >> $INSTALL_LOG
     eval "$@" 2>&1 >> $INSTALL_LOG ||  {
-        echo "\033[0;31mExecute command $@ failed. \033[0m"
-        echo "\033[0;32mSee logs at $INSTALL_LOG\033[0m"
+        echo -e "\033[0;31mExecute command $@ failed. \033[0m"
+        echo -e "\033[0;32mSee logs at $INSTALL_LOG\033[0m"
         exit 1
     }
 }
 
 function precheck_command () {
-    echo "\033[0;34mCheck Required Commands.....\033[0m"
+    echo -e "\033[0;34mCheck Required Commands.....\033[0m"
     local check_failed=false
     for cmd in "$@"
     do
         if ! cmd_loc=$(type -p "$cmd") || [ -z "$cmd_loc" ]; then
-            echo "  >\033[0;32mCommand $cmd not found.\033[0m"
+            echo -e "  >\033[0;32mCommand $cmd not found.\033[0m"
             check_failed=false
           fi
     done
@@ -61,21 +61,21 @@ function precheck_command () {
 }
 
 function precheck_repo() {
-    echo "\033[0;34mCheck Exists Git Repo.....\033[0m"
+    echo -e "\033[0;34mCheck Exists Git Repo.....\033[0m"
     local check_failed=false
 
     for item in "${REPO_LIST[@]}"
     do
         args=($=item)
         [ -d "$HOME/$args[2]" ] && check_failed=true && \
-            echo "  >\033[0;32mRepo: $args[2] exists.\033[0m"
+            echo -e "  >\033[0;32mRepo: $args[2] exists.\033[0m"
     done
 
     if [ "$check_failed" = false ] ; then
         if [ "$FLAG_FORCE" = true ]; then
-            echi "\033[0;34mOverride Repo Checking Result, Continue.\033[0m"
+            echo -e "\033[0;34mOverride Repo Checking Result, Continue.\033[0m"
         fi
-        echo "\033[0;33mRepo check failed."
+        echo -e "\033[0;33mRepo check failed."
         echo "Use --force flag or remove exists repo."
         exit 1
     fi
@@ -83,7 +83,7 @@ function precheck_repo() {
 
 function pre_backup () {
     if [ "$FLAG_NOBACKUP" = false ]; then
-        echo "\033[0;35mSkipping Backup....\033[0m"
+        echo -e "\033[0;35mSkipping Backup....\033[0m"
         return 0
     fi
 
@@ -91,7 +91,7 @@ function pre_backup () {
     local backup_path="/tmp/$backup"
     mkdir $backup_path
 
-    echo "\033[0;34mStarting backup.\033[0m"
+    echo -e "\033[0;34mStarting backup.\033[0m"
 
     for item in "${BACKUP_LIST[@]}"
     do
@@ -103,7 +103,7 @@ function pre_backup () {
 
     tar czf "$HOME/$backup.tar.gz" $backup_path
     rm -r $backup_path
-    echo "\033[0;32mBackup Done.\033[0m"
+    echo -e "\033[0;32mBackup Done.\033[0m"
     echo "Backup Location: $HOME/$backup.tar.gz"
 }
 
@@ -129,10 +129,10 @@ function _do_link() {
     for item in "${CLINK_LIST[@]}"
     do
         args=($=item)
-        printf "\033[0;33mClone Repo $args[0]........."
+        printf -e "\033[0;33mClone Repo $args[0]........."
         local spath="$HOME/$args[1]"
         if [ ! -e $spath ]; then
-            echo "\033[0;31mCannot link file $spath, file is not exists.\033[0m"
+            echo -e "\033[0;31mCannot link file $spath, file is not exists.\033[0m"
             exit 2
         fi
         _do_shell ln -sf $spath $HOME/$args[2]
@@ -154,15 +154,15 @@ function _do_repoclone() {
 function _do_zegn_setup() {
     printf "Configuring local zsh........."
     if ! cmd_loc=$(type -p zsh) || [ -z "$cmd_loc" ]; then
-        echo "\033[0;32mSkipping (No ZSH)\033[0m"
+        echo -e "\033[0;32mSkipping (No ZSH)\033[0m"
         return 1
     fi
     _do_shell zsh $HOME/.my_config/zgen_init.sh
-    echo "\033[0;34mDone\033[0m"
+    echo -e "\033[0;34mDone\033[0m"
 }
 
 function ccommit() {
-    echo "\033[0;34mInstalling Dotfiles......."
+    echo -e "\033[0;34mInstalling Dotfiles......."
     precheck_command git
 
     precheck_repo
@@ -187,6 +187,7 @@ function ccommit() {
     do
         _do_shell cmd
     done
+    echo -e "\033[0;32mInstalling Done"
 }
 
 function cclean() {
@@ -194,9 +195,9 @@ function cclean() {
 }
 
 function clink() {
-    if (( $# != 3 )); then
+    if (( $# != 2 )); then
         echo "\033[0;31mError: Unexcepted clink arguments.\033[0m"
-        echo "  >$*"
+        echo "  >clink $*"
         exit -2
     fi
 
@@ -206,18 +207,18 @@ function clink() {
 
 function crepo() {
     # crepo <source>
-    if (( $# != 3 )); then
+    if (( $# != 2 )); then
         echo "\033[0;31mError: Unexcepted crepo arguments.\033[0m"
-        echo "  >$*"
+        echo "  >crepo $*"
         exit -2
     fi
     REPO_LIST+=("https://github.com/$1.git $2")
 }
 
 function crepo_ssh() {
-   if (( $# != 3 )); then
+   if (( $# != 2 )); then
         echo "\033[0;31mError: Unexcepted crepo_ssh arguments.\033[0m"
-        echo "  >$*"
+        echo "  >crepo_ssh $*"
         exit -2
     fi
     REPO_LIST+=("git@github.com:$1.git $2")
