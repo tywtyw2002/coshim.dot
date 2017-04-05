@@ -1,7 +1,4 @@
 #vim:enc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=sh:
-alias ak="ssh-add"
-alias kd="ssh-add -D"
-alias pacman="sudo pacman"
 export LANG=en_US.UTF-8
 
 #global aliases
@@ -107,18 +104,21 @@ start()
       sudo /etc/init.d/$arg start
     done
 }
+
 stop()
 {
   for arg in $*; do
       sudo /etc/init.d/$arg stop
     done
 }
+
 restart()
 {
   for arg in $*; do
       sudo /etc/init.d/$arg restart
     done
 }
+
 reload()
 {
   for arg in $*; do
@@ -138,4 +138,8 @@ function ssht(){
 
 function sshcc(){
   ssh $* -t 'tmux  -CC -u a || tmux -CC -u || /bin/zsh || /bin/bash'
+}
+
+function pss() {
+    ps aux | grep $1
 }

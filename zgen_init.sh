@@ -7,15 +7,15 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 #check git
-command -v git >/dev/null 2>&1 || {
-echo "Abort, Git is not installed."
-exit 1
-}
+#command -v git >/dev/null 2>&1 || {
+#echo "Abort, Git is not installed."
+#exit 1
+#}
 
 #clone zgen
-if ! [[ -d $ZHOME ]]; then
-    git clone https://github.com/tarjoilija/zgen.git $ZHOME
-fi
+#if ! [[ -d $ZHOME ]]; then
+    #git clone https://github.com/tarjoilija/zgen.git $ZHOME
+#fi
 
 #load zgen
 if [[ -e $ZHOME/zgen.zsh ]]; then
@@ -47,6 +47,9 @@ zgen-install-plugin() {
         echo "Zgen already initiated, try reset first."
         exit 1
     fi
+
+    #zgen
+    zgen load unixorn/autoupdate-zgen
 
     # common plugin
     zgen oh-my-zsh
@@ -87,6 +90,10 @@ zgen-install-plugin() {
 
     #load custom shell scripts
     zgen load $CFG_HOME/shellrc
+
+    #zsh completion
+    GENCOMPL_FPATH=$HOME/.zsh/complete
+    zgen load RobSis/zsh-completion-generator
 
     case $(uname) in
         "Darwin"*)
