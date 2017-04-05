@@ -4,6 +4,7 @@
 
 FLAG_NOBACKUP=false
 FLAG_FORCE=false
+FLAG_SKIPSSH=false
 
 BACKUP_LIST=()
 REPO_LIST=()
@@ -11,7 +12,10 @@ CLINK_LIST=()
 PRECMD_LIST=()
 POSTCMD_LIST=()
 
+GIT_SSH=false
 INSTALL_LOG="$HOME/dotfiles-install-`date +%Y%m%d`.log"
+
+LINE='------------------------------------------------- '
 
 function args_hookup() {
     [ -z "$@" ] && return
@@ -25,6 +29,9 @@ function args_hookup() {
             --no-backup)
                 FLAG_NOBACKUP=true
                 ;;
+            --no-ssh)
+                FLAG_SKIPSSH=true
+                ;;
             *)
                 ;;
         esac
@@ -35,9 +42,9 @@ args_hookup $@
 
 function _do_shell() {
     echo "> $*" >> $INSTALL_LOG
-    eval "$@" 2>&1 >> $INSTALL_LOG ||  {
+    eval "$*" >> $INSTALL_LOG 2>&1 ||  {
         echo -e "\033[0;31mExecute command $@ failed. \033[0m"
-        echo -e "\033[0;32mSee logs at $INSTALL_LOG\033[0m"
+        echo -e "\033[0;35mSee logs at $INSTALL_LOG\033[0m"
         exit 1
     }
 }
@@ -68,14 +75,15 @@ function precheck_repo() {
     do
         args=($item)
         [ -d "$HOME/${args[1]}" ] && check_failed=true && \
-            echo -e "  >\033[0;32mRepo: ${args[1]} exists.\033[0m"
+            echo -e "  >\033[0;31mRepo: ${args[1]} exists.\033[0m"
     done
 
     if [ "$check_failed" = true ] ; then
         if [ "$FLAG_FORCE" = true ]; then
-            echo -e "\033[0;34mOverride Repo Checking Result, Continue.\033[0m"
+            echo -e "\033[0;35mOverride Repo Checking Result, Continue.\033[0m"
+            return 1
         fi
-        echo -e "\033[0;33mRepo check failed."
+        echo -e "\033[0;31mRepo check failed.\033[0m"
         echo "Use --force flag or remove exists repo."
         exit 1
     fi
@@ -88,55 +96,71 @@ function pre_backup () {
     fi
 
     local backup="dotfile-backup-`date +%Y%m%d`"
-    local backup_path="/tmp/$backup"
+    local backup_path="/tmp/$backup/"
     mkdir $backup_path
 
     echo -e "\033[0;34mStarting backup.\033[0m"
 
     for item in "${BACKUP_LIST[@]}"
     do
-        printf "  >\032[0;33mProcessing $item.........."
-        [ -f "$item" -a ! -h "$item "] && mv $item $backup_path
+        printf "  >\033[0;33mProcessing %s %s\033[0m" $item "${LINE:${#item}}"
+        [ -f "$item" -a ! -h "$item " ] && mv $item $backup_path
         [ -d "$item" ] && mv $item $backup_path
-        printf "\033[0;32mDone\033[0m\n"
+        printf "[\033[0;32mDone\033[0m]\n"
     done
 
-    tar czf "$HOME/$backup.tar.gz" $backup_path
-    rm -r $backup_path
+    tar czf "$HOME/$backup.tar.gz" -C /tmp $backup
+    rm -rf $backup_path
     echo -e "\033[0;32mBackup Done.\033[0m"
     echo "Backup Location: $HOME/$backup.tar.gz"
 }
 
 function pre_cleanup() {
-    printf "\033[0;33mCleanup Dotfile............"
+    printf "\033[0;33mCleanup Dotfile %s\033[0m" "${LINE:1}"
     for item in "${BACKUP_LIST[@]}"
     do
         [ -f $item ] && rm $item
         [ -d $item ] && rm -r $item
     done
-    printf "\033[0;32mDone\033[0m\n"
+    printf "[\033[0;32mDone\033[0m]\n"
 
-    printf "\033[0;33mCleanup Dot Repo............"
+    printf "\033[0;33mCleanup Dot Repo %s\033[0m" "${LINE:2}"
     for item in "${REPO_LIST[@]}"
     do
         args=($item)
-        [ -d ${args[1]} ] && rm -r ${args[1]}
+        [ -d ${args[1]} ] && {
+            _do_shell "find $HOME/${args[1]} -name *.git* -exec rm -rf {} +"
+            _do_shell rm -r $HOME/${args[1]}
+        }
     done
-    printf "\033[0;32mDone\033[0m\n"
+    printf "[\033[0;32mDone\033[0m]\n"
+}
+
+function precheck_github() {
+    if [ "$GIT_SSH" = true ] ; then
+        echo "ssh -T git@github.com" >> INSTALL_LOG
+        ssh -T git@github.com >> INSTALL_LOG 2>&1
+        [ "$?" = 255 ] && {
+            echo "Pre check GitHub ssh connecting failed."
+            echo "Use --no-ssh to disable ssh or add public key."
+            exit 1
+        }
+    fi
 }
 
 function _do_link() {
     for item in "${CLINK_LIST[@]}"
     do
         args=($item)
-        printf -e "\033[0;33mLink file ${args[0]}........."
+        local name=${args[0]}
+        printf "  >\033[0;33mProcessing %s %s\033[0m" $name "${LINE:${#name}}"
         local spath="$HOME/${args[0]}"
         if [ ! -e $spath ]; then
             echo -e "\033[0;31mCannot link file $spath, file is not exists.\033[0m"
             exit 2
         fi
         _do_shell ln -sf $spath $HOME/${args[1]}
-        printf "\033[0;32mDone\033[0m\n"
+        printf "[\033[0;32mDone\033[0m]\n"
     done
 
 }
@@ -145,26 +169,28 @@ function _do_repoclone() {
     for item in "${REPO_LIST[@]}"
     do
         args=($item)
-        printf "\033[0;33mClone Repo ${args[0]}........."
+        local name=${args[0]}
+        printf "  >\033[0;33mProcessing %s %s\033[0m" $name "${LINE:${#name}}"
         _do_shell git clone --quiet ${args[0]} $HOME/${args[1]}
-        printf "\033[0;32mDone\033[0m\n"
+        printf "[\033[0;32mDone\033[0m]\n"
     done
 }
 
 function _do_zegn_setup() {
-    printf "Configuring local zsh........."
+    printf "\033[0;33mConfiguring local zsh %s\033[0m" "${LINE:7}"
     if ! cmd_loc=$(type -p zsh) || [ -z "$cmd_loc" ]; then
         echo -e "\033[0;32mSkipping (No ZSH)\033[0m"
         return 1
     fi
     _do_shell zsh $HOME/.my_config/zgen_init.sh
-    echo -e "\033[0;34mDone\033[0m"
+    printf "[\033[0;32mDone\033[0m]\n"
 }
 
 function ccommit() {
     echo -e "\033[0;34mStarting Dotfile Install Preocess."
-    precheck_command git
+    precheck_command git ssh
 
+    precheck_github
     precheck_repo
     pre_backup
     pre_cleanup
@@ -172,7 +198,7 @@ function ccommit() {
     # do command in precmd list
     for cmd in "${PRECMD_LIST[@]}"
     do
-        _do_shell cmd
+        _do_shell $cmd
     done
 
     # running install.
@@ -185,9 +211,11 @@ function ccommit() {
     # post running cmd
     for cmd in "${POSTCMD_LIST[@]}"
     do
-        _do_shell cmd
+        _do_shell $cmd
     done
-    echo -e "\033[0;32mInstalling Done"
+    echo -e "\033[0;34m#################################"
+    echo -e "#        \033[0;35mInstalling Done\033[0;34m        #"
+    echo -e "#################################\033[0m"
 }
 
 function cclean() {
@@ -221,6 +249,11 @@ function crepo_ssh() {
         echo "  >crepo_ssh $*"
         exit -2
     fi
+    if [ "$FLAG_SKIPSSH" = true ] ; then
+        crepo $1 $2
+        return 1
+    fi
+    GIT_SSH=true
     REPO_LIST+=("git@github.com:$1.git $2")
 }
 
@@ -232,6 +265,7 @@ function ccmd_post() {
     POSTCMD_LIST+=("$*")
 }
 
+cclean .zgen
 cclean .zshrc
 cclean .zsh_local
 
@@ -247,8 +281,9 @@ clink .my_config/xinitrc .xinitrc
 crepo_ssh tywtyw2002/my.vim .vim
 crepo_ssh tywtyw2002/coshim.dot .my_config
 crepo gmarik/vundle .vim/bundle/vundle
+crepo tarjoilija/zgen .zgen
 
-ccmd_post echo "source $HOME/.zsh_local" >.zshrc \
-          echo "source $HOME/.my_config/zshrc" >> .zshrc
+ccmd_post 'echo "source $HOME/.zsh_local" > $HOME/.zshrc &&
+           echo "source $HOME/.my_config/zshrc" >> $HOME/.zshrc'
 
 ccommit

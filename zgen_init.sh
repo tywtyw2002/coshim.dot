@@ -7,15 +7,15 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 #check git
-command -v git >/dev/null 2>&1 || {
-echo "Abort, Git is not installed."
-exit 1
-}
+#command -v git >/dev/null 2>&1 || {
+#echo "Abort, Git is not installed."
+#exit 1
+#}
 
 #clone zgen
-if ! [[ -d $ZHOME ]]; then
-    git clone https://github.com/tarjoilija/zgen.git $ZHOME
-fi
+#if ! [[ -d $ZHOME ]]; then
+    #git clone https://github.com/tarjoilija/zgen.git $ZHOME
+#fi
 
 #load zgen
 if [[ -e $ZHOME/zgen.zsh ]]; then
