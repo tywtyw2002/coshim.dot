@@ -286,6 +286,6 @@ crepo tarjoilija/zgen .zgen
 
 ccmd_post 'touch $HOME/.zsh_local'
 ccmd_post 'echo "source $HOME/.zsh_local" > $HOME/.zshrc &&
-           echo "source $HOME/.my_config/zshrc" >> $HOME/.zshrc'
-
+           echo "setopt prompt_subst" >> $HOME/.zshrc &&
+           echo "source $HOME/.zgen/zgen.zsh" >> $HOME/.zshrc'
 ccommit
