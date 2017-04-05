@@ -202,6 +202,7 @@ function ccommit() {
     done
 
     # running install.
+    echo -e "\033[0;34mInstalling.......\033[0m"
     _do_repoclone
     _do_link
 
@@ -283,6 +284,7 @@ crepo_ssh tywtyw2002/coshim.dot .my_config
 crepo gmarik/vundle .vim/bundle/vundle
 crepo tarjoilija/zgen .zgen
 
+ccmd_post 'touch $HOME/.zsh_local'
 ccmd_post 'echo "source $HOME/.zsh_local" > $HOME/.zshrc &&
            echo "source $HOME/.my_config/zshrc" >> $HOME/.zshrc'
 
