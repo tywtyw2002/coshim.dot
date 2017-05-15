@@ -56,7 +56,7 @@ function precheck_command () {
     do
         if ! cmd_loc=$(type -p "$cmd") || [ -z "$cmd_loc" ]; then
             echo -e "  >\033[0;32mCommand $cmd not found.\033[0m"
-            check_failed=false
+            check_failed=true
           fi
     done
 
