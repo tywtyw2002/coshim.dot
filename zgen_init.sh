@@ -1,26 +1,11 @@
 #!/usr/bin/env zsh
 
 ZHOME=$HOME/.zgen
+ZGEN_INIT="${ZHOME}/init.zsh"
 CFG_HOME=$HOME/.my_config
 ZLHOME=$CFG_HOME/zsh_custom
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-
-#check git
-#command -v git >/dev/null 2>&1 || {
-#echo "Abort, Git is not installed."
-#exit 1
-#}
-
-#clone zgen
-#if ! [[ -d $ZHOME ]]; then
-    #git clone https://github.com/tarjoilija/zgen.git $ZHOME
-#fi
-
-#load zgen
-if [[ -e $ZHOME/zgen.zsh ]]; then
-    source $ZHOME/zgen.zsh
-fi
 
 #reset all zgen plugin
 zgen-plugin-reset() {
@@ -43,6 +28,14 @@ zgen-plugin-reset() {
 
 #install zgen plugin
 zgen-install-plugin() {
+    #load zgen
+    if [[ -e $ZHOME/zgen.zsh ]]; then
+        source $ZHOME/zgen.zsh
+    else
+        echo "No Zgen found, exit."
+        exit 1
+    fi
+
     if zgen saved; then
         echo "Zgen already initiated, try reset first."
         exit 1
@@ -113,11 +106,17 @@ zgen-install-plugin() {
     zgen save
 }
 
+zgen-check-update() {
+    if [[ ! -e $ZGEN_INIT ]]; then
+        zgen-install-plugin
+    fi
+}
+
 
 if [[ ${1} = "reset" ]]; then
     zgen-plugin-reset $2
+elif [[ ${1} = "update" ]]; then
+    zgen-check-update
 else
     zgen-install-plugin
 fi
-
-

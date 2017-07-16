@@ -285,7 +285,6 @@ crepo gmarik/vundle .vim/bundle/vundle
 crepo tarjoilija/zgen .zgen
 
 ccmd_post 'touch $HOME/.zsh_local'
-ccmd_post 'echo "source $HOME/.zsh_local" > $HOME/.zshrc &&
-           echo "setopt prompt_subst" >> $HOME/.zshrc &&
-           echo "source $HOME/.zgen/zgen.zsh" >> $HOME/.zshrc'
+ccmd_post 'cp -f $HOME/.my_config/template_zshrc $HOME/.zshrc'
+
 ccommit
