@@ -73,9 +73,9 @@ function precheck_repo() {
 
     for item in "${REPO_LIST[@]}"
     do
-        args=($item)
-        [ -d "$HOME/${args[1]}" ] && check_failed=true && \
-            echo -e "  >\033[0;31mRepo: ${args[1]} exists.\033[0m"
+        args=(${(s: :)${item}})
+        [ -d "$HOME/${args[2]}" ] && check_failed=true && \
+            echo -e "  >\033[0;31mRepo: ${args[2]} exists.\033[0m"
     done
 
     if [ "$check_failed" = true ] ; then
@@ -151,15 +151,15 @@ function precheck_github() {
 function _do_link() {
     for item in "${CLINK_LIST[@]}"
     do
-        args=($item)
-        local name=${args[0]}
+        args=(${(s: :)${item}})
+        local name=${args[1]}
         printf "  >\033[0;33mProcessing %s %s\033[0m" $name "${LINE:${#name}}"
-        local spath="$HOME/${args[0]}"
+        local spath="$HOME/${args[1]}"
         if [ ! -e $spath ]; then
             echo -e "\033[0;31mCannot link file $spath, file is not exists.\033[0m"
             exit 2
         fi
-        _do_shell ln -sf $spath $HOME/${args[1]}
+        _do_shell ln -sf $spath $HOME/${args[2]}
         printf "[\033[0;32mDone\033[0m]\n"
     done
 
@@ -168,10 +168,10 @@ function _do_link() {
 function _do_repoclone() {
     for item in "${REPO_LIST[@]}"
     do
-        args=($item)
-        local name=${args[0]}
+        args=(${(s: :)${item}})
+        local name=${args[1]}
         printf "  >\033[0;33mProcessing %s %s\033[0m" $name "${LINE:${#name}}"
-        _do_shell git clone --quiet ${args[0]} $HOME/${args[1]}
+        _do_shell git clone --quiet ${args[1]} $HOME/${args[2]}
         printf "[\033[0;32mDone\033[0m]\n"
     done
 }
