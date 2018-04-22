@@ -22,12 +22,24 @@ host_prompt_info() {
     fi
 }
 
-
 prompt_vi_mode() {
+    prefix=""
+    if [[ -n $SSH_TTY ]]; then
+        prefix="⌨ "
+    fi
+
     if [[ "$KEYMAP" == 'vicmd' ]]; then
-        echo "%(!.%{$fg[red]%}❮❮.%{$fg[green]%}⇐ )%{$reset_color%} "
+        echo "$prefix%(!.%{$fg[red]%}❮❮.%{$fg[green]%}⇐ )%{$reset_color%} "
     else
-        echo "%(!.%{$fg[yellow]%}➜.%{$fg[cyan]%}⇒)%{$reset_color%}  "
+        echo "$prefix%(!.%{$fg[yellow]%}➜.%{$fg[cyan]%}⇒)%{$reset_color%}  "
+    fi
+}
+
+set_post_prompt() {
+    if [[ -z $SSH_TTY ]]; then
+        echo '%(!.%{$fg[yellow]%}➜.%{$fg[cyan]%}⇒)%{$reset_color%}  '
+    else
+        echo '⌨ %(!.%{$fg[yellow]%}➜.%{$fg[cyan]%}⇒)%{$reset_color%}  '
     fi
 }
 
@@ -58,7 +70,8 @@ prompt_setup_pygmalion(){
   base_prompt=$user_prompt'%n%{$reset_color%}%{$fg[cyan]%}@%{$reset_color%}$(host_prompt_info)%{$fg[red]%}:%{$reset_color%}%{$fg[cyan]%}%0~%{$reset_color%}%{$fg[red]%}|$(virtualenv_prompt_info)%{$reset_color%}'
   #base_prompt='%{$fg[magenta]%}%n%{$reset_color%}%{$fg[cyan]%}@%{$reset_color%}%{$fg[yellow]%}%m%{$reset_color%}%{$fg[red]%}:%{$reset_color%}%{$fg[cyan]%}%0~%{$reset_color%}%{$fg[red]%}|$(virtualenv_prompt_info)%{$reset_color%}'
 
-  post_prompt='%(!.%{$fg[yellow]%}➜.%{$fg[cyan]%}⇒)%{$reset_color%}  '
+  #post_prompt='%(!.%{$fg[yellow]%}➜.%{$fg[cyan]%}⇒)%{$reset_color%}  '
+  post_prompt=$(set_post_prompt)
   #post_prompt='%{$fg[cyan]%}⇒%{$reset_color%}  '
 
   base_prompt_nocolor=$(echo "$base_prompt" | perl -pe "s/%\{[^}]+\}//g")
