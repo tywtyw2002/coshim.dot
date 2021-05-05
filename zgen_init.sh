@@ -16,6 +16,7 @@ zgen-plugin-reset() {
         exit 1
     fi
 
+    source $ZHOME/zgen.zsh
     zgen reset
     #remove all installed plugin
     for item in $(find $ZHOME/* -maxdepth 0 -type d); do
@@ -72,7 +73,10 @@ zgen-install-plugin() {
     zgen load psprint/history-search-multi-word
 
     zgen load supercrabtree/k
-    zgen load rupa/z
+    #zgen load rupa/z
+    zgen load skywind3000/z.lua
+
+    zgen load lincheney/fzf-tab-completion zsh/fzf-zsh-completion.sh
 
     #zsh themes
     zgen load $ZLHOME/themes/pygmalion.zsh-theme
