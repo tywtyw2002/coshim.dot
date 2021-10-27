@@ -21,6 +21,11 @@ hs.hotkey.bind(mash, 'H', function()
    shift(0)
 end)
 
+-- Loop without change size
+hs.hotkey.bind(mash, 'J', function()
+    shift(-1)
+end)
+
 hs.hotkey.bind(mash, 'I', function()
     resize_1440()
 end)
@@ -62,10 +67,16 @@ function shift(side)
     --- side = {0, 1}
     --- 0: left
     --- 1: right
+    --- -1: Do not change side
     local win = hs.window.focusedWindow()
     local screen = win:screen():frame()
     local tiled = true
     local moveside = false
+    local resize = true
+
+    if side == -1 then
+        resize = false
+    end
 
     unitframe = win:frame():toUnitRect(screen)
 
@@ -77,11 +88,15 @@ function shift(side)
         moveside = true
     end
 
-    -- set window side (x)
-    unitframe.x = 0.5 * side
+    if resize then
+        -- set window side (x)
+        unitframe.x = 0.5 * side
 
-    -- set window width (w)
-    unitframe.w = 0.5
+        -- set window width (w)
+        unitframe.w = 0.5
+    else
+        unitframe.x = 0
+    end
 
     frameH = getWinframePercent(unitframe.h)
     frameY = getWinframePercent(unitframe.y)
