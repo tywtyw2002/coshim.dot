@@ -96,7 +96,7 @@ zgen-install-plugin() {
         "Darwin"*)
             zgen oh-my-zsh plugins/brew
             #zgen oh-my-zsh plugins/cask
-            zgen oh-my-zsh plugins/osx
+            zgen oh-my-zsh plugins/macos
 
             zgen oh-my-zsh plugins/sublime
             ;;
