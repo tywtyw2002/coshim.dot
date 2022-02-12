@@ -47,7 +47,7 @@ zgen-install-plugin() {
 
     # common plugin
     zgen oh-my-zsh
-    zgen oh-my-zsh plugins/git
+    zgen oh-my-zsh plugins/cp
     zgen oh-my-zsh plugins/sudo
     zgen oh-my-zsh plugins/history
     zgen oh-my-zsh plugins/rsync
@@ -58,19 +58,30 @@ zgen-install-plugin() {
     zgen oh-my-zsh plugins/tmux-cssh
     zgen oh-my-zsh plugins/tmuxinator
 
+    #git
+    zgen oh-my-zsh plugins/git
+    zgen oh-my-zsh plugins/gh
+    zgen oh-my-zsh plugins/gitignore
+
     #tools
     zgen oh-my-zsh plugins/urltools
     zgen oh-my-zsh plugins/encode64
+    zgen oh-my-zsh plugins/httpie
+    zgen oh-my-zsh plugins/ag
     #zgen oh-my-zsh plugins/autojump
 
     #python
     zgen oh-my-zsh plugins/pip
     zgen oh-my-zsh plugins/python
+    zgen oh-my-zsh plugins/pyenv
+    zgen oh-my-zsh plugins/pylint
 
+    zgen oh-my-zsh plugins/yarn
 
     #zgen load zsh-users/zsh-syntax-highlighting
     zgen load zsh-users/zsh-completions src
-    zgen load psprint/history-search-multi-word
+    # zgen load psprint/history-search-multi-word
+    zgen load zdharma-continuum/history-search-multi-word
 
     zgen load supercrabtree/k
     #zgen load rupa/z
