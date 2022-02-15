@@ -1,8 +1,11 @@
 [user]
-	name = Tianyi Wu
+	name = Landon Wu
 	email = tywtyw2002@gmail.com
+    signingkey = 08B9B4E2
 [core]
-	editor = /usr/local/bin/vim
-	excludesfile = $HOME/.my_config/gitignore_global
+	editor = vim
+	excludesfile = ~/.my_config/gitignore_global
 [push]
 	default = simple
+[init]
+    defaultBranch = master

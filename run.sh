@@ -278,6 +278,8 @@ clink .my_config/Xresources .Xdefaults
 clink .my_config/Xresources .Xresources
 clink .my_config/xsession .xsession
 clink .my_config/xinitrc .xinitrc
+clink .my_config/gitconfig .gitconfig
+clink .my_config/alacritty.yml .alacritty.yml
 
 crepo_ssh tywtyw2002/my.vim .vim
 crepo_ssh tywtyw2002/coshim.dot .my_config
