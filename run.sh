@@ -1,10 +1,11 @@
 #!/bin/bash
 
-# curl -L http://bootstrap.saltstack.org | bash -s -- -M -N stable
 
 FLAG_NOBACKUP=false
 FLAG_FORCE=false
 FLAG_SKIPSSH=false
+FLAG_RELINK=false
+FLAG_UPATE=false
 
 BACKUP_LIST=()
 REPO_LIST=()
@@ -31,6 +32,12 @@ function args_hookup() {
                 ;;
             --no-ssh)
                 FLAG_SKIPSSH=true
+                ;;
+            --relink)
+                FLAG_RELINK=true
+                ;;
+            --update)
+                FLAG_UPDATE=true
                 ;;
             *)
                 ;;
@@ -79,7 +86,7 @@ function precheck_repo() {
     done
 
     if [ "$check_failed" = true ] ; then
-        if [ "$FLAG_FORCE" = true ]; then
+        if [ "$FLAG_FORCE" = true ] || [ "$FLAG_UPDATE" = true ] ; then
             echo -e "\033[0;35mOverride Repo Checking Result, Continue.\033[0m"
             return 1
         fi
@@ -90,7 +97,7 @@ function precheck_repo() {
 }
 
 function pre_backup () {
-    if [ "$FLAG_NOBACKUP" = true ]; then
+    if [ "$FLAG_NOBACKUP" = true ] || [ "$FLAG_UPDATE" = true ] ; then
         echo -e "\033[0;35mSkipping Backup....\033[0m"
         return 0
     fi
@@ -116,6 +123,11 @@ function pre_backup () {
 }
 
 function pre_cleanup() {
+    if [ "$FLAG_UPDATE" = true ] ; then
+        echo -e "\033[0;35mSkipping Cleanup....\033[0m"
+        return 0
+    fi
+
     printf "\033[0;33mCleanup Dotfile %s\033[0m" "${LINE:1}"
     for item in "${BACKUP_LIST[@]}"
     do
@@ -159,6 +171,10 @@ function _do_link() {
             echo -e "\033[0;31mCannot link file $spath, file is not exists.\033[0m"
             exit 2
         fi
+        if [ "$FLAG_UPDATE" = true ] && [ ! -L $HOME/${args[2]} ] && [ ! "$FLAG_RELINK" = true ]; then
+            echo -e "\033[0;31mFile $HOME/${args[2]} exists, use --relink to override.\033[0m"
+            continue
+        fi
         _do_shell ln -sf $spath $HOME/${args[2]}
         printf "[\033[0;32mDone\033[0m]\n"
     done
@@ -171,7 +187,7 @@ function _do_repoclone() {
         args=(${(s: :)${item}})
         local name=${args[1]}
         printf "  >\033[0;33mProcessing %s %s\033[0m" $name "${LINE:${#name}}"
-        _do_shell git clone --quiet ${args[1]} $HOME/${args[2]}
+        [ ! -d $HOME/${args[2]} ] && _do_shell git clone --quiet ${args[1]} $HOME/${args[2]}
         printf "[\033[0;32mDone\033[0m]\n"
     done
 }
@@ -182,7 +198,8 @@ function _do_zegn_setup() {
         echo -e "\033[0;32mSkipping (No ZSH)\033[0m"
         return 1
     fi
-    _do_shell zsh $HOME/.my_config/zgen_init.sh
+    [ "$FLAG_RELINK" = true ] && _do_shell zsh $HOME/.my_config/zgen_init.sh reset --doit
+    [ ! "$FLAG_UPDATE" = true ] && _do_shell zsh $HOME/.my_config/zgen_init.sh
     printf "[\033[0;32mDone\033[0m]\n"
 }
 
