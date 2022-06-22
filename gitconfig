@@ -3,7 +3,7 @@
 	email = tywtyw2002@gmail.com
     signingkey = 08B9B4E2
 [core]
-	editor = vim
+	editor = nvim
 	excludesfile = ~/.my_config/gitignore_global
 [push]
 	default = simple

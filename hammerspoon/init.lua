@@ -27,7 +27,7 @@ hs.hotkey.bind(mash, 'J', function()
 end)
 
 hs.hotkey.bind(mash, 'I', function()
-    resize_1440()
+    resize_1440_800()
 end)
 
 hs.hotkey.bind(mash, 'O', function() nextscreen() end)
@@ -213,16 +213,23 @@ function push(x, y, w, h)
 end
 
 
-function resize_1440()
+function resize_1440_800()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
     local max = screen:frame()
 
-    f.x = max.x
-    f.y = max.y
-    f.w = 1400
-    f.h = 890
+    if screen:fullFrame().w == 1440 then
+        f.x = 320
+        f.y = 180
+        f.w = 800
+        f.h = 550
+    else
+        f.x = max.x
+        f.y = max.y
+        f.w = 1400
+        f.h = 890
+    end
     win:setFrame(f)
 end
 
