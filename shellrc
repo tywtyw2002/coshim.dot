@@ -1,4 +1,4 @@
-#vim:enc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=sh:
+# vim:ts=4:sw=4:ft=sh
 export LANG=en_US.UTF-8
 
 #global aliases
@@ -54,38 +54,6 @@ function remindme() { sleep $1 && zenity --info --text "$2" & }
 # usage: nh <command>
 function nh() { nohup "$@" &>/dev/null & }
 
-# s - gnu screen function
-# usage: lists screen sessions, otherwise
-#        s <name> reattaches to <name>, otherwise
-#        s <name> creates a new session <name>.
-#s ()
-#{
-#    if [[ $1 ]]; then
-#        screen -dRR -S $HOSTNAME.$1
-#    else
-#        screen -ls
-#    fi
-#}
-
-
-
-#rd defnition from google
-# usage: define <word>
-#define ()
-#{
-  #curl -L "http://www.google.com/search?hl=en&q=define%3A+${1}&btnG=Google+Search" | grep -m 5 -w "*"  | sed 's/;/ -/g' | cut -d- -f5 > /tmp/templookup.txt
-  #if [[ -s  /tmp/templookup.txt ]] ;then
-        #until ! read response
-      #do
-        #echo "${response}"
-        #done < /tmp/templookup.txt
-      #else
-        #echo "Sorry $USER, I can't find the term \"${1} \""
-    #fi
-    #rm -f /tmp/templookup.txt
-#}
-
-
 # send public key to remote server
 # usage: sendkey <user@remotehost>
 sendkey()
@@ -128,7 +96,7 @@ reload()
 
 function http_server() {
     local port="${1:-8000}"
-    python -m SimpleHTTPServer "$port"
+    python3 -m SimpleHTTPServer "$port"
 
 }
 

@@ -1,4 +1,5 @@
 source $HOME/.zsh_local
 setopt prompt_subst
-$HOME/.my_config/zgen_init.sh update
 source $HOME/.zgen/zgen.zsh
+$HOME/.my_config/zgen_init.sh update
+zgen init

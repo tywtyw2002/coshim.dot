@@ -301,7 +301,7 @@ clink .my_config/alacritty.yml .alacritty.yml
 crepo_ssh tywtyw2002/my.vim .vim
 crepo_ssh tywtyw2002/coshim.dot .my_config
 crepo gmarik/vundle .vim/bundle/vundle
-crepo tarjoilija/zgen .zgen
+crepo jandamm/zgenom .zgen
 crepo tmux-plugins/tpm .tmux/plugins/tpm
 
 ccmd_post 'touch $HOME/.zsh_local'

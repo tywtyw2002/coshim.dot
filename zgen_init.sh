@@ -18,10 +18,12 @@ zgen-plugin-reset() {
 
     source $ZHOME/zgen.zsh
     zgen reset
-    #remove all installed plugin
+    # #remove all installed plugin
     for item in $(find $ZHOME/* -maxdepth 0 -type d); do
         rm -rf $item
     done
+
+    git -C $ZHOME reset --hard
 
     echo 'Zgen cleanup finish.'
 }
@@ -46,42 +48,44 @@ zgen-install-plugin() {
     zgen load unixorn/autoupdate-zgen
 
     # common plugin
-    zgen oh-my-zsh
-    zgen oh-my-zsh plugins/cp
-    zgen oh-my-zsh plugins/sudo
-    zgen oh-my-zsh plugins/history
-    zgen oh-my-zsh plugins/rsync
-    zgen oh-my-zsh plugins/colored-man-pages
-    #zgen oh-my-zsh plugins/compleat
+    zgen ohmyzsh
+    zgen ohmyzsh plugins/cp
+    zgen ohmyzsh plugins/sudo
+    zgen ohmyzsh plugins/history
+    zgen ohmyzsh plugins/rsync
+    zgen ohmyzsh plugins/colored-man-pages
+    #zgen ohmyzsh plugins/compleat
 
-    zgen oh-my-zsh plugins/tmux
-    zgen oh-my-zsh plugins/tmux-cssh
-    zgen oh-my-zsh plugins/tmuxinator
+    zgen ohmyzsh plugins/tmux
+    zgen ohmyzsh plugins/tmux-cssh
+    zgen ohmyzsh plugins/tmuxinator
 
     #git
-    zgen oh-my-zsh plugins/git
-    zgen oh-my-zsh plugins/gh
-    zgen oh-my-zsh plugins/gitignore
+    zgen ohmyzsh plugins/git
+    zgen ohmyzsh plugins/gh
+    zgen ohmyzsh plugins/gitignore
 
     #tools
-    zgen oh-my-zsh plugins/urltools
-    zgen oh-my-zsh plugins/encode64
-    zgen oh-my-zsh plugins/httpie
-    zgen oh-my-zsh plugins/ag
-    #zgen oh-my-zsh plugins/autojump
+    zgen ohmyzsh plugins/urltools
+    zgen ohmyzsh plugins/encode64
+    zgen ohmyzsh plugins/httpie
+    zgen ohmyzsh plugins/ag
+    #zgen ohmyzsh plugins/autojump
 
     #python
-    zgen oh-my-zsh plugins/pip
-    zgen oh-my-zsh plugins/python
-    zgen oh-my-zsh plugins/pyenv
-    zgen oh-my-zsh plugins/pylint
+    zgen ohmyzsh plugins/pip
+    zgen ohmyzsh plugins/python
+    zgen ohmyzsh plugins/pyenv
+    zgen ohmyzsh plugins/pylint
 
-    zgen oh-my-zsh plugins/yarn
+    zgen ohmyzsh plugins/yarn
+    zgen ohmyzsh plugins/zoxide
 
     #zgen load zsh-users/zsh-syntax-highlighting
     zgen load zsh-users/zsh-completions src
     # zgen load psprint/history-search-multi-word
-    zgen load zdharma-continuum/history-search-multi-word
+    #zgen load zdharma-continuum/history-search-multi-word
+    zgen load joshskidmore/zsh-fzf-history-search
 
     zgen load supercrabtree/k
     #zgen load rupa/z
@@ -105,15 +109,15 @@ zgen-install-plugin() {
 
     case $(uname) in
         "Darwin"*)
-            zgen oh-my-zsh plugins/brew
-            #zgen oh-my-zsh plugins/cask
-            zgen oh-my-zsh plugins/macos
+            zgen ohmyzsh plugins/brew
+            #zgen ohmyzsh plugins/cask
+            zgen ohmyzsh plugins/macos
 
-            zgen oh-my-zsh plugins/sublime
+            zgen ohmyzsh plugins/sublime
             ;;
         "Linux"*)
-            command -v yum >/dev/null 2>&1 && zgen oh-my-zsh plugins/yum
-            command -v apt-get >/dev/null 2>&1 && zgen oh-my-zsh plugins/debian
+            command -v yum >/dev/null 2>&1 && zgen ohmyzsh plugins/yum
+            command -v apt-get >/dev/null 2>&1 && zgen ohmyzsh plugins/debian
 
         ;;
     esac
@@ -124,6 +128,9 @@ zgen-install-plugin() {
 zgen-check-update() {
     if [[ ! -e $ZGEN_INIT ]]; then
         zgen-install-plugin
+    else
+        source $ZHOME/zgen.zsh
+        zgen autoupdate
     fi
 }
 
