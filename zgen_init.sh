@@ -93,6 +93,8 @@ zgen-install-plugin() {
 
     zgen load lincheney/fzf-tab-completion zsh/fzf-zsh-completion.sh
 
+    zgen bin bigH/git-fuzzy
+
     #zsh themes
     zgen load $ZLHOME/themes/pygmalion.zsh-theme
 
