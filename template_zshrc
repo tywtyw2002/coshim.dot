@@ -4,7 +4,7 @@ $HOME/.my_config/zgen_init.sh update
 zgen init
 
 # Post Init Setup
-source $HOME/.my_config/zsh_config
+source $HOME/.my_config/zsh_custom/zsh_config.zsh
 
 # Local ZSH Configs
 source $HOME/.zsh_local

@@ -1,0 +1,87 @@
+#!/usr/bin/env zsh
+CHOME=$HOME/.my_config
+BINPATH=$CHOME/installer
+
+function printModuleUsage() {
+    echo "Usage: cdot ${1} PROGRAM [ARGS]"
+    echo "Avaliable Modules:"
+    for file in ${@:2}; do
+        echo $file:t:r
+    done
+}
+
+function buildCompletion() {
+    local -a list
+    for file in $@; do
+        list+=$file:r:t
+    done
+    echo $list
+}
+
+if [[  $# -lt 1  ]]; then
+    echo "Usage: $0 module [progam] [args]"
+    echo "Avaliable Modules:"
+    cmds=(install utils update zinit zreset)
+    echo ${(j:\n:)cmds}
+    exit 1
+fi
+
+case ${1} in
+    install)
+        if [[  $# -lt 2  ]]; then
+            printModuleUsage "install" $BINPATH/script/*(*)
+            exit 1
+        fi
+
+        if [[ ${2} = "_COMP" ]]; then
+            buildCompletion $BINPATH/script/*(*)
+            exit 0
+        fi
+
+        prog=($BINPATH/script/${2}.*(*))
+        if [[ ! -f $prog ]]; then
+            echo "Program: ${2} not found."
+            exit 127
+        fi
+        $prog ${@:3}
+    ;;
+    utils)
+        if [[  $# -lt 2  ]]; then
+            printModuleUsage "utils" $BINPATH/utils/*(*)
+            exit 1
+        fi
+
+        if [[ ${2} = "_COMP" ]]; then
+            buildCompletion $BINPATH/utils/*(*)
+            exit 0
+        fi
+
+        prog=($BINPATH/utils/${2}.*(*))
+        if [[ ! -f $prog ]]; then
+            echo "Program: ${2} not found."
+            exit 127
+        fi
+        $prog ${@:3}
+    ;;
+    update)
+        $BINPATH/run_update.sh
+    ;;
+    zinit)
+        $CHOME/zgen_init.sh
+    ;;
+    zreset)
+        $CHOME/zgen_init.sh reset ${2}
+    ;;
+esac
+
+
+exit $?
+# if [[ ${1} = "utils" ]]; then
+#     #BINPATH/${2} ${@:2}
+#     echo BINPATH/${2} ${@:3}
+# else [[  ]]
+# # elif [[ ${1} = "update" ]]; then
+# #     zgen-check-update
+# # else
+# #     zgen-install-plugin
+# fi

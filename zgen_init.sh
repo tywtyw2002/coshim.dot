@@ -103,12 +103,16 @@ zgen-install-plugin() {
     zgen load $ZLHOME/completion.zsh
     zgen load $ZLHOME/editor.zsh
 
-    #load custom shell scripts
+    # load custom shell scripts
     zgen load $CFG_HOME/shellrc
 
-    #zsh completion
+    # zsh completion
     GENCOMPL_FPATH=$HOME/.zsh/complete
     zgen load RobSis/zsh-completion-generator
+
+    # local bins
+    zgen bin $CFG_HOME/mybin
+    zgen bin $CFG_HOME/mybin/local
 
     case $(uname) in
         "Darwin"*)
@@ -117,12 +121,15 @@ zgen-install-plugin() {
             zgen ohmyzsh plugins/macos
 
             zgen ohmyzsh plugins/sublime
+
+            zgen bin $CFG_HOME/mybin/macos
             ;;
         "Linux"*)
             command -v yum >/dev/null 2>&1 && zgen ohmyzsh plugins/yum
             command -v apt-get >/dev/null 2>&1 && zgen ohmyzsh plugins/debian
 
-        ;;
+            zgen bin $CFG_HOME/mybin/linux
+            ;;
     esac
 
     zgen save

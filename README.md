@@ -3,7 +3,7 @@
 **Install:**
 
 ```
-curl -L https://raw.github.com/tywtyw2002/coshim.dot/master/run.sh | zsh -s --
+curl -L https://raw.github.com/tywtyw2002/coshim.dot/master/installer/run.sh | zsh -s --
 ```
 
 > Flags:
@@ -14,4 +14,4 @@ curl -L https://raw.github.com/tywtyw2002/coshim.dot/master/run.sh | zsh -s --
 
 Update:
 
-    curl -L https://raw.github.com/tywtyw2002/coshim.dot/master/run.sh | zsh -s --
+    curl -L https://raw.github.com/tywtyw2002/coshim.dot/master/installer/run.sh | zsh -s --
