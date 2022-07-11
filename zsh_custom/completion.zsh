@@ -58,13 +58,6 @@ zstyle ':completion:*' verbose yes
 # Environmental Variables
 #zstyle ':completion::*:(-command-|export):*' fake-parameters ${${${_comps[(I)-value-*]#*,}%%,*}:#-*-}
 
-# Populate hostname completion.
-zstyle -e ':completion:*:hosts' hosts 'reply=(
-  ${=${=${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) 2>/dev/null)"}%%[#| ]*}//\]:[0-9]*/ }//,/ }//\[/ }
-  ${=${(f)"$(cat /etc/hosts(|)(N) <<(ypcat hosts 2>/dev/null))"}%%\#*}
-  ${=${${${${(@M)${(f)"$(cat ~/.ssh/config 2>/dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}}
-)'
-
 # Ignore multiple entries.
 #zstyle ':completion:*:(rm|kill|diff):*' ignore-line other
 #zstyle ':completion:*:rm:*' file-patterns '*:all-files'
@@ -92,12 +85,39 @@ if [[ -s "$HOME/.mutt/aliases" ]]; then
   zstyle ':completion:*:mutt:*' users ${${${(f)"$(<"$HOME/.mutt/aliases")"}#alias[[:space:]]}%%[[:space:]]*}
 fi
 
+hosts=()
+CACHE_FILE="${TMPDIR:-/tmp}/zsh-${UID}/ssh-hosts.zsh"
+if [[ -f ~/.ssh/config ]] || [[ -f ~/.ssh/known_hosts ]] ; then
+  if [[ "$CACHE_FILE" -nt "$HOME/.ssh/config" ]] && [[ "$CACHE_FILE" -nt "$HOME/.ssh/known_hosts" ]]; then
+    source "$CACHE_FILE"
+  else
+    mkdir -p "${CACHE_FILE:h}"
+    hosts=$(grep '^Host ' ~/.ssh/config | awk '{first = $1; $1 = ""; print $0; }' )
+    hosts+="\n"
+    hosts+=$(cat ~/.ssh/known_hosts | awk '{first=$1; print $1} ')
+    hosts=($(echo $hosts | uniq |xargs))
+    typeset -p hosts >! "$CACHE_FILE" 2> /dev/null
+    zcompile "$CACHE_FILE"
+  fi
+fi
+
+zstyle ':completion:*:hosts' hosts $hosts
+
+
 # SSH/SCP/RSYNC
-zstyle ':completion:*:(scp|rsync):*' tag-order 'hosts:-host:host hosts:-domain:domain hosts:-ipaddr:ip\ address *'
-zstyle ':completion:*:(scp|rsync):*' group-order users files all-files hosts-domain hosts-host hosts-ipaddr
-zstyle ':completion:*:ssh:*' tag-order 'hosts:-host:host hosts:-domain:domain hosts:-ipaddr:ip\ address *'
-zstyle ':completion:*:ssh:*' group-order users hosts-domain hosts-host users hosts-ipaddr
-zstyle ':completion:*:(ssh|scp|rsync):*:hosts-host' ignored-patterns '*(.|:)*' loopback ip6-loopback localhost ip6-localhost broadcasthost
-zstyle ':completion:*:(ssh|scp|rsync):*:hosts-domain' ignored-patterns '<->.<->.<->.<->' '^[-[:alnum:]]##(.[-[:alnum:]]##)##' '*@*'
-zstyle ':completion:*:(ssh|scp|rsync):*:hosts-ipaddr' ignored-patterns '^(<->.<->.<->.<->|(|::)([[:xdigit:].]##:(#c,2))##(|%*))' '127.0.0.<->' '255.255.255.255' '::1' 'fe80::*'
+zstyle ':completion:*:(ssh|scp|sshfs|mosh):*' sort false
+zstyle ':completion:*:(ssh|scp|sshfs|mosh):*' format ' %F{yellow}-- %d --%f'
+
+zstyle ':completion:*:(ssh|scp|sshfs|mosh):*' group-name ''
+zstyle ':completion:*:(ssh|scp|sshfs|mosh):*' verbose yes
+
+zstyle ':completion:*:(scp|rsync|sshfs):*' tag-order 'hosts:-host:host hosts:-domain:domain hosts:-ipaddr:ip\ address *'
+zstyle ':completion:*:(scp|rsync|sshfs):*' group-order users files all-files hosts-domain hosts-host hosts-ipaddr
+
+zstyle ':completion:*:(ssh|mosh):*' tag-order 'hosts:-host:host hosts:-domain:domain hosts:-ipaddr:ip\ address *'
+zstyle ':completion:*:(ssh|mosh):*' group-order users hosts-domain hosts-host users hosts-ipaddr
+
+zstyle ':completion:*:(ssh|scp|sshfs|mosh):*:hosts-host' ignored-patterns '*(.|:)*' loopback localhost broadcasthost 'ip6-*'
+zstyle ':completion:*:(ssh|scp|sshfs|mosh):*:hosts-domain' ignored-patterns '<->.<->.<->.<->' '^[-[:alnum:]]##(.[-[:alnum:]]##)##' '*@*'
+zstyle ':completion:*:(ssh|scp|sshfs|mosh):*:hosts-ipaddr' ignored-patterns '^(<->.<->.<->.<->|(|::)([[:xdigit:].]##:(#c,2))##(|%*))' '127.0.*' '255.255.255.255' '::1' 'fe80::*' 'ff02::*'
 

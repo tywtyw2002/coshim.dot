@@ -45,7 +45,7 @@ zgen-install-plugin() {
     fi
 
     #zgen
-    zgen load unixorn/autoupdate-zgen
+    # zgen load unixorn/autoupdate-zgen
 
     # common plugin
     zgen ohmyzsh
@@ -91,12 +91,13 @@ zgen-install-plugin() {
     #zgen load rupa/z
     zgen load skywind3000/z.lua
 
-    zgen load lincheney/fzf-tab-completion zsh/fzf-zsh-completion.sh
+    # zgen load lincheney/fzf-tab-completion zsh/fzf-zsh-completion.sh
+    zgen load Aloxaf/fzf-tab
 
     zgen bin bigH/git-fuzzy
 
     #zsh themes
-    zgen load $ZLHOME/themes/pygmalion.zsh-theme
+    # zgen load $ZLHOME/themes/pygmalion.zsh-theme
 
     #load custom zgen plugins
     zgen load $ZLHOME/completion.zsh

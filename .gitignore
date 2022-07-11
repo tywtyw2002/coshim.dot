@@ -1,0 +1,5 @@
+# exclude everything
+mybin/local/*
+
+# exception to the rule
+!mybin/local/.gitkeep
