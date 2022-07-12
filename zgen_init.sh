@@ -110,6 +110,9 @@ zgen-install-plugin() {
     GENCOMPL_FPATH=$HOME/.zsh/complete
     zgen load RobSis/zsh-completion-generator
 
+    zgen load $ZLHOME/completion
+    zgen load $HOME/.zsh_completion
+
     # local bins
     zgen bin $CFG_HOME/mybin
     zgen bin $CFG_HOME/mybin/local

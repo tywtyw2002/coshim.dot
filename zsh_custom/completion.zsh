@@ -92,10 +92,12 @@ if [[ -f ~/.ssh/config ]] || [[ -f ~/.ssh/known_hosts ]] ; then
     source "$CACHE_FILE"
   else
     mkdir -p "${CACHE_FILE:h}"
-    hosts=$(grep '^Host ' ~/.ssh/config | awk '{first = $1; $1 = ""; print $0; }' )
-    hosts+="\n"
-    hosts+=$(cat ~/.ssh/known_hosts | awk '{first=$1; print $1} ')
-    hosts=($(echo $hosts | uniq |xargs))
+    # hosts=$(grep '^Host ' ~/.ssh/config | awk '{first = $1; $1 = ""; print $0; }' )
+    hosts=(${=$(grep '^Host ' ~/.ssh/config | awk '{first = $1; $1 = ""; print $0; }' )})
+    # hosts="$hosts$(cat ~/.ssh/known_hosts | awk '{first=$1; print $1} ')"
+    hosts+=(${="$(cat ~/.ssh/known_hosts | awk '{first=$1; print $1} ')"})
+    hosts=(${(u)hosts})
+    # hosts=($(echo $hosts | uniq |xargs))
     typeset -p hosts >! "$CACHE_FILE" 2> /dev/null
     zcompile "$CACHE_FILE"
   fi

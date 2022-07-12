@@ -19,9 +19,9 @@ function buildCompletion() {
 }
 
 if [[  $# -lt 1  ]]; then
-    echo "Usage: $0 module [progam] [args]"
-    echo "Avaliable Modules:"
-    cmds=(install utils update zinit zreset)
+    echo "Usage: cdot subcommand [PROGRAM] [args]"
+    echo "Avaliable Commands:"
+    cmds=("install" "utils" "update" "zinit" "zreset")
     echo ${(j:\n:)cmds}
     exit 1
 fi
@@ -71,6 +71,17 @@ case ${1} in
     ;;
     zreset)
         $CHOME/zgen_init.sh reset ${2}
+    ;;
+    _COMP)
+        cmds=(
+            "zinit:Init ZSH"
+            "zreset:Reset ZSH"
+            "update:Update dotfiles"
+            "install:Install Binary"
+            "utils:Run utils tools"
+            )
+        echo ${(j:\n:)cmds}
+        exit 0
     ;;
 esac
 

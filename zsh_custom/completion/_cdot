@@ -1,0 +1,49 @@
+#compdef cdot
+
+function _subprogram() {
+  if [[ $words[2] ]]; then
+    _files
+    return
+  fi
+  cmds=(${(ps:\ :)"$(cdot $1 _COMP)"})
+  _values "PROGRAM" $cmds && ret=0
+}
+
+function _cdot() {
+
+  local ret=1 state
+  _arguments \
+    ':command:->command' \
+    '*:: :->subcmds' && ret=0
+
+  case $state in
+    command)
+      cmds=(${(ps:\n:)"$(cdot _COMP)"})
+      _describe 'commands' cmds && ret=0
+  esac
+
+  case "$words[1]" in
+    utils | install)
+      local command="${words[1]}"
+      _subprogram $command
+      ;;
+    zreset)
+      # _values "DOIT" '--doit[Do the zsh reset.]' && ret=0
+      # _arguments '--doit[Do the zsh reset.]'
+      compadd -Q -- "--doit"
+      compadd -Q -- "--dummy"
+      compstate[insert]="menu"
+      compstate[list]="list force"
+      ret=0
+      # echo $compstate[insert]
+      ;;
+    # exec)
+    #   _generic
+    #   ;;
+  esac
+
+  return ret
+}
+
+
+_cdot "$@"
