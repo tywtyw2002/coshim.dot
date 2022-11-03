@@ -1,246 +1,481 @@
-# Configuration file for the color ls utility
-# Synchronized with coreutils 8.5 dircolors
-# This file goes in the /etc directory, and must be world readable.
-# You can copy this file to .dir_colors in your $HOME directory to override
-# the system defaults.
+# vim:ft=dircolors
+# (This is not a dircolors file but it helps to highlight colors and comments)
 
-# COLOR needs one of these arguments: 'tty' colorizes output to ttys, but not
-# pipes. 'all' adds color characters to all output. 'none' shuts colorization
-# off.
-COLOR tty
+# default values from dircolors
+# (entries with a leading # are not implemented in lf)
+# #no     00              # NORMAL
+# fi      00              # FILE
+# #rs     0               # RESET
+# di      01;34           # DIR
+# ln      01;36           # LINK
+# #mh     00              # MULTIHARDLINK
+# pi      40;33           # FIFO
+# so      01;35           # SOCK
+# #do     01;35           # DOOR
+# bd      40;33;01        # BLK
+# cd      40;33;01        # CHR
+# or      40;31;01        # ORPHAN
+# #mi     00              # MISSING
+# su      37;41           # SETUID
+# sg      30;43           # SETGID
+# #ca     30;41           # CAPABILITY
+# tw      30;42           # STICKY_OTHER_WRITABLE
+# ow      34;42           # OTHER_WRITABLE
+# st      37;44           # STICKY
+# ex      01;32           # EXEC
 
-# Extra command line options for ls go here.
-# Basically these ones are:
-#  -F = show '/' for dirs, '*' for executables, etc.
-#  -T 0 = don't trust tab spacing when formatting ls output.
-OPTIONS -F -T 0
+# default values from lf (with matching order)
+# ln      01;36   # LINK
+# or      31;01   # ORPHAN
+# tw      01;34   # STICKY_OTHER_WRITABLE
+# ow      01;34   # OTHER_WRITABLE
+# st      01;34   # STICKY
+# di      01;34   # DIR
+# pi      33      # FIFO
+# so      01;35   # SOCK
+# bd      33;01   # BLK
+# cd      33;01   # CHR
+# su      01;32   # SETUID
+# sg      01;32   # SETGID
+# ex      01;32   # EXEC
+# fi      00      # FILE
 
-# Below, there should be one TERM entry for each termtype that is colorizable
-TERM Eterm
-TERM ansi
-TERM color-xterm
-TERM con132x25
-TERM con132x30
-TERM con132x43
-TERM con132x60
-TERM con80x25
-TERM con80x28
-TERM con80x30
-TERM con80x43
-TERM con80x50
-TERM con80x60
-TERM cons25
-TERM console
-TERM cygwin
-TERM dtterm
-TERM eterm-color
-TERM gnome
-TERM gnome-256color
-TERM jfbterm
-TERM konsole
-TERM kterm
-TERM linux
-TERM linux-c
-TERM mach-color
-TERM mlterm
-TERM putty
-TERM rxvt
-TERM rxvt-256color
-TERM rxvt-cygwin
-TERM rxvt-cygwin-native
-TERM rxvt-unicode
-TERM rxvt-unicode-256color
-TERM rxvt-unicode256
-TERM screen
-TERM screen-256color
-TERM screen-256color-bce
-TERM screen-bce
-TERM screen-w
-TERM screen.rxvt
-TERM screen.linux
-TERM terminator
-TERM vt100
-TERM xterm
-TERM xterm-16color
-TERM xterm-256color
-TERM xterm-88color
-TERM xterm-color
-TERM xterm-debian
+# file types (with matching order)
+ln      01;36   # LINK
+or      31;01   # ORPHAN
+tw      34      # STICKY_OTHER_WRITABLE
+ow      34      # OTHER_WRITABLE
+st      01;34   # STICKY
+di      01;34   # DIR
+pi      33      # FIFO
+so      01;35   # SOCK
+bd      33;01   # BLK
+cd      33;01   # CHR
+su      01;32   # SETUID
+sg      01;32   # SETGID
+ex      38;5;72   # EXEC
+fi      00      # FILE
 
-# EIGHTBIT, followed by '1' for on, '0' for off. (8-bit output)
-EIGHTBIT 1
+# archives or compressed (dircolors defaults)
+.tar   00;31
+.tgz   00;31
+.arc   00;31
+.arj   00;31
+.taz   00;31
+.lha   00;31
+.lz4   00;31
+.lzh   00;31
+.lzma  00;31
+.tlz   00;31
+.txz   00;31
+.tzo   00;31
+.t7z   00;31
+.zip   00;31
+.z     00;31
+.dz    00;31
+.gz    00;31
+.lrz   00;31
+.lz    00;31
+.lzo   00;31
+.xz    00;31
+.zst   00;31
+.tzst  00;31
+.bz2   00;31
+.bz    00;31
+.tbz   00;31
+.tbz2  00;31
+.tz    00;31
+.deb   00;31
+.rpm   00;31
+.jar   00;31
+.war   00;31
+.ear   00;31
+.sar   00;31
+.rar   00;31
+.alz   00;31
+.ace   00;31
+.zoo   00;31
+.cpio  00;31
+.7z    00;31
+.rz    00;31
+.cab   00;31
+.wim   00;31
+.swm   00;31
+.dwm   00;31
+.esd   00;31
+.dmg   38;5;166;1
 
-# Below are the color init strings for the basic file types. A color init
-# string consists of one or more of the following numeric codes:
-# Attribute codes:
-# 00=none 01=bold 04=underscore 05=blink 07=reverse 08=concealed
-# Text color codes:
-# 30=black 31=red 32=green 33=yellow 34=blue 35=magenta 36=cyan 37=white
-# Background color codes:
-# 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
-#NORMAL 00	# no color code at all
-#FILE 00	# normal file, use no color at all
-RESET 0 # reset to "normal" color
-DIR 01;34	# directory
-LINK 01;36	# symbolic link (If you set this to 'target' instead of a
-		# numerical value, the color is as for the file pointed to.)
-MULTIHARDLINK 00	# regular file with more than one link
-FIFO 40;33	# pipe
-SOCK 01;35	# socket
-DOOR 01;35	# door
-BLK 40;33;01	# block device driver
-CHR 40;33;01	# character device driver
-ORPHAN 40;31;01  # symlink to nonexistent file, or non-stat'able file
-MISSING 01;05;37;41 # ... and the files they point to
-SETUID 37;41	# file that is setuid (u+s)
-SETGID 30;43	# file that is setgid (g+s)
-CAPABILITY 30;41	# file with capability
-STICKY_OTHER_WRITABLE 30;42 # dir that is sticky and other-writable (+t,o+w)
-OTHER_WRITABLE 34;42 # dir that is other-writable (o+w) and not sticky
-STICKY 37;44	# dir with the sticky bit set (+t) and not other-writable
+# image formats (dircolors defaults)
+.jpg   00;33
+.jpeg  00;33
+.mjpg  00;33
+.mjpeg 00;33
+.gif   00;33
+.bmp   00;33
+.pbm   00;33
+.pgm   00;33
+.ppm   00;33
+.tga   00;33
+.xbm   00;33
+.xpm   00;33
+.tif   00;33
+.tiff  00;33
+.png   00;33
+.svg   00;33
+.svgz  00;33
+.mng   00;35
+.pcx   00;35
+.mov   00;35
+.mpg   00;35
+.mpeg  00;35
+.m2v   00;35
+.mkv   00;35
+.webm  00;35
+.ogm   00;35
+.mp4   00;35
+.m4v   00;35
+.mp4v  00;35
+.vob   00;35
+.qt    00;35
+.nuv   00;35
+.wmv   00;35
+.asf   00;35
+.rm    00;35
+.rmvb  00;35
+.flc   00;35
+.avi   00;35
+.fli   00;35
+.flv   00;35
+.gl    00;35
+.dl    00;35
+.xcf   00;35
+.xwd   00;35
+.yuv   00;35
+.cgm   00;35
+.emf   00;35
+.ogv   00;35
+.ogx   00;35
+.m3u8  38;5;170
 
-# This is for files with execute permission:
-EXEC 01;32
+# audio formats (dircolors defaults)
+.aac   00;36
+.au    00;36
+.flac  00;36
+.m4a   00;36
+.m4r   00;36
+.mid   00;36
+.midi  00;36
+.mka   00;36
+.mp3   00;36
+.mpc   00;36
+.ogg   00;36
+.ra    00;36
+.wav   00;36
+.oga   00;36
+.opus  00;36
+.spx   00;36
+.xspf  00;36
 
-# List any file extensions like '.gz' or '.tar' that you would like ls
-# to colorize below. Put the extension, a space, and the color init string.
-# (and any comments you want to add after a '#')
-# executables (bright green)
-#.cmd 01;32
-#.exe 01;32
-#.com 01;32
-#.btm 01;32
-#.bat 01;32
-#.sh  01;32
-#.csh 01;32
- # archives or compressed (bright red)
-.tar 01;31
-.tgz 01;31
-.arj 01;31
-.taz 01;31
-.lzh 01;31
-.lzma 01;31
-.tlz 01;31
-.txz 01;31
-.zip 01;31
-.z   01;31
-.Z   01;31
-.dz  01;31
-.gz  01;31
-.lz  01;31
-.xz  01;31
-.bz2 01;31
-.tbz 01;31
-.tbz2 01;31
-.bz  01;31
-.tz  01;31
-.deb 01;31
-.rpm 01;31
-.jar 01;31
-.war 01;31
-.ear 01;31
-.sar 01;31
-.rar 01;31
-.ace 01;31
-.zoo 01;31
-.cpio 01;31
-.7z  01;31
-.rz  01;31
+*README               38;5;136;1          # Documentation
+*readme               38;5;136;1          # Documentation
+*README.rst           38;5;136;1          # Documentation
+*README.md            38;5;136;1          # Documentation
+*LICENSE              38;5;136;1          # Documentation
+*LICENSE.txt          38;5;136;1          # Documentation
+*COPYING              38;5;136;1          # Documentation
+*INSTALL              38;5;136;1          # Documentation
+*COPYRIGHT            38;5;136;1          # Documentation
+*AUTHORS              38;5;136;1          # Documentation
+*HISTORY              38;5;136;1          # Documentation
+*CONTRIBUTORS         38;5;136;1          # Documentation
+*PATENTS              38;5;136;1          # Documentation
+*VERSION              38;5;136;1          # Documentation
+*NOTICE               38;5;136;1          # Documentation
+*CHANGES              38;5;136;1          # Documentation
+*ChangeLog            38;5;136;1          # Documentation
+.toc                 38;5;136;1
 
-# image formats (magenta)
-.jpg 01;35
-.jpeg 01;35
-.gif 01;35
-.bmp 01;35
-.pbm 01;35
-.pgm 01;35
-.ppm 01;35
-.tga 01;35
-.xbm 01;35
-.xpm 01;35
-.tif 01;35
-.tiff 01;35
-.png 01;35
-.svg 01;35
-.svgz 01;35
-.mng 01;35
-.pcx 01;35
-.mov 01;35
-.mpg 01;35
-.mpeg 01;35
-.m2v 01;35
-.mkv 01;35
-.ogm 01;35
-.mp4 01;35
-.m4v 01;35
-.mp4v 01;35
-.vob 01;35
-.qt  01;35
-.nuv 01;35
-.wmv 01;35
-.asf 01;35
-.rm  01;35
-.rmvb 01;35
-.flc 01;35
-.avi 01;35
-.fli 01;35
-.flv 01;35
-.gl 01;35
-.dl 01;35
-.xcf 01;35
-.xwd 01;35
-.yuv 01;35
-.cgm 01;35
-.emf 01;35
+.log                  38;5;180            # Logs
+.pid                  38;5;244            # state files
+.state                38;5;244            # state files
+*lockfile             38;5;244            # state files
+*lock                 38;5;244            # state files
+.lock                 38;5;244            # state files
+*go.sum                 38;5;244            # state files
+*package-lock.json          38;5;244
+.err                  38;5;160;1          # error logs
+.error                38;5;160;1          # error logs
+.stderr               38;5;160;1          # error logs
 
-# http://wiki.xiph.org/index.php/MIME_Types_and_File_Extensions
-.axv 01;35
-.anx 01;35
-.ogv 01;35
-.ogx 01;35
+.adoc                 38;5;184            # Markup
+.asciidoc             38;5;184            # Markup
+.etx                  38;5;184            # Markup
+.info                 38;5;184            # Markup
+.markdown             38;5;184            # Markup
+.md                   38;5;184            # Markup
+.mkd                  38;5;184            # Markup
+.nfo                  38;5;184            # Markup
+.org                  38;5;184            # Markup
+.pod                  38;5;184            # Markup
+.rst                  38;5;184            # Markup
+.tex                  38;5;184            # Markup
+.textile              38;5;184            # Markup
 
-# audio formats (cyan)
-.aac 01;36
-.au 01;36
-.flac 01;36
-.mid 01;36
-.midi 01;36
-.mka 01;36
-.mp3 01;36
-.mpc 01;36
-.ogg 01;36
-.ra 01;36
-.wav 01;36
+*config               1                   # Configs
+*cfg                  1                   # Configs
+*conf                 1                   # Configs
+*rc                   1                   # Configs
+*authorized_keys      1                   # Configs
+*known_hosts          1                   # Configs
+.ini                  1                   # Configs
+.plist                1                   # Configs
+.profile              1                   # Configs
+.bash_profile         1                   # Configs
+.bash_login           1                   # Configs
+.bash_logout          1                   # Configs
+.zshenv               1                   # Configs
+.zprofile             1                   # Configs
+.zlogin               1                   # Configs
+.zlogout              1                   # Configs
+.viminfo              1                   # Configs
+.pcf                  1                   # Configs
+.psf                  1                   # Configs
+.hidden-color-scheme  1                   # Configs
+.hidden-tmTheme       1                   # Configs
+.last-run             1                   # Configs
+.merged-ca-bundle     1                   # Configs
+.sublime-build        1                   # Configs
+.sublime-commands     1                   # Configs
+.sublime-keymap       1                   # Configs
+.sublime-settings     1                   # Configs
+.sublime-snippet      1                   # Configs
+.sublime-project      1                   # Configs
+.sublime-workspace    1                   # Configs
+.tmTheme              1                   # Configs
+.user-ca-bundle       1                   # Configs
+.rstheme              1                   # Configs
+.epf                  1                   # Configs
 
-# http://wiki.xiph.org/index.php/MIME_Types_and_File_Extensions
-.axa 01;36
-.oga 01;36
-.spx 01;36
-.xspf 01;36
+*setup.py              38;5;29             # py
+*Cargo.toml            38;5;29
+*go.mod                38;5;29
+*package.json          38;5;29
+*tsconfig.json         38;5;29
+*requirements.txt      38;5;114
 
-# colorize basic documents (brown)
-.pdf 00;33
-.ps 00;33
-.ps.gz 00;33
-.txt 00;33
-.patch 00;33
-.diff 00;33
-.log 00;33
-.tex 00;33
-.xls 00;33
-.xlsx 00;33
-.ppt 00;33
-.pptx 00;33
-.rtf 00;33
-.doc 00;33
-.docx 00;33
-.odt 00;33
-.ods 00;33
-.odp 00;33
-.xml 00;33
-.epub 00;33
-.abw 00;33
-.htm 00;33
-.html 00;33
-.shtml 00;33
-.wpd 00;33
+
+.pcap                 38;5;29             # tcpdump / network traffic capture
+.cap                  38;5;29             # tcpdump / network traffic capture
+.dmp                  38;5;29             # tcpdump / network traffic capture
+
+.DS_Store             38;5;239            # macOS
+
+.key                  38;5;166            # LICENSE
+.csr                  38;5;182          # Encrypted data
+.asc                  38;5;192          # Encrypted data
+.bfe                  38;5;192          # Encrypted data
+.enc                  38;5;192          # Encrypted data
+.gpg                  38;5;192          # Encrypted data
+.signature            38;5;192          # Encrypted data
+.sig                  38;5;192          # Encrypted data
+.p12                  38;5;192          # Encrypted data
+.cert                 38;5;192          # Encrypted data
+.crt                  38;5;192          # Encrypted data
+.pem                  38;5;192          # Encrypted data
+.pgp                  38;5;192          # Encrypted data
+.p7s                  38;5;192          # Encrypted data
+*id_dsa               38;5;192          # Encrypted data
+*id_rsa               38;5;192          # Encrypted data
+*id_ecdsa             38;5;192          # Encrypted data
+*id_ed25519           38;5;192          # Encrypted data
+
+.afm                  38;5;66             # Fonts
+.fon                  38;5;66             # Fonts
+.fnt                  38;5;66             # Fonts
+.pfb                  38;5;66             # Fonts
+.pfm                  38;5;66             # Fonts
+.ttf                  38;5;66             # Fonts
+.ttc                  38;5;66             # Fonts
+.otf                  38;5;66             # Fonts
+.woff                 38;5;66             # Fonts
+.woff2                38;5;66             # Fonts
+.PFA                  38;5;66             # Fonts
+.pfa                  38;5;66             # Fonts
+
+.awk                  38;5;172            # Code (shell)
+.bash                 38;5;172            # Code (shell)
+.bat                  38;5;172            # Code (shell)
+.BAT                  38;5;172            # Code (shell)
+.sed                  38;5;172            # Code (shell)
+.sh                   38;5;172            # Code (shell)
+.zsh                  38;5;172            # Code (shell)
+.vim                  38;5;172            # Code (shell)
+.kak                  38;5;172            # Code (shell)
+.ahk                  38;5;107             # Code (interpreted) (AutoHotKey)
+.py                   38;5;107             # Code (interpreted) (Python)
+.ipynb                38;5;114             # Code (interpreted) (Python)
+.xsh                  38;5;107             # Code (interpreted) (xonsh)
+.rb                   38;5;107             # Code (interpreted) (ruby)
+.gemspec              38;5;107             # Code (interpreted) (ruby)
+.pl                   38;5;208            # Code (interpreted) (Perl)
+.PL                   38;5;160            # Code (interpreted) (Perl)
+.pm                   38;5;203            # Code (interpreted) (Perl)
+.t                    38;5;114            # Code (interpreted) (Perl)
+.msql                 38;5;222            # Code (SQL)
+.mysql                38;5;222            # Code (SQL)
+.pgsql                38;5;222            # Code (SQL)
+.sql                  38;5;222            # Code (SQL)
+.tcl                  38;5;64;1           # Code (interpreted) (Tool Command Language)
+.r                    38;5;41             # Code (interpreted) (R)
+.R                    38;5;41             # Code (interpreted) (R)
+.gs                   38;5;111             # GrADS
+.clj                  38;5;41             # Clojure
+.cljs                 38;5;41             # Clojure
+.cljc                 38;5;41             # Clojure
+.cljw                 38;5;41             # Clojure Gorilla notebook
+.scala                38;5;41             # Scala
+.sc                   38;5;41             # Scala
+.dart                 38;5;72             # Dart
+.asm                  38;5;111             # ASM
+.cl                   38;5;111             # LISP
+.lisp                 38;5;111             # LISP
+.rkt                  38;5;111             # LISP
+.el                   38;5;111             # LISP (Emacs)
+.elc                  38;5;241            # LISP (Emacs)
+.eln                  38;5;241            # LISP (Emacs)
+.lua                  38;5;111             # Code (interpreted) (Lua)
+.moon                 38;5;111             # Code (interpreted) (Moonscript)
+.c                    38;5;111             # C
+.C                    38;5;111             # C
+.h                    38;5;110            # C headers
+.H                    38;5;110            # C headers
+.tcc                  38;5;110            # C headers
+.c++                  38;5;111             # C++
+.h++                  38;5;110            # C++ headers
+.hpp                  38;5;110            # C++ headers
+.hxx                  38;5;110            # C++ headers
+.ii                   38;5;110            # C++ headers
+.M                    38;5;110            # Objective C method file
+.m                    38;5;110            # Objective C method file
+.cc                   38;5;111             # Csharp
+.cs                   38;5;111             # Csharp
+.cp                   38;5;111             # Csharp
+.cpp                  38;5;111             # Csharp
+.cxx                  38;5;111             # Csharp
+.cr                   38;5;111             # Crystal
+.go                   38;5;111             # Golang
+.f                    38;5;111             # Fortran
+.F                    38;5;111             # Fortran
+.for                  38;5;111             # Fortran
+.ftn                  38;5;111             # Fortran
+.f90                  38;5;111             # Fortran
+.F90                  38;5;111             # Fortran
+.f95                  38;5;111             # Fortran
+.F95                  38;5;111             # Fortran
+.f03                  38;5;111             # Fortran
+.F03                  38;5;111             # Fortran
+.f08                  38;5;111             # Fortran
+.F08                  38;5;111             # Fortran
+.nim                  38;5;111             # Nim
+.nimble               38;5;111             # Nim
+.s                    38;5;110            # Pascal
+.S                    38;5;110            # Pascal
+.rs                   38;5;111             # Code (compiled) (Rust)
+.scpt                 38;5;219            # AppleScript
+.swift                38;5;219            # Swift
+.sx                   38;5;111             # SimplexNumerica
+.vala                 38;5;111             # Vala
+.vapi                 38;5;111             # Vala
+.hi                   38;5;110            # Haskell
+.hs                   38;5;111             # Haskell
+.lhs                  38;5;111             # Haskell
+.agda                 38;5;111             # Agda
+.lagda                38;5;111             # Agda
+.lagda.tex            38;5;111             # Agda
+.lagda.rst            38;5;111             # Agda
+.lagda.md             38;5;111             # Agda
+.agdai                38;5;110            # Agda
+.zig                  38;5;111             # Zig
+.v                    38;5;111             # V
+.pyc                  38;5;240            # Code (Python)
+.tf                   38;5;168            # Code (Terraform)
+.tfstate              38;5;168            # Code (Terraform)
+.tfvars               38;5;168            # Code (Terraform)
+.css                  38;5;125;1          # XML
+.less                 38;5;125;1          # XML
+.sass                 38;5;125;1          # XML
+.scss                 38;5;125;1          # XML
+.htm                  38;5;125;1          # XML
+.html                 38;5;125;1          # XML
+.jhtm                 38;5;125;1          # XML
+.mht                  38;5;125;1          # XML
+.eml                  38;5;125;1          # XML
+.mustache             38;5;125;1          # XML
+.coffee               38;5;107;1          # Java
+.java                 38;5;107;1          # Java
+.js                   38;5;107;1          # Java
+.mjs                  38;5;107;1          # Java
+.jsm                  38;5;107;1          # Java
+.jsp                  38;5;107;1          # Java
+.php                  38;5;111             # php
+.ctp                  38;5;111             # php (CakePHP)
+.twig                 38;5;111             # php (Twig)
+.vb                   38;5;111             # VBA
+.vba                  38;5;111             # VBA
+.vbs                  38;5;111             # VBA
+*Dockerfile           38;5;155            # Build process (Docker)
+.dockerignore         38;5;240            # Build process (Docker)
+*Makefile             38;5;155            # Build process (Make)
+*MANIFEST             38;5;243            # Build process (Make)
+*pm_to_blib           38;5;240            # Build process (Perl)
+.nix                  38;5;155            # Functional configuration
+.dhall                38;5;178            # Functional configuration
+.rake                 38;5;155            # Build process (Ruby)
+.am                   38;5;242            # Build process (Automake)
+.in                   38;5;242            # Build process (Automake)
+.hin                  38;5;242            # Build process (Automake)
+.scan                 38;5;242            # Build process (Automake)
+.m4                   38;5;242            # Build process (Automake)
+.old                  38;5;242            # Build process (Automake)
+.out                  38;5;242            # Build process (Automake)
+.SKIP                 38;5;244            # Build process (Automake)
+.diff                 38;5;181   # Patch files
+.patch                38;5;181 # Patch files
+.bib                  38;5;180            # Data store # non-relational
+.json                 38;5;180            # Data store # non-relational
+.jsonl                38;5;180            # Data store # non-relational
+.jsonnet              38;5;180            # Data store # non-relational
+.libsonnet            38;5;142            # Data store # non-relational
+.ndjson               38;5;180            # Data store # non-relational
+.msg                  38;5;180            # Data store # non-relational
+.pgn                  38;5;180            # Data store # non-relational
+.rss                  38;5;180            # Data store # non-relational
+.xml                  38;5;180            # Data store # non-relational
+.fxml                 38;5;180            # Data store # non-relational
+.toml                 38;5;180            # Data store # non-relational
+.yaml                 38;5;180            # Data store # non-relational
+.yml                  38;5;180            # Data store # non-relational
+.RData                38;5;180            # Data store # non-relational
+.rdata                38;5;180            # Data store # non-relational
+.xsd                  38;5;180            # Data store # non-relational
+.dtd                  38;5;180            # Data store # non-relational
+.sgml                 38;5;180            # Data store # non-relational
+.rng                  38;5;180            # Data store # non-relational
+.rnc                  38;5;180            # Data store # non-relational
+.accdb                38;5;96             # Data store # MS Access
+.accde                38;5;96             # Data store # MS Access
+.accdr                38;5;96             # Data store # MS Access
+.accdt                38;5;96             # Data store # MS Access
+.db                   38;5;96             # Data store
+.fmp12                38;5;96             # Data store
+.fp7                  38;5;96             # Data store
+.localstorage         38;5;96             # Data store
+.mdb                  38;5;96             # Data store
+.mde                  38;5;96             # Data store
+.sqlite               38;5;96             # Data store # SQLite
+.typelib              38;5;96             # Data store
+.nc                   38;5;96             # Data store # NetCDF
+
+git/                   38;5;180
+.ca-authority/         38;5;180
+

@@ -14,3 +14,7 @@ if (( $+commands[starship] )); then
 else
     zgen load $ZLHOME/themes/pygmalion.zsh-theme
 fi
+
+
+# ls themes
+(( $+commands[gdircolors] )) && eval $(gdircolors ~/.my_config/DIR_COLORS.less)

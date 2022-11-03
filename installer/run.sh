@@ -294,6 +294,7 @@ clink .vim/vimrc .vimrc
 clink .nvim/init.lua .config/nvim/init.lua
 clink .my_config/screenrc .screenrc
 clink .my_config/bashrc .bashrc
+clink .my_config/DIR_COLORS .dircolors
 clink .my_config/tmux.conf .tmux.conf
 clink .my_config/Xresources .Xdefaults
 clink .my_config/Xresources .Xresources
