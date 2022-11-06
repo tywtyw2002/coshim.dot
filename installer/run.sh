@@ -131,6 +131,7 @@ function pre_cleanup() {
     printf "\033[0;33mCleanup Dotfile %s\033[0m" "${LINE:1}"
     for item in "${BACKUP_LIST[@]}"
     do
+        [ -h $item ] && unlink $item
         [ -f $item ] && rm $item
         [ -d $item ] && rm -r $item
     done
