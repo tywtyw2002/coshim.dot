@@ -111,3 +111,11 @@ function sshcc(){
 function pss() {
     ps aux | grep $1
 }
+
+
+function fixssh() {
+    if [[ -n $TMUX && -n $SSH_AUTH_SOCK ]]; then
+        eval $(tmux show-env    \
+            | sed -n 's/^\(SSH_[^=]*\)=\(.*\)/export \1="\2"/p')
+    fi
+}

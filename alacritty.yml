@@ -94,7 +94,6 @@ font:
   # for retina displays, but for non-retina you probably want this set to
   # false.
   # use_thin_strokes: true
-  use_thin_strokes: true
   scale_with_dpi: true
   # use_thin_strokes: false
 
