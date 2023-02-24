@@ -60,7 +60,7 @@ sendkey()
 {
     if [ $# -ge 1 ]; then
        echo $1
-       ssh $1 'umask 0077; mkdir -p .ssh; cat >> ~/.ssh/authorized_keys' < ~/.ssh/id_rsa.pub
+       ssh-copy-id -i ~/.ssh/id_ed25519 $1
     fi
 }
 
