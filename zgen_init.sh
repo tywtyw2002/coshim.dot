@@ -89,7 +89,7 @@ zgen-install-plugin() {
 
     zgen load supercrabtree/k
     #zgen load rupa/z
-    zgen load skywind3000/z.lua
+    # zgen load skywind3000/z.lua
 
     # zgen load lincheney/fzf-tab-completion zsh/fzf-zsh-completion.sh
     zgen load Aloxaf/fzf-tab
