@@ -23,9 +23,27 @@ zgen-plugin-reset() {
         rm -rf $item
     done
 
+    # remove zwc
+    for item in $(find $ZHOME/*.zwc -maxdepth 0); do
+        rm -f $item
+    done
+
+    zgen-comp-reset
+
     git -C $ZHOME reset --hard
 
     echo 'Zgen cleanup finish.'
+}
+
+zgen-comp-reset () {
+    # remove zcompdump_5.9
+    for item in $(find $ZHOME/zcomp* -maxdepth 0); do
+        rm -f $item
+    done
+
+    for item in $(find $HOME/.zcomp* -maxdepth 0); do
+        rm -f $item
+    done
 }
 
 
@@ -150,6 +168,8 @@ zgen-check-update() {
 
 if [[ ${1} = "reset" ]]; then
     zgen-plugin-reset $2
+elif [[ ${1} = "creset" ]]; then
+    zgen-comp-reset
 elif [[ ${1} = "update" ]]; then
     zgen-check-update
 else

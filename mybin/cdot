@@ -66,6 +66,9 @@ case ${1} in
     update)
         $BINPATH/run_update.sh
     ;;
+    creset)
+        $CHOME/zgen_init.sh creset
+    ;;
     zinit)
         $CHOME/zgen_init.sh
     ;;
@@ -76,6 +79,7 @@ case ${1} in
         cmds=(
             "zinit:Init ZSH"
             "zreset:Reset ZSH"
+            "creset:Reset Comp"
             "update:Update dotfiles"
             "install:Install Binary"
             "utils:Run utils tools"
