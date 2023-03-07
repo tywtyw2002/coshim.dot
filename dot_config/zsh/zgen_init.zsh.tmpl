@@ -1,0 +1,75 @@
+zgenom autoupdate
+
+if ! zgenom saved; then
+   echo "Creating zgen Save."
+
+   zgenom ohmyzsh
+
+   zgenom ohmyzsh plugins/cp
+   zgenom ohmyzsh plugins/sudo
+   zgenom ohmyzsh plugins/history
+   zgenom ohmyzsh plugins/rsync
+   zgenom ohmyzsh plugins/colored-man-pages
+   zgenom ohmyzsh plugins/direnv
+
+   # tmux
+   zgenom ohmyzsh plugins/tmux
+   zgenom ohmyzsh plugins/tmux-cssh
+
+   # tools
+   zgenom ohmyzsh plugins/encode64
+   zgenom ohmyzsh plugins/extract
+   zgenom ohmyzsh plugins/urltools
+   zgenom ohmyzsh plugins/httpie
+
+   # git
+   zgenom ohmyzsh plugins/git
+   zgenom ohmyzsh plugins/git-lfs
+   zgenom ohmyzsh plugins/gh
+   zgenom ohmyzsh plugins/gitignore
+
+   # dev
+   zgenom ohmyzsh plugins/python
+   zgenom ohmyzsh --completion plugins/pylint
+   zgenom ohmyzsh plugins/pip
+
+   # k8s
+   # zgenom ohmyzsh plugins/kubectl
+   # zgenom ohmyzsh plugins/minikube
+
+   # completion
+   zgenom ohmyzsh plugins/ag
+   zgenom ohmyzsh plugins/rust
+   zgenom ohmyzsh plugins/ripgrep
+   zgenom ohmyzsh --completion plugins/deno
+
+   # macos
+   zgenom ohmyzsh plugins/brew
+   zgenom ohmyzsh plugins/macos
+
+   # linux
+   zgenom ohmyzsh plugins/systemd
+
+   ######################
+   #  External Plugins  #
+   ######################
+   zgenom load zsh-users/zsh-completions
+   zgenom load joshskidmore/zsh-fzf-history-search
+   zgenom load Aloxaf/fzf-tab
+   zgenom bin bigH/git-fuzzy
+   zgenom load RobSis/zsh-completion-generator
+   zgenom load nix-community/nix-zsh-completions
+
+
+   #################
+   #  Completions  #
+   #################
+   zgenom load $Z_DOT_PATH/completions
+   zgenom load $Z_DOT_PATH/z_nix.zsh
+   zgenom load $Z_DOT_PATH/z_comp_gen.zsh
+   zgenom load $Z_DOT_PATH/z_function.zsh
+   zgenom load $Z_DOT_PATH/z_alias.zsh
+   zgenom load $Z_DOT_PATH/z_config.zsh
+
+   zgenom save
+fi

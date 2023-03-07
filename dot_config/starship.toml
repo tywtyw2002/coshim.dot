@@ -1,0 +1,150 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = false
+right_format = "$status$cmd_duration$git_status"
+format = """
+$username\
+[@](cyan)\
+$hostnamemod\
+[:](red)\
+$directory\
+[|](red)\
+$git_branch\
+$git_commit\
+$git_state\
+$git_dirty\
+$python\
+$line_break\
+$charactermod\
+"""
+
+[charactermod]
+format = "$ssh_symbol[$symbol]($style) "
+
+[character]
+format = "$symbol "
+success_symbol = "[⇒](cyan) "
+error_symbol = "[⇒](red) "
+
+[status]
+format = "$symbol"
+symbol = "[✗ $status](red)"
+recognize_signal_code = false
+disabled = false
+
+[git_status]
+format = "$all_status$ahead_behind"
+ahead = "[ ⬆](cyan)"
+behind = "[ ⬇](cyan)"
+diverged = "[ ⬍](cyan)"
+modified = "[ ✱](blue)"
+deleted = "[ ✖](red)"
+renamed = "[ ➜](purple)"
+stashed = "[ ★](cyna)"
+untracked = "[ ◼](white)"
+conflicted = "[ ⚠](yellow)"
+staged = "[ ✚](green)"
+
+[git_branch]
+format = "[git:$branch($remote_name:$remote_branch)](green)"
+only_attached = true
+truncation_symbol = ""
+
+[git_commit]
+format = "[git:$hash$tag](green)"
+
+[git_state]
+style = 'yellow'
+
+[username]
+format = "[$user]($style)"
+style_root = "red"
+style_user = "purple"
+show_always = true
+disabled = false
+
+[hostname]
+ssh_only = false
+format = "[$hostname](yellow)"
+disabled = true
+
+[sudo]
+format = "$symbol"
+symbol = "[](cyan)"
+disabled = true
+
+[directory]
+truncate_to_repo = false
+truncation_length = 5
+read_only = ""
+format = "[$path](cyan)"
+
+[cmd_duration]
+min_time = 10_000  # Show command duration over 10,000 milliseconds (=10 sec)
+format = " [☉ $duration]($style)"
+
+[aws]
+symbol = " "
+
+[buf]
+symbol = " "
+
+[c]
+symbol = " "
+
+[conda]
+symbol = " "
+
+[dart]
+symbol = " "
+
+[docker_context]
+symbol = " "
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[golang]
+symbol = "ﳑ "
+
+[haskell]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[java]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[memory_usage]
+symbol = " "
+
+[nim]
+symbol = " "
+
+[nix_shell]
+symbol = " "
+
+[nodejs]
+symbol = " "
+
+[package]
+symbol = " "
+
+[python]
+# symbol = " "
+symbol = ""
+pyenv_prefix = ""
+format = "([venv:<](blue)[$virtualenv](red)[>](blue))"
+
+[spack]
+symbol = "🅢 "
+
+[rust]
+symbol = " "
