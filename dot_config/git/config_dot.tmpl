@@ -1,0 +1,22 @@
+[user]
+	name = Landon Wu
+	email = tywtyw2002@gmail.com
+	signingkey = CB77A3AB52E22C93CA8EC5D1F6CDC71FFDBE2EC3
+[core]
+	editor = nvim
+	excludesfile = $HOME/.config/git/ignore
+[push]
+	default = simple
+[init]
+    	defaultBranch = master
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+{{ if eq .chezmoi.os "darwin" }}
+[commit]
+	gpgSign = true
+[tag]
+        gpgSign = true
+{{ end }}
