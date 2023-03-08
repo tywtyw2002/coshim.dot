@@ -1,0 +1,12 @@
+#!/bin/bash
+
+TMUX_CONFIG_HOME="$HOME/.config/tmux"
+
+if [[ ! -e "$TMUX_CONFIG_HOME/tmux.conf" ]]; then
+    exit 0;
+fi
+
+if [[ ! -d "$TMUX_CONFIG_HOME/plugins/tpm" ]]; then
+    echo "Clone TMUX TPM"
+    git clone https://github.com/tmux-plugins/tpm $TMUX_CONFIG_HOME/plugins/tpm
+fi
