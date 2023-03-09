@@ -29,6 +29,9 @@ function zle-keymap-select() {
 
 zle -N zle-keymap-select
 
+# Tmux
+ZSH_TMUX_CONFIG=$HOME/.config/tmux/tmux.conf
+
 # ================ #
 #  theme starship  #
 # ================ #
