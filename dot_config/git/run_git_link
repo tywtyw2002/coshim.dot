@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 GIT_CONFIG_HOME=$HOME/.config/git
 GIT_CONFIG_ALL=("config" "ignore")
