@@ -52,11 +52,48 @@ hs.hotkey.bind(mash, 'E', function()
     hs.hints.windowHints()
 end)
 
+hs.hotkey.bind(mash, '=', function()
+    change_size()
+end)
+
+hs.hotkey.bind(mash, '-', function()
+   change_size(true)
+end)
+
 hs.hotkey.bind(mash_shift, 'H', function() hs.window.focusedWindow():focusWindowWest() end)
 hs.hotkey.bind(mash_shift, 'L', function() hs.window.focusedWindow():focusWindowEast() end)
 hs.hotkey.bind(mash_shift, 'K', function() hs.window.focusedWindow():focusWindowNorth() end)
 hs.hotkey.bind(mash_shift, 'J', function() hs.window.focusedWindow():focusWindowSouth() end)
 
+
+function change_size(reduce)
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen():frame()
+
+    -- do not do anything if fullscreen
+    if not reduce and screen.w == f.w then
+        return
+    end
+
+    if reduce and f.w <= screen.w * 0.15 then
+        return
+    end
+
+    local si = screen.w * 0.05 * (reduce and -1 or 1)
+
+    -- check window right to screen
+    if f.w + f.x == screen.w then
+        f.x = f.x - si
+    end
+
+    f.w = f.w + si
+    if f.w > screen.w then
+        f.w = screen.w
+        f.x = 0
+    end
+    win:setFrame(f)
+end
 
 function getWinframePercent(h)
     return math.floor(h * 100 + 0.5)
