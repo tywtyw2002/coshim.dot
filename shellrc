@@ -119,3 +119,16 @@ function fixssh() {
             | sed -n 's/^\(SSH_[^=]*\)=\(.*\)/export \1="\2"/p')
     fi
 }
+
+function cssh(){
+  ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $*
+}
+
+function rssh(){
+  local host=$(echo $1 | sed -n 's/^[a-zA-Z0-9]*@\(.*\)/\1/p')
+  ssh-keygen -R ${host:-$1}
+}
+
+function nixfmt() {
+    alejandra $* && nixpkgs-fmt $*
+}
