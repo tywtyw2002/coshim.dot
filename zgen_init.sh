@@ -93,7 +93,7 @@ zgen-install-plugin() {
     #python
     zgen ohmyzsh plugins/pip
     zgen ohmyzsh plugins/python
-    zgen ohmyzsh plugins/pyenv
+    # zgen ohmyzsh plugins/pyenv
     zgen ohmyzsh plugins/pylint
 
     zgen ohmyzsh plugins/yarn
