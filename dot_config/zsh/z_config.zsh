@@ -31,6 +31,9 @@ zle -N zle-keymap-select
 
 # Tmux
 ZSH_TMUX_CONFIG=$HOME/.config/tmux/tmux.conf
+ZSH_TMUX_FIXTERM=false
+unset _ZSH_TMUX_FIXED_CONFIG
+unset ZSH_TMUX_TERM
 
 # ================ #
 #  theme starship  #
