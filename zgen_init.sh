@@ -120,6 +120,7 @@ zgen-install-plugin() {
     #load custom zgen plugins
     zgen load $ZLHOME/completion.zsh
     zgen load $ZLHOME/editor.zsh
+    zgen load $ZLHOME/nix.zsh
 
     # load custom shell scripts
     zgen load $CFG_HOME/shellrc

@@ -17,5 +17,6 @@ fi
 
 
 # ls themes
-(( $+commands[gdircolors] )) && eval $(gdircolors ~/.my_config/DIR_COLORS.less)
+(( $+commands[gdircolors] )) && eval $(gdircolors ~/.my_config/DIR_COLORS)
+unalias ls
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
