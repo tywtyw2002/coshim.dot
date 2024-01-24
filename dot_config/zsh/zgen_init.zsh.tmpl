@@ -14,13 +14,13 @@ if ! zgenom saved; then
 
    # tmux
    zgenom ohmyzsh plugins/tmux
-   zgenom ohmyzsh plugins/tmux-cssh
+   # zgenom ohmyzsh plugins/tmux-cssh
 
    # tools
    zgenom ohmyzsh plugins/encode64
    zgenom ohmyzsh plugins/extract
    zgenom ohmyzsh plugins/urltools
-   zgenom ohmyzsh plugins/httpie
+   # zgenom ohmyzsh plugins/httpie
 
    # git
    zgenom ohmyzsh plugins/git
@@ -33,6 +33,8 @@ if ! zgenom saved; then
    zgenom ohmyzsh --completion plugins/pylint
    zgenom ohmyzsh plugins/pip
 
+   zgenom ohmyzsh --completion plugins/yarn
+
    # k8s
    # zgenom ohmyzsh plugins/kubectl
    # zgenom ohmyzsh plugins/minikube
@@ -41,11 +43,11 @@ if ! zgenom saved; then
    zgenom ohmyzsh plugins/ag
    zgenom ohmyzsh plugins/rust
    zgenom ohmyzsh plugins/ripgrep
-   zgenom ohmyzsh --completion plugins/deno
 
    # macos
    zgenom ohmyzsh plugins/brew
    zgenom ohmyzsh plugins/macos
+   zgenom ohmyzsh plugins/sublime
 
    # linux
    zgenom ohmyzsh plugins/systemd
@@ -54,7 +56,6 @@ if ! zgenom saved; then
    #  External Plugins  #
    ######################
    zgenom load zsh-users/zsh-completions
-   zgenom load joshskidmore/zsh-fzf-history-search
    zgenom load Aloxaf/fzf-tab
    zgenom bin bigH/git-fuzzy
    zgenom load RobSis/zsh-completion-generator

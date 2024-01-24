@@ -67,7 +67,7 @@ zstyle ':completion:*:(ssh|scp|sshfs|mosh):*:hosts-ipaddr' ignored-patterns '^(<
 
 ############
 #   deno   #
-###########
+############
 if (( $+commands[deno] )); then
     # If the completion file doesn't exist yet, we need to autoload it and
     # bind it to `deno`. Otherwise, compinit will have already done that.

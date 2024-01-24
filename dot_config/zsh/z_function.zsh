@@ -82,16 +82,15 @@ sendkey()
 function http_server() {
     local port="${1:-8000}"
     python3 -m SimpleHTTPServer "$port"
-
 }
 
-function ssht(){
-  ssh $* -t 'tmux  -u a || tmux -u || /bin/zsh ||/bin/bash'
-}
+# function ssht(){
+#   ssh $* -t 'tmux  -u a || tmux -u || /bin/zsh ||/bin/bash'
+# }
 
-function sshcc(){
-  ssh $* -t 'tmux  -CC -u a || tmux -CC -u || /bin/zsh || /bin/bash'
-}
+# function sshcc(){
+#   ssh $* -t 'tmux  -CC -u a || tmux -CC -u || /bin/zsh || /bin/bash'
+# }
 
 function cssh(){
   ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $*

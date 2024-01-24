@@ -10,9 +10,15 @@ typeset -g ZSH_FZF_HISTORY_SEARCH_FZF_EXTRA_ARGS='--ansi --height 40% --reverse'
 # ======== #
 #  Editor  #
 # ======== #
+# In Macos, use neovim replace the vi/vim.
+# In Linux, do not link vi to nvim by default.
 local edit='vi'
 (( $+commands[vim] )) && alias vi=vim
-(( $+commands[nvim] )) && edit='nvim'
+
+if (( $+commands[nvim] )); then
+    edit='nvim'
+    (($(uname) == "Darwin")) && alias vi=nvim
+fi
 
 export EDITOR=$edit
 # Allow command line editing in an external editor.
@@ -49,7 +55,7 @@ fi
 # ======== #
 if (( $+commands[zoxide] )); then
     eval "$(zoxide init zsh)"
-    unset zi
+    unalias zi
 fi
 
 # =========== #
@@ -57,3 +63,12 @@ fi
 # =========== #
 (( $+commands[gdircolors] )) && eval $(gdircolors $Z_DOT_PATH/stores/DIR_COLORS)
 (( $+commands[dircolors] )) && eval $(dircolors $Z_DOT_PATH/stores/DIR_COLORS)
+
+
+# =========== #
+#   atuin     #
+# =========== #
+# Manual bind ^p as local dir search
+eval "$(atuin init zsh --disable-up-arrow)"
+bindkey -M emacs '^p' _atuin_up_search_widget
+
