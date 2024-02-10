@@ -34,7 +34,10 @@ local function isTiledWindow(height)
 end
 
 local function isOnBottom(unitframe)
-	return math.ceil(unitframe.y + unitframe.h) == 1
+	if unitframe.h == 1 then
+		return false
+	end
+	return math.ceil((unitframe.y + unitframe.h) * 100) == 100
 end
 
 M.DIRECTION_LEFT = 0
@@ -57,31 +60,32 @@ M.shift = function(direction)
 	end
 	--local screen = win:screen()
 	local frame = win:screen():frame()
-	local unitframe = win:frame():toUnitRect(frame)
+	local winframe = win:frame()
+	--local unitframe = win:frame():toUnitRect(frame)
 
 	-- check window on side. First run
-	if direction == M.DIRECTION_LEFT and unitframe.x ~= 0 then
-		unitframe.x = 0
-		win:setFrame(unitframe:fromUnitRect(frame))
+	if direction == M.DIRECTION_LEFT and winframe.x ~= frame.x then
+		winframe.x = frame.x
+		win:setFrame(winframe)
 		return
-	elseif direction == M.DIRECTION_RIGHT and (unitframe.x + unitframe.w) ~= 1 then
-		unitframe.x = 1 - unitframe.w
-		win:setFrame(unitframe:fromUnitRect(frame))
+	elseif direction == M.DIRECTION_RIGHT and (winframe.x + winframe.w) ~= frame.w then
+		winframe.x = frame.w - winframe.w + frame.x
+		win:setFrame(winframe)
 		return
 	end
 
 	-- check window on top. Second run
-	if unitframe.y ~= 0 then
-		unitframe.y = 0
-		win:setFrame(unitframe:fromUnitRect(frame))
+	if winframe.y ~= frame.y then
+		winframe.y = frame.y
+		win:setFrame(winframe)
 		return
 	end
 
 	-- tiled window. w to half. Third run
-	if unitframe.w ~= 0.5 then
-		unitframe.w = 0.5
-		unitframe.x = direction * 0.5
-		win:setFrame(unitframe:fromUnitRect(frame))
+	if winframe.w ~= 0.5 * frame.w then
+		winframe.w = 0.5 * frame.w
+		winframe.x = direction * 0.5 * frame.w
+		win:setFrame(winframe)
 	end
 end
 
@@ -101,9 +105,11 @@ M.shift_v = function(direction)
 		return
 	end
 	local frame = win:screen():frame()
+	local winframe = win:frame()
 	local unitframe = win:frame():toUnitRect(frame)
 
-	local label, new_h = isTiledWindow(unitframe.h)
+	local unit_h = winframe.h / frame.h
+	local label, new_h = isTiledWindow(unit_h)
 	local frame_y = getWinframePercent(unitframe.y)
 
 	-- try tiled move
@@ -139,24 +145,18 @@ M.shift_v = function(direction)
 	end
 
 	-- move to top/bottom
-	if direction == M.DIRECTION_DOWN and unitframe.y ~= 0 then
-		unitframe.y = 0
-		win:setFrame(unitframe:fromUnitRect(frame))
-	elseif direction == M.DIRECTION_UP and unitframe.y + unitframe.h ~= 1 then
-		unitframe.y = 1 - unitframe.h
-		win:setFrame(unitframe:fromUnitRect(frame))
+	if direction == M.DIRECTION_DOWN and winframe.y ~= frame.y then
+		winframe.y = frame.y
+		win:setFrame(winframe)
+	elseif direction == M.DIRECTION_UP and (winframe.y + winframe.h) ~= frame.y then
+		winframe.y = frame.h - winframe.h + frame.y
+		win:setFrame(winframe)
 	end
 end
 
 M.TILE_FULL = tiled_label.FULL
 M.TILE_HALF = tiled_label.HALF
 M.TILE_THIRD = tiled_label.THIRD
-
-local tile_matrix = {
-	[tiled_label.FULL] = 1,
-	[tiled_label.HALF] = 2,
-	[tiled_label.THIRD] = 3,
-}
 
 local tile_height = {
 	[tiled_label.FULL] = 1,
@@ -169,9 +169,11 @@ M.to_tile = function(mode)
 	local win = hs.window.focusedWindow()
 	local screen_frame = win:screen():frame()
 	local unitframe = win:frame():toUnitRect(screen_frame)
+	local winframe = win:frame()
 
 	-- check win tiled status
-	local label, new_h = isTiledWindow(unitframe.h)
+	local unit_h = winframe.h / screen_frame.h
+	local label, new_h = isTiledWindow(unit_h)
 
 	if label == mode then
 		return
@@ -266,6 +268,28 @@ M.step_resize = function(mode, direction)
 		frame.x = 0
 	end
 	win:setFrame(frame)
+end
+
+M.step_move = function(direction)
+	local cwin = hs.window.focusedWindow()
+	if not cwin then
+		return
+	end
+
+	local cscreen = cwin:screen()
+	local cres = cscreen:frame()
+	local stepw = cres.w * 0.05
+	local steph = cres.h * 0.05
+	local wtopleft = cwin:topLeft()
+	if direction == M.DIRECTION_LEFT then
+		cwin:setTopLeft({ x = wtopleft.x - stepw, y = wtopleft.y })
+	elseif direction == M.DIRECTION_RIGHT then
+		cwin:setTopLeft({ x = wtopleft.x + stepw, y = wtopleft.y })
+	elseif direction == M.DIRECTION_UP then
+		cwin:setTopLeft({ x = wtopleft.x, y = wtopleft.y - steph })
+	elseif direction == M.DIRECTION_DOWN then
+		cwin:setTopLeft({ x = wtopleft.x, y = wtopleft.y + steph })
+	end
 end
 
 M.resize_to = function(size)

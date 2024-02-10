@@ -44,7 +44,7 @@ local app_map = {
 	f = "com.apple.finder",
 	m = "md.obsidian",
 	w = "com.github.wez.wezterm",
-    t = "com.googlecode.iterm2"
+	t = "com.googlecode.iterm2",
 }
 
 app_selector.init(app_km, app_map)
@@ -122,6 +122,23 @@ end)
 
 hs.hotkey.bind(mash, "[", function()
 	W.step_resize(W.RESIZE_DECREASE, W.RESIZE_VERTICAL)
+end)
+
+-- step move
+hs.hotkey.bind(mash_shift, "-", function()
+	W.step_move(W.DIRECTION_LEFT)
+end)
+
+hs.hotkey.bind(mash_shift, "=", function()
+	W.step_move(W.DIRECTION_RIGHT)
+end)
+
+hs.hotkey.bind(mash_shift, "[", function()
+	W.step_move(W.DIRECTION_UP)
+end)
+
+hs.hotkey.bind(mash_shift, "]", function()
+	W.step_move(W.DIRECTION_DOWN)
 end)
 
 hs.hotkey.bind(mash_shift, "H", function()

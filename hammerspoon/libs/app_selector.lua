@@ -5,22 +5,22 @@ local function call_app(name)
 	if app then
 		local screen_id = hs.mouse.getCurrentScreen():id()
 		local wins = app:allWindows()
-        local fallback_win = nil
+		local fallback_win = nil
 		for _, win in pairs(wins) do
 			if not win:isMinimized() then
 				local s = win:screen()
 				if s:id() == screen_id then
 					win:focus()
-                    return
+					return
 				end
-                fallback_win = win
+				fallback_win = win
 			end
 		end
-        if fallback_win then
-            fallback_win:focus()
-        else
-            hs.alert.show("Not Avaliable Windows.")
-        end
+		if fallback_win then
+			fallback_win:focus()
+		else
+			hs.alert.show("Not Avaliable Windows.")
+		end
 	else
 		--hs.application.launchOrFocus(name)
 		hs.alert.show("App not found.")
