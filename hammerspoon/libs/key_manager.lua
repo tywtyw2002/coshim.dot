@@ -106,7 +106,7 @@ local function format_key_name(mod, key)
                 if count == 1 then
                     name = MOD_MAPPING[modifier] .. " + "
                 else
-                    name = key .. MOD_MAPPING[modifier] .. " + "
+                    name = name .. MOD_MAPPING[modifier] .. " + "
                 end
             end
         end
