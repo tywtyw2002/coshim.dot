@@ -1,5 +1,5 @@
 local unpack = table.unpack
-local KM = require("libs.key_manager")
+local KM = require("libs.key_manager_next")
 local CheatSheet = require("libs.cheatsheet")
 
 local yabai = {}
@@ -127,24 +127,45 @@ local keymaps = {
 }
 
 local options = {
-    { "", "b", "space --layout bsp", "Layout: BSP" },
-    { "", "f", "space --layout float", "Layout: Float" },
-    { "", "c", "space --layout stack", "Layout: Stack" },
-    { "", "g", "space --toggle gap --toggle padding", "Toggle Gap" },
-
-    { "", "p", "window --toggle pip", "PIP" },
-    { "", "s", "window --toggle split", "Split" },
-    { "", "i", "window --toggle sticky", "Sticky" },
-    { "", "d", "window --toggle zoom-parent", "Zoom Parent" },
-    { "", "m", "window --toggle zoom-fullscreen", "FullScreen" },
-    { "", "t", "window --toggle float", "Float" },
-
-    { "", "x", "window --close", "Close Window" },
-
-    { "", "h", "window --insert west", "Insert: West" },
-    { "", "l", "window --insert east", "Insert: East" },
-    { "", "k", "window --insert north", "Insert: North" },
-    { "", "j", "window --insert south", "Insert: South" },
+    {
+        title = "Space",
+        loc = { 1, 1 },
+        binds = {
+            { "", "b", "space --layout bsp", "Layout: BSP" },
+            { "", "f", "space --layout float", "Layout: Float" },
+            { "", "c", "space --layout stack", "Layout: Stack" },
+            {
+                "",
+                "g",
+                "space --toggle gap --toggle padding",
+                "Layout: Toggle Gap",
+            },
+            {},
+            { "", "x", "window --close", "Close Window" },
+        },
+    },
+    {
+        title = "Window",
+        loc = { 1, 2 },
+        binds = {
+            { "", "t", "window --toggle float", "Float" },
+            { "", "s", "window --toggle split", "Split" },
+            { "", "i", "window --toggle sticky", "Sticky" },
+            { "", "p", "window --toggle pip", "PIP" },
+            { "", "d", "window --toggle zoom-parent", "Zoom Parent" },
+            { "", "m", "window --toggle zoom-fullscreen", "FullScreen" },
+        },
+    },
+    {
+        title = "Window Insert",
+        loc = { 1, 3 },
+        binds = {
+            { "", "h", "window --insert west", "Insert: Left" },
+            { "", "l", "window --insert east", "Insert: Right" },
+            { "", "k", "window --insert north", "Insert: Up" },
+            { "", "j", "window --insert south", "Insert: Down" },
+        },
+    },
 }
 
 function yabai:init()
@@ -159,9 +180,9 @@ function yabai:init()
     local y = { yabai_path = output }
     setmetatable(y, self)
     self.__index = self
-    self.cheatsheet = CheatSheet:init()
+    self.cheatsheet = CheatSheet:init({title="Yabai"})
 
-    _G["DEBUG_CHEATSHEET"] = self.cheatsheet
+    -- _G["DEBUG_CHEATSHEET"] = self.cheatsheet
 
     return y
 end
@@ -215,14 +236,15 @@ function yabai:bind_keys()
         self.cheatsheet:toggle()
     end)
 
-    self.kv =
-        KM:init({ show_enter = false, show_helper = true, helper_timeout = 10 })
+    self.kv = KM:init({ helper_title = "Mode: Yabai", show_helper = true, helper_timeout = 0 })
     self.kv:new(altctrl, "\\", "Yabai")
-    for _, data in ipairs(options) do
-        local meta, key, cmd, msg = unpack(data)
-        self.kv:bind(meta, key, msg, function()
+    local fn = function(cmd)
+        return function()
             self:cmd(cmd)
-        end)
+        end
+    end
+    for _, keymaps in ipairs(options) do
+        self.kv:bind_keymaps(keymaps, fn)
     end
 end
 

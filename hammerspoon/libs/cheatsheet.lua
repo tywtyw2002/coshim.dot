@@ -1,6 +1,10 @@
 local obj = {
+    title = nil,
     entry_length = 25,
+    background = { hex = "#08080A", alpha = 0.85 },
 
+    title_color = { hex = "#FFD60A", alpha = 0.8 },
+    desc_color = { hex = "#EBEBF5", alpha = 0.8 },
     meta_color = { hex = "#EBEBF5", alpha = 0.6 },
     key_color = { hex = "#EBEBF5", alpha = 0.6 },
     upper_key_color = { hex = "#0A84FF", alpha = 1 },
@@ -149,6 +153,11 @@ function obj:format_key_string(mod, key, idx)
     return nsstring, attrs
 end
 
+local title_height = 20
+local title_padding_top_neg = 10
+local base_padding = 25
+local padding = 10
+
 function obj:init(conf)
     conf = conf or {}
     setmetatable(conf, self)
@@ -159,12 +168,30 @@ function obj:init(conf)
     conf.canvas[1] = {
         type = "rectangle",
         action = "fill",
-        fillColor = { hex = "#1c1c1e", alpha = 0.85 },
+        fillColor = conf.background,
         roundedRectRadii = { xRadius = 10, yRadius = 10 },
     }
 
     conf.draw_pos = {}
     conf.rendered = false
+    conf.row_base_zero = base_padding - padding
+
+    if conf.title then
+        conf.canvas[2] = {
+            type = "text",
+            text = conf.title,
+            textSize = 20,
+            textColor = conf.title_color,
+            textAlignment = "center",
+            frame = {
+                x = base_padding,
+                y = base_padding - title_padding_top_neg,
+                w = 0,
+                h = title_height + title_padding_top_neg,
+            },
+        }
+        conf.row_base_zero = conf.row_base_zero + title_height
+    end
 
     return conf
 end
@@ -181,15 +208,13 @@ function obj:insert(o)
 end
 
 local col_width = 240
-local col_key_width = 80
+local col_key_width = 60
 local col_desc_width = col_width - col_key_width
 local row_height = 19
 local nav_height = 25
-local base_padding = 25
-local padding = 10
 
 function obj:add_section(title, entries, row, col)
-    local row_base = (self.draw_pos[col] or base_padding - padding) + padding
+    local row_base = (self.draw_pos[col] or self.row_base_zero) + padding
     local col_base = (col - 1) * (col_width + base_padding) + base_padding
 
     local t = {
@@ -244,7 +269,7 @@ function obj:add_section(title, entries, row, col)
         type = "text",
         text = desc,
         textSize = 16,
-        textColor = { hex = "#EBEBF5", alpha = 0.8 },
+        textColor = self.desc_color,
         textAlignment = "left",
         frame = {
             x = col_base,
@@ -269,14 +294,19 @@ function obj:show()
                 max_x = col
             end
         end
+        local w = col_width * max_x
+            + (max_x - 1) * base_padding
+            + base_padding * 2
         self.canvas:frame({
             x = 0,
             y = 0,
-            w = col_width * max_x
-                + (max_x - 1) * base_padding
-                + base_padding * 2,
+            w = w,
             h = max_y + base_padding,
         })
+        --reszie title w
+        if self.title then
+            self.canvas[2]["frame"]["w"] = w - base_padding * 2
+        end
     end
     self.canvas:show()
 end
@@ -286,6 +316,12 @@ function obj:toggle()
         self.canvas:hide()
     else
         self:show()
+    end
+end
+
+function obj:hide()
+    if self.canvas:isShowing() then
+        self.canvas:hide()
     end
 end
 
