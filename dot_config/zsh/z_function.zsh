@@ -39,6 +39,9 @@ function zgen-reset () {
         rm -f $item
     done
 
+    # restore repo
+    git -C $ZGEN_PATH checkout -- .
+
     # reset comp
     zgen-comp-reset
 
