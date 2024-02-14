@@ -47,7 +47,7 @@ unset ZSH_TMUX_TERM
 if (( $+commands[starship] )); then
     source <(starship init zsh --print-full-init)
 else
-    zgenom load $Z_DOT_PATH/stores/pygmalion.zsh-theme
+    source load $Z_DOT_PATH/stores/pygmalion.zsh-theme
 fi
 
 # ======== #
