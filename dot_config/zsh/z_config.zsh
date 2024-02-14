@@ -66,6 +66,11 @@ fi
 
 
 # =========== #
+#     ls      #
+# =========== #
+(( $+commands[gls] )) && alias ls='gls --color=auto'
+
+# =========== #
 #   atuin     #
 # =========== #
 # Manual bind ^p as local dir search

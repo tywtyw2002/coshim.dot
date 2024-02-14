@@ -1,0 +1,4 @@
+setopt prompt_subst
+NIX_Z_CONFIG=$HOME/.config/zsh
+NIX_ZGEN_PATH=$HOME/.zgen
+source $HOME/.config/zsh/init.zsh

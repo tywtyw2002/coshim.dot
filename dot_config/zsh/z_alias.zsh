@@ -16,4 +16,4 @@ alias NUL="> /dev/null 2>&1"
 alias G="| grep "
 
 # system
-alias rm="rm -i"
+# alias rm="rm -i"

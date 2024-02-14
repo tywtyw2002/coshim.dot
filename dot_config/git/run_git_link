@@ -3,9 +3,9 @@
 GIT_CONFIG_HOME=$HOME/.config/git
 GIT_CONFIG_ALL=("config" "ignore")
 
-if command -v nix >/dev/null 2>&1; then
-  exit
-fi
+# if command -v nix >/dev/null 2>&1; then
+#   exit
+# fi
 
 for conf in ${GIT_CONFIG_ALL[@]}; do
   if [[ ! -e $GIT_CONFIG_HOME/$conf ]]; then

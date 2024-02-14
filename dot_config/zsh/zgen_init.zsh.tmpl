@@ -44,13 +44,16 @@ if ! zgenom saved; then
    zgenom ohmyzsh plugins/rust
    zgenom ohmyzsh plugins/ripgrep
 
+   {{ if eq .chezmoi.os "darwin" }}
    # macos
    zgenom ohmyzsh plugins/brew
    zgenom ohmyzsh plugins/macos
    zgenom ohmyzsh plugins/sublime
 
+   {{ else if eq .chezmoi.os "linux" }}
    # linux
    zgenom ohmyzsh plugins/systemd
+   {{ end }}
 
    ######################
    #  External Plugins  #
