@@ -74,6 +74,8 @@ fi
 #   atuin     #
 # =========== #
 # Manual bind ^p as local dir search
-eval "$(atuin init zsh --disable-up-arrow)"
-bindkey -M emacs '^p' _atuin_up_search_widget
+if (( $+commands[atuin] )); then
+    eval "$(atuin init zsh --disable-up-arrow)"
+    bindkey -M emacs '^p' _atuin_up_search_widget
+fi
 
