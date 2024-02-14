@@ -50,7 +50,7 @@ function M:new(mods, key, message, exit_message)
     end
 
     if self.show_helper then
-        self.cheatsheet = CheatSheet:init({title=self.helper_title})
+        self.cheatsheet = CheatSheet:init({ title = self.helper_title })
     end
 end
 
@@ -70,7 +70,15 @@ function M:bind_keymaps(keymap, fn)
             if msg and msg ~= "" then
                 table.insert(entries, { meta, key, msg })
             end
-            self:bind(mod, key, nil, fn(cmd))
+            -- process the function
+            -- possible to add cheatsheet without binding
+            if cmd ~= nil and cmd ~= "" then
+                if type(cmd) == "function" then
+                    self:bind(meta, key, nil, cmd)
+                else
+                    self:bind(meta, key, nil, fn(cmd))
+                end
+            end
         end
     end
 

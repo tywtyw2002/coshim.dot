@@ -37,33 +37,9 @@ mouse_km:bind("", "O", "", function()
     M.move_to_next_screen()
 end)
 
-local app_km = KM:init({ exit_on_key = false, show_helper = true })
-app_km:new(mash, "\\", "App Selcect")
-local app_map = {
-    s = { "com.sublimetext.4", "Sublime" },
-    c = { "com.google.Chrome", "Chrome" },
-    f = { "com.apple.finder", "Finder" },
-    m = { "md.obsidian", "Obsidian" },
-    w = { "com.github.wez.wezterm", "Wezterm" },
-    t = { "com.googlecode.iterm2", "iTerm2" },
-}
-
-app_selector.init(app_km, app_map)
-
-app_km:bind("", "space", "", function()
-    hs.hints.windowHints()
-end)
-
-app_km:bind("", "\\", "", function()
-    -- show bundleid for focused window
-    local fwin = hs.window.focusedWindow()
-    if not fwin then
-        return
-    end
-    local bundleid = fwin:application():bundleID()
-    hs.alert.show("BundleID: " .. bundleid)
-    hs.pasteboard.setContents(bundleid)
-end)
+-- app selector
+local app_selector = app_selector:init()
+app_selector:bind_keys(mash, "\\")
 
 -- yabai
 local y = yabai:init()

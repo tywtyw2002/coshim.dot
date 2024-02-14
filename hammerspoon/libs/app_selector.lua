@@ -1,4 +1,37 @@
+local KM = require("libs.key_manager_next")
+
 local M = {}
+
+local keymaps = {
+    {
+        --title = "App",
+        title = "",
+        loc = { 1, 1 },
+        binds = {
+            { "", "f", "com.apple.finder", "Finder" },
+            { "", "m", "md.obsidian", "Obsidian" },
+            { "", "c", "com.google.Chrome", "Chrome" },
+            {},
+            { "", "s", "com.sublimetext.4", "Sublime" },
+            { "", "t", "com.googlecode.iterm2", "iTerm2" },
+            { "", "w", "com.github.wez.wezterm", "Wezterm" },
+            {},
+            { "", "\\", "", "Get BundleID" },
+            { "", "space", "", "Window Hints" },
+        },
+    },
+}
+
+local function get_app_bundle_id()
+    local fwin = hs.window.focusedWindow()
+    if not fwin then
+        hs.alert.show("Unable to get Bundle ID")
+        return
+    end
+    local bundleid = fwin:application():bundleID()
+    hs.alert.show("BundleID: " .. bundleid)
+    hs.pasteboard.setContents(bundleid)
+end
 
 local function call_app(name)
     local app = hs.application.find(name)
@@ -27,13 +60,39 @@ local function call_app(name)
     end
 end
 
-M.init = function(km, maps)
-    for key, data in pairs(maps) do
-        local app_name, desc = table.unpack(data)
-        km:bind("", key, desc, function()
+function M:init(o)
+    o = o or {}
+    setmetatable(o, self)
+    self.__index = self
+
+    return o
+end
+
+function M:bind_keys(meta, key)
+    self.KM = KM:init({
+        helper_title = "Mode: App Selector",
+        show_helper = true,
+        helper_timeout = 0,
+    })
+    self.KM:new(meta, key, "App Selector")
+
+    local fn = function(app_name)
+        return function()
             call_app(app_name)
-        end)
+        end
     end
+    for _, section in ipairs(keymaps) do
+        self.KM:bind_keymaps(section, fn)
+    end
+
+    -- extra binds
+    self.KM:bind("", "space", "", function()
+        hs.hints.windowHints()
+    end)
+
+    self.KM:bind("", "\\", "", function()
+        get_app_bundle_id()
+    end)
 end
 
 return M

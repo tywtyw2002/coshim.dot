@@ -1,3 +1,5 @@
+local utf8len = hs.utf8.len
+
 local obj = {
     title = nil,
     entry_length = 25,
@@ -25,17 +27,16 @@ local KEY_SPECIAL_MAP = {
     ["return"] = "↩",
     delete = "⌫",
     escape = "⎋",
-    ["left"] = "←",
-    ["right"] = "→",
-    ["up"] = "↑",
-    ["down"] = "↓",
+    ["left"] = "◀",
+    ["right"] = "▶",
+    ["up"] = "▲",
+    ["down"] = "▼",
     ["home"] = "⇱",
     ["end"] = "⇲",
     ["pageup"] = "⇞",
     ["pagedown"] = "⇟",
     ["tab"] = "⇥",
     ["forwarddelete"] = "⌦",
-    ["help"] = "⍰",
     ["clear"] = "⌧",
 }
 
@@ -124,32 +125,31 @@ function obj:format_key_string(mod, key, idx)
                 local modifier = mod[count]
                 meta = meta .. MOD_MAPPING[modifier]
             end
+            meta = meta .. " "
+            table.insert(attrs, {
+                starts = idx,
+                ends = idx + meta:len(),
+                attributes = {
+                    color = self.meta_color,
+                    font = { size = 16 },
+                    paragraphStyle = { alignment = "right" },
+                },
+            })
+            idx = idx + meta:len()
         end
-        meta = meta .. " "
-        table.insert(attrs, {
-            starts = idx,
-            ends = idx + meta:len(),
-            attributes = {
-                color = self.meta_color,
-                font = { size = 16 },
-                paragraphStyle = { alignment = "right" },
-            },
-        })
-        idx = idx + meta:len()
     end
 
     local nsstring = meta .. key
     table.insert(attrs, {
         starts = idx,
-        ends = idx + key:len(),
+        ends = idx + utf8len(key),
         attributes = {
             color = colored and self.upper_key_color or self.key_color,
             font = { name = key_font, size = 16 },
-            -- font = {size = 16},
             paragraphStyle = { alignment = "right" },
         },
     })
-
+    --print(meta, key, nsstring, hs.inspect(attrs))
     return nsstring, attrs
 end
 
@@ -217,20 +217,24 @@ function obj:add_section(title, entries, row, col)
     local row_base = (self.draw_pos[col] or self.row_base_zero) + padding
     local col_base = (col - 1) * (col_width + base_padding) + base_padding
 
-    local t = {
-        type = "text",
-        text = self:format_text(title),
-        textSize = 18,
-        textColor = { hex = "#ffffff", alpha = 1 },
-        textAlignment = "left",
-        frame = {
-            x = col_base,
-            y = row_base,
-            w = col_width,
-            h = nav_height,
-        },
-    }
-    self:insert(t)
+    -- title
+    if title ~= nil and title ~= "" then
+        local t = {
+            type = "text",
+            text = self:format_text(title),
+            textSize = 18,
+            textColor = { hex = "#ffffff", alpha = 1 },
+            textAlignment = "left",
+            frame = {
+                x = col_base,
+                y = row_base,
+                w = col_width,
+                h = nav_height,
+            },
+        }
+        self:insert(t)
+        row_base = row_base + nav_height
+    end
 
     local keys = ""
     local desc = ""
@@ -258,7 +262,7 @@ function obj:add_section(title, entries, row, col)
         text = ns_key,
         frame = {
             x = col_base + col_desc_width,
-            y = row_base + nav_height,
+            y = row_base,
             w = col_key_width,
             h = row_height * #entries,
         },
@@ -273,13 +277,13 @@ function obj:add_section(title, entries, row, col)
         textAlignment = "left",
         frame = {
             x = col_base,
-            y = row_base + nav_height,
+            y = row_base,
             w = col_desc_width,
             h = row_height * #entries,
         },
     })
 
-    self.draw_pos[col] = row_base + #entries * row_height + nav_height
+    self.draw_pos[col] = row_base + #entries * row_height
 end
 
 function obj:show()

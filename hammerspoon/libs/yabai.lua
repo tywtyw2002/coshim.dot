@@ -180,7 +180,7 @@ function yabai:init()
     local y = { yabai_path = output }
     setmetatable(y, self)
     self.__index = self
-    self.cheatsheet = CheatSheet:init({title="Yabai"})
+    y.cheatsheet = CheatSheet:init({ title = "Yabai" })
 
     -- _G["DEBUG_CHEATSHEET"] = self.cheatsheet
 
@@ -236,7 +236,11 @@ function yabai:bind_keys()
         self.cheatsheet:toggle()
     end)
 
-    self.kv = KM:init({ helper_title = "Mode: Yabai", show_helper = true, helper_timeout = 0 })
+    self.kv = KM:init({
+        helper_title = "Mode: Yabai",
+        show_helper = true,
+        helper_timeout = 0,
+    })
     self.kv:new(altctrl, "\\", "Yabai")
     local fn = function(cmd)
         return function()
