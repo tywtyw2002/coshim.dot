@@ -59,16 +59,12 @@ if (( $+commands[zoxide] )); then
 fi
 
 # =========== #
-#  dircolors  #
+#  dircolors  + LS #
 # =========== #
 (( $+commands[gdircolors] )) && eval $(gdircolors $Z_DOT_PATH/stores/DIR_COLORS)
 (( $+commands[dircolors] )) && eval $(dircolors $Z_DOT_PATH/stores/DIR_COLORS)
-
-
-# =========== #
-#     ls      #
-# =========== #
 (( $+commands[gls] )) && alias ls='gls --color=auto'
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 # =========== #
 #   atuin     #

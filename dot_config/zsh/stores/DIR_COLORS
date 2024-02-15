@@ -41,20 +41,20 @@
 # fi      00      # FILE
 
 # file types (with matching order)
-ln      01;36   # LINK
-or      31;01   # ORPHAN
-tw      34      # STICKY_OTHER_WRITABLE
-ow      34      # OTHER_WRITABLE
-st      01;34   # STICKY
-di      01;34   # DIR
-pi      33      # FIFO
-so      01;35   # SOCK
-bd      33;01   # BLK
-cd      33;01   # CHR
-su      01;32   # SETUID
-sg      01;32   # SETGID
-ex      38;5;72   # EXEC
-fi      00      # FILE
+LINK      01;36   # LINK
+ORPHAN      31;01   # ORPHAN
+STICKY_OTHER_WRITABLE      34      # STICKY_OTHER_WRITABLE
+OTHER_WRITABLE      34      # OTHER_WRITABLE
+STICKY      01;34   # STICKY
+DIR      01;34   # DIR
+FIFO      33      # FIFO
+SOCK      01;35   # SOCK
+BLK      33;01   # BLK
+CHR      33;01   # CHR
+SETUID      01;32   # SETUID
+SETGID      01;32   # SETGID
+EXEC      38;5;72   # EXEC
+FILE      00      # FILE
 
 # archives or compressed (dircolors defaults)
 .tar   00;31

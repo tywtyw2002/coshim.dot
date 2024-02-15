@@ -8,6 +8,9 @@ if [[ ! -e $ZGEN_PATH/zgenom.zsh ]]; then
     git clone https://github.com/jandamm/zgenom.git $ZGEN_PATH
 fi
 
+# OMZ Configs
+DISABLE_LS_COLORS=true
+
 # load zgenom & plugins
 source $ZGEN_PATH/zgenom.zsh
 source $Z_DOT_PATH/zgen_init.zsh
