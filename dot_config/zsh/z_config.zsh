@@ -55,7 +55,6 @@ fi
 # ======== #
 if (( $+commands[zoxide] )); then
     eval "$(zoxide init zsh)"
-    unalias zi
 fi
 
 # =========== #
