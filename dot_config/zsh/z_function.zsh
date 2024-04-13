@@ -129,5 +129,5 @@ function certv() {
     command -v openssl > /dev/null 2>&1 || {echo "openssl not found."; return 1;}
     if [[ -f $1 ]]; then
         openssl x509 -in $1 -text -noout
-    end
+    fi
 }
