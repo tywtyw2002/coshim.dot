@@ -71,6 +71,6 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 # Manual bind ^p as local dir search
 if (( $+commands[atuin] )); then
     eval "$(atuin init zsh --disable-up-arrow)"
-    bindkey -M emacs '^p' _atuin_up_search_widget
+    bindkey -M emacs '^p' atuin-up-search
 fi
 
