@@ -10,7 +10,7 @@ if ! zgenom saved; then
    zgenom ohmyzsh plugins/history
    zgenom ohmyzsh plugins/rsync
    zgenom ohmyzsh plugins/colored-man-pages
-   zgenom ohmyzsh plugins/direnv
+   # zgenom ohmyzsh plugins/direnv
 
    # tmux
    zgenom ohmyzsh plugins/tmux
@@ -29,18 +29,18 @@ if ! zgenom saved; then
    zgenom ohmyzsh plugins/gitignore
 
    # dev
-   zgenom ohmyzsh plugins/python
-   zgenom ohmyzsh --completion plugins/pylint
-   zgenom ohmyzsh plugins/pip
+   # zgenom ohmyzsh plugins/python
+   # zgenom ohmyzsh --completion plugins/pylint
+   # zgenom ohmyzsh plugins/pip
 
-   zgenom ohmyzsh --completion plugins/yarn
+   # zgenom ohmyzsh --completion plugins/yarn
 
    # k8s
    # zgenom ohmyzsh plugins/kubectl
    # zgenom ohmyzsh plugins/minikube
 
    # completion
-   zgenom ohmyzsh plugins/ag
+   # zgenom ohmyzsh plugins/ag
    zgenom ohmyzsh plugins/rust
    zgenom ohmyzsh plugins/ripgrep
 
@@ -58,11 +58,15 @@ if ! zgenom saved; then
    ######################
    #  External Plugins  #
    ######################
-   zgenom load zsh-users/zsh-completions
+   # zgenom load romkatv/zsh-defer
    zgenom load Aloxaf/fzf-tab
-   zgenom bin bigH/git-fuzzy
+   # zgenom load marlonrichert/zsh-autocomplete
+   zgenom load zsh-users/zsh-completions
+   zgenom load zsh-users/zsh-autosuggestions
    # zgenom load RobSis/zsh-completion-generator
+   zgenom load zdharma-continuum/fast-syntax-highlighting
 
+   # zgenom bin bigH/git-fuzzy
 
    #################
    #  Completions  #

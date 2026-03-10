@@ -43,7 +43,7 @@ function zgen-reset () {
     git -C $ZGEN_PATH checkout -- .
 
     # reset comp
-    zgen-comp-reset
+    zcomp-reset()
 
     echo 'Zgen cleanup finish.'
 }

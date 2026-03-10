@@ -1,11 +1,41 @@
+# =========== #
+#  FZF-Tab    #
+# =========== #
+zstyle ':fzf-tab:*' fzf-flags --color=bg+:23
+zstyle ':fzf-tab:*' show-group full
+zstyle ':fzf-tab:*' switch-group '<' '>'
+zstyle ':fzf-tab:*' prefix ''
+
+zstyle ':fzf-tab:complete:*' group-desc '[ %d ]'
+
+zstyle ':fzf-tab:complete:kill:argument-rest' fzf-preview 'ps --pid=$word -o cmd --no-headers -w -w'
+zstyle ':fzf-tab:complete:kill:argument-rest' fzf-flags '--preview-window=down:3:wrap'
+zstyle ':fzf-tab:complete:kill:*' popup-pad 0 3
+
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+zstyle ':fzf-tab:complete:cd:*' popup-pad 30 0
+
 # fzf tab
 bindkey "^I" expand-or-complete
 bindkey "^ " fzf-tab-complete
 
-# fzf history search
-typeset -g ZSH_FZF_HISTORY_SEARCH_END_OF_LINE='true'
-typeset -g ZSH_FZF_HISTORY_SEARCH_REMOVE_DUPLICATES='5'
-typeset -g ZSH_FZF_HISTORY_SEARCH_FZF_EXTRA_ARGS='--ansi --height 40% --reverse'
+bindkey -M menuselect '^[' send-break
+bindkey -M menuselect 'q' send-break
+
+# TODO: carapace
+
+# ===========  #
+#  autosuggest #
+# ===========  #
+ZSH_AUTOSUGGEST_STRATEGY+=(match_prev_cmd completion)
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(expand-or-complete)
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+# ZSH_AUTOSUGGEST_COMPLETION_IGNORE='( |man |pikaur -S )*'
+# 太长的行不用触发建议
+ZSH_AUTOSUGGEST_HISTORY_IGNORE='?(#c80,)'
+
 
 # ======== #
 #  Editor  #
@@ -63,7 +93,8 @@ fi
 (( $+commands[gdircolors] )) && eval $(gdircolors $Z_DOT_PATH/stores/DIR_COLORS)
 (( $+commands[dircolors] )) && eval $(dircolors $Z_DOT_PATH/stores/DIR_COLORS)
 (( $+commands[gls] )) && alias ls='gls --color=auto'
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+# zstyle ":completion:*" list-colors "${(s.:.)ZLS_COLORS}"
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # =========== #
 #   atuin     #
@@ -74,3 +105,15 @@ if (( $+commands[atuin] )); then
     bindkey -M emacs '^p' atuin-up-search
 fi
 
+# ============= #
+#   Rust Tools  #
+# ============= #
+(( $+commands[bat] )) && alias cat='bat'
+(( $+commands[difft])) && alias diff='difft'
+
+if (( $+commands[eza] )); then
+    alias ls='eza'
+    alias ll='eza -lh --icons'
+    alias la='eza -a --icons'
+    alias tree='eza --tree --icons'
+fi
