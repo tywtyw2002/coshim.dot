@@ -15,6 +15,7 @@ $git_state\
 $git_dirty\
 $python\
 $line_break\
+$shell\
 $charactermod\
 """
 
@@ -25,6 +26,17 @@ format = "$ssh_symbol[$symbol]($style) "
 format = "$symbol "
 success_symbol = "[⇒](cyan) "
 error_symbol = "[⇒](red) "
+
+[shell]
+bash_indicator = ' '
+zsh_indicator = ''
+fish_indicator = '󰈺 '
+xonsh_indicator = '[ ](cyan)'
+nu_indicator = '[ ](yellow)'
+unknown_indicator = ''
+style = ''
+format = "$indicator"
+disabled = false
 
 [status]
 format = "$symbol"
@@ -40,7 +52,7 @@ diverged = "[ ⬍](cyan)"
 modified = "[ ✱](blue)"
 deleted = "[ ✖](red)"
 renamed = "[ ➜](purple)"
-stashed = "[ ★](cyna)"
+stashed = "[ ★](cyan)"
 untracked = "[ ◼](white)"
 conflicted = "[ ⚠](yellow)"
 staged = "[ ✚](green)"
