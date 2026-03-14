@@ -117,3 +117,14 @@ if (( $+commands[eza] )); then
     alias la='eza -a --icons'
     alias tree='eza --tree --icons'
 fi
+
+
+# ============= #
+#   carapace    #
+# ============= #
+if (( $+commands[carapace] )); then
+    export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense'
+    # eval "$(carapace _carapace zsh)"
+    source <(carapace _carapace)
+    zstyle ':completion:*:git:*' group-order 'main commands' 'alias commands' 'external commands'
+fi

@@ -5,43 +5,45 @@ if [[ "$TERM" == 'dumb' ]]; then
     return 1
 fi
 
+
 ##############
 #   Styles   #
 ##############
 LISTMAX=200
-# Group matches and describe.
-# fuck omh
-# setopt menu_complete
+
+# reset options
 zstyle -d ':completion:*:*:*:*:*' menu
-# zstyle ':completion:*' menu yes select
+
+unsetopt MENU_COMPLETE
+unsetopt AUTO_LIST
+unsetopt CASE_GLOB
+setopt AUTO_MENU
+setopt COMPLETE_IN_WORD
+setopt ALWAYS_TO_END
+
+zstyle ':completion:*' menu select
 zstyle ':completion:*' list-ambiguous true
 zstyle ':completion:*' insert-unambiguous true
 # zstyle ':completion:*' insert-tab false
 # zstyle ':completion:*' original true
 zstyle ':completion:*' list-packed true
+zstyle ':completion:*' insert-sections yes
+zstyle ':completion:*' separate-sections yes
 
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' verbose yes
 
-zstyle -e ':completion:*' menu '
-  # echo "=========" >> /tmp/zsh1123
-  # typeset -p >> /tmp/zsh1123
-  if [[ -z "$PREFIX" && -z "$SUFFIX" ]]; then
-      reply=( yes select )
-  else
-      if [[ "$LASTWIDGET" == "complete-word" ]]; then
-          reply=( yes select )
-     else
-          reply=( select )
-     fi
-  fi
-'
-
+# format
 zstyle -e ':completion:*' format '
+    # echo "===SSS===" >> /tmp/typeset_123
+    # echo "CARAPACE_COMPLINE = $CARAPACE_COMPLINE" >> /tmp/typeset_123
+    # typeset -p >> /tmp/typeset_123
   if (( IN_FZF_TAB )); then
     reply=("[%d]")
+  elif (( ${#CARAPACE_COMPLINE} )); then
+      reply=("%K{5}%F{252}Completing %d%f%k")
   else
-    reply=(" %F{yellow}-- %d --%f")  # 自带 menu：带颜色
+    reply=(" %F{yellow}-- %d --%f")
   fi
 '
 
@@ -53,27 +55,39 @@ zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
 zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 # zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 
+zstyle ':completion:*:default' list-prompt '%S%M matches%s'
+zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}' 'm:{[:upper:]}={[:lower:]}'  'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
 # Man
 zstyle ':completion:*:manuals' separate-sections true
 zstyle ':completion:*:manuals.(^1*)' insert-sections true
 
+# file sort
 zstyle ":completion:*:git-checkout:*" sort false
 zstyle ':completion:*' file-sort modification
 zstyle ':completion:*:eza' sort false
 zstyle ':completion:files' sort false
 
-
-
 # copy from autocompletion
 zstyle ':completion:*' use-cache yes
 zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/compcache"
 
-# _expand: 展开别名/变量, _complete: 基础补全, _ignored: 之前忽略的也尝试, _approximate: 允许 1-2 个错别字
-zstyle ':completion:*' completer \
-      _expand _complete _complete:-fuzzy _correct _approximate _ignored
-#
-# 根据输入长度动态决定允许多少个错别字：(长度/3)
-zstyle ':completion:*:approximate:*' max-errors 'reply=( $(( ($#PREFIX + $#SUFFIX) / 3 )) )'
+# command completer
+zstyle ':completion:*:*(approximate|correct):-command-:*:*' max-errors 0
+zstyle ':completion:*:*(approximate|correct):-command-:*:*' tag-order '-'
+# zstyle ':completion:*:*:-command-:*' matcher-list ''
+# zstyle ':completion:*:*:-command-:*' format
+# zstyle ':completion:*:*:-command-:*' group-name ''
+
+zstyle -e ':completion:*' completer '
+  if [[ $CURRENT -eq 1 ]]; then
+    reply=(_complete _ignored)
+  else
+    reply=(_expand _complete _complete:-fuzzy _correct _approximate _ignored)
+  fi
+'
+
+zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3>5?5:($#PREFIX+$#SUFFIX)/3))numeric)'
 
 # zstyle ':completion:*:-command-:*' group-name commands
 zstyle ':completion:*:all-expansions' group-name 'expansion'
@@ -114,6 +128,7 @@ autocomplete:config_tag-order_command() {
 
 zstyle ':completion:*:-tilde-:*' tag-order directory-stack named-directories
 
+zstyle ':completion:*:approximate:*' tag-order 'corrections'
 zstyle ':completion:*:(approximate|correct):*' tag-order '! original' -
 
 # Don't show the giant list of history lines.
@@ -149,15 +164,6 @@ autocomplete:config_file-patterns() {
         typeset -ga reply=( '*(-/):directories:directory %p(#q^-/):globbed-files' )
     fi
 }
-# zstyle -e ':completion:*' tag-order '
-#   if (( IN_FZF_TAB )); then
-#     reply=("all-files directories globbed-files")
-#   else
-#     reply=("directories globbed-files" "-")
-#   fi
-# '
-
-# zstyle ':completion:*'  tag-order directories globbed-files
 
 zstyle -e ':completion:*:-command-:*'   file-patterns autocomplete:config_file-patterns_command
 autocomplete:config_file-patterns_command() {
@@ -167,7 +173,6 @@ autocomplete:config_file-patterns_command() {
 
 zstyle ':completion:*:(.|source):*'  file-patterns \
     '%p(#q-/):directories:directory %p~*.zwc(-.^*):globbed-files' '%p~*.zwc(-^/):globbed-files'
-
 
 
 # Don't combine parameters with same values.
@@ -184,8 +189,7 @@ zstyle -e ':completion:*:expansions'     format autocomplete:config:format '"glo
 
 zstyle -e ':completion:*:warnings'    format autocomplete:config:format:warnings
 autocomplete:config:format:warnings() {
-  [[ $CURRENT == 1 && -z $PREFIX$SUFFIX ]] ||
-      autocomplete:config:format 'no matching %d completions'
+    autocomplete:config:format 'no matching %d completions'
 }
 
 zstyle ':completion:*:messages'       format '%F{9}%d%f'
@@ -194,19 +198,6 @@ zstyle ':completion:*:history-lines'  format ''
 zstyle ':completion:*' auto-description '%d'
 zstyle ':completion:*:parameters' extra-verbose yes
 zstyle ':completion:*:default' select-prompt '%F{black}%K{12}line %l %p%f%k'
-
-zstyle ':completion:*' insert-sections yes
-zstyle ':completion:*' separate-sections yes
-
-function _instant_menu_trigger() {
-    # 只有输入第一个字母，且不是删除/回车时触发
-    if [[ $#BUFFER -gt 0 && $LASTWIDGET == (self-insert|vi-self-insert) ]]; then
-        # 强制显示补全列表
-        zle list-choices
-    fi
-}
-# autoload -Uz add-zle-hook-widget
-# add-zle-hook-widget line-pre-redraw _instant_menu_trigger
 
 
 hosts=()
@@ -229,7 +220,6 @@ fi
 
 zstyle ':completion:*:hosts' hosts $hosts
 
-
 # SSH/SCP/RSYNC
 zstyle ':completion:*:(ssh|scp|sshfs|mosh):*' sort false
 zstyle ':completion:*:(ssh|scp|sshfs|mosh):*' format ' %F{yellow}-- %d --%f'
@@ -246,19 +236,3 @@ zstyle ':completion:*:(ssh|mosh):*' group-order users hosts-domain hosts-host us
 zstyle ':completion:*:(ssh|scp|sshfs|mosh):*:hosts-host' ignored-patterns '*(.|:)*' loopback localhost broadcasthost 'ip6-*'
 zstyle ':completion:*:(ssh|scp|sshfs|mosh):*:hosts-domain' ignored-patterns '<->.<->.<->.<->' '^[-[:alnum:]]##(.[-[:alnum:]]##)##' '*@*'
 zstyle ':completion:*:(ssh|scp|sshfs|mosh):*:hosts-ipaddr' ignored-patterns '^(<->.<->.<->.<->|(|::)([[:xdigit:].]##:(#c,2))##(|%*))' '127.0.*' '255.255.255.255' '::1' 'fe80::*' 'ff02::*'
-
-
-############
-#   deno   #
-############
-if (( $+commands[deno] )); then
-    # If the completion file doesn't exist yet, we need to autoload it and
-    # bind it to `deno`. Otherwise, compinit will have already done that.
-    if [[ ! -f "$ZSH_CACHE_DIR/completions/_deno" ]]; then
-      typeset -g -A _comps
-      autoload -Uz _deno
-      _comps[deno]=_deno
-    fi
-
-    deno completions zsh >| "$ZSH_CACHE_DIR/completions/_deno" &|
-fi
